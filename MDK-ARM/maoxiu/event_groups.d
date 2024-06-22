@@ -1,0 +1,15 @@
+maoxiu\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/event_groups.c
+maoxiu\event_groups.o: F:\KEIL\ARM\ARMCC\Bin\..\include\stdlib.h
+maoxiu\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+maoxiu\event_groups.o: F:\KEIL\ARM\ARMCC\Bin\..\include\stddef.h
+maoxiu\event_groups.o: F:\KEIL\ARM\ARMCC\Bin\..\include\stdint.h
+maoxiu\event_groups.o: ../Core/Inc/FreeRTOSConfig.h
+maoxiu\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+maoxiu\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+maoxiu\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+maoxiu\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+maoxiu\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+maoxiu\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+maoxiu\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+maoxiu\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
+maoxiu\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h

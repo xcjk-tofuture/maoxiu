@@ -1,0 +1,10 @@
+maoxiu\cjson.o: ..\MATH_Tools\src\cJSON.c
+maoxiu\cjson.o: F:\KEIL\ARM\ARMCC\Bin\..\include\string.h
+maoxiu\cjson.o: F:\KEIL\ARM\ARMCC\Bin\..\include\stdio.h
+maoxiu\cjson.o: F:\KEIL\ARM\ARMCC\Bin\..\include\math.h
+maoxiu\cjson.o: F:\KEIL\ARM\ARMCC\Bin\..\include\stdlib.h
+maoxiu\cjson.o: F:\KEIL\ARM\ARMCC\Bin\..\include\limits.h
+maoxiu\cjson.o: F:\KEIL\ARM\ARMCC\Bin\..\include\ctype.h
+maoxiu\cjson.o: F:\KEIL\ARM\ARMCC\Bin\..\include\float.h
+maoxiu\cjson.o: ../MATH_Tools/inc/cJSON.h
+maoxiu\cjson.o: F:\KEIL\ARM\ARMCC\Bin\..\include\stddef.h

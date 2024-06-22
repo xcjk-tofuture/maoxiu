@@ -1,0 +1,13 @@
+maoxiu\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c
+maoxiu\heap_4.o: F:\KEIL\ARM\ARMCC\Bin\..\include\stdlib.h
+maoxiu\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+maoxiu\heap_4.o: F:\KEIL\ARM\ARMCC\Bin\..\include\stddef.h
+maoxiu\heap_4.o: F:\KEIL\ARM\ARMCC\Bin\..\include\stdint.h
+maoxiu\heap_4.o: ../Core/Inc/FreeRTOSConfig.h
+maoxiu\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+maoxiu\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+maoxiu\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+maoxiu\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+maoxiu\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+maoxiu\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+maoxiu\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
