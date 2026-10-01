@@ -133,7 +133,8 @@ See http://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html. */
 /* Normal assert() semantics without relying on the provision of an assert.h
 header file. */
 /* USER CODE BEGIN 1 */
-#define configASSERT( x ) if ((x) == 0) {taskDISABLE_INTERRUPTS(); for( ;; );}
+extern void app_fatal(void);
+#define configASSERT(x) do {if(!(x))app_fatal();}while(0)
 /* USER CODE END 1 */
 
 /* Definitions that map the FreeRTOS port interrupt handlers to their CMSIS
@@ -153,6 +154,14 @@ standard names. */
 /* USER CODE END 2 */
 
 /* USER CODE BEGIN Defines */
+#undef configTOTAL_HEAP_SIZE
+#define configTOTAL_HEAP_SIZE ((size_t)24576)
+#undef configCHECK_FOR_STACK_OVERFLOW
+#define configCHECK_FOR_STACK_OVERFLOW 2
+#undef configUSE_MALLOC_FAILED_HOOK
+#define configUSE_MALLOC_FAILED_HOOK 1
+#undef configUSE_RECURSIVE_MUTEXES
+#define configUSE_RECURSIVE_MUTEXES 1
 /* Section where parameter definitions can be added (for instance, to override default ones in FreeRTOS.h) */
 /* USER CODE END Defines */
 

@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "OpenOCD ST-Link",
+      "type": "cortex-debug",
+      "request": "launch",
+      "servertype": "openocd",
+      "cwd": "${workspaceFolder}",
+      "executable": "${workspaceFolder}/build/debug/maoxiu_stm32.elf",
+      "configFiles": [
+        "${workspaceFolder}/openocd/board.cfg"
+      ],
+      "runToEntryPoint": "main",
+      "gdbPath": "arm-none-eabi-gdb",
+      "preLaunchTask": "CMake: build"
+    }
+  ]
+}

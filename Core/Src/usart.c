@@ -519,14 +519,6 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 /* USER CODE BEGIN 1 */
 #include <stdio.h>
 
-u8 ch;
-//重写这个函数,重定向printf函数到串口
-/*fputc*/
-int fputc(int c, FILE * f)
-{
-	
-	ch=c;
-	HAL_UART_Transmit(&huart3, &ch, 1, 50); //发送串口，不同的单片机函数和串口命名不同，替换对于的函数串口名字即可实现不同库和不同单片机的重定向了
-	return c;
-}
+#include "log_service.h"
+int fputc(int c,FILE *stream) {(void)stream;maoxiu_log_byte((uint8_t)c);return c;}
 /* USER CODE END 1 */

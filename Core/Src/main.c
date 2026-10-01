@@ -29,6 +29,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+extern void app_fatal(void);
 #include "pc_proc.h"
 
 u8 PCdatabufRx[200];
@@ -124,6 +125,7 @@ int main(void)
 	
 
 	HAL_UARTEx_ReceiveToIdle_DMA(&huart1, PCdatabufRx, 200);
+    __HAL_DMA_DISABLE_IT(huart1.hdmarx, DMA_IT_HT);
 	HAL_UARTEx_ReceiveToIdle_DMA(&huart3, InfodatabufRx, 200);
   /* USER CODE END 2 */
 
@@ -203,8 +205,9 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 	else if(huart->Instance == USART1)
 	{
 		PC_Data_Rx_Proc(Size);
-		HAL_UART_Transmit_DMA(&huart3, PCdatabufRx, Size);
+
 		HAL_UARTEx_ReceiveToIdle_DMA(&huart1, PCdatabufRx, 200);
+    __HAL_DMA_DISABLE_IT(huart1.hdmarx, DMA_IT_HT);
 	}
 }
 /* USER CODE END 4 */
@@ -237,6 +240,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
+  app_fatal();
   /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
   while (1)

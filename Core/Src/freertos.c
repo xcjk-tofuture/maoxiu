@@ -25,19 +25,13 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-//#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS() ConfigureTimeForRunTimeStats()
-//#define portGET_RUN_TIME_COUNTER_VALUE() FreeRTOSRunTimeTicks
-#include "stdio.h"
-#define XC_FREERTOS_MAKE_FLAG //编译标志位 彻底解决cube改代码需要删除东西
-
-
+#define APP_RTOS_EXTERNAL_TASKS 1
+extern void app_tasks_init(void);
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-#include "tim.h"
-//#include "trcConfig.h"
-//#include "trcKernelPort.h"
+
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -51,17 +45,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-extern	osThreadId RGBTaskHandle;
-extern	osThreadId BuzzerTaskHandle;
-extern  osThreadId LCDTaskHandle;
-extern osThreadId KeyTaskHandle;
-extern osThreadId PCTaskHandle;
-extern osThreadId ServoTaskHandle;
-extern osThreadId MotorTaskHandle;
-extern osThreadId EncoderTaskHandle;
-extern osThreadId IMUTaskHandle;
-extern osThreadId BleTaskHandle;
-#ifndef XC_FREERTOS_MAKE_FLAG
+#if !APP_RTOS_EXTERNAL_TASKS
 /* USER CODE END Variables */
 osThreadId KeyTaskHandle;
 osThreadId RGBTaskHandle;
@@ -77,29 +61,7 @@ osThreadId ServoTaskHandle;
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 #endif
-extern void RGB_Task_Proc(void const * argument);
-extern void Buzzer_Task_Proc(void const * argument);
-extern void LCD_Task_Proc(void const * argument);
-extern void Key_Task_Proc(void const * argument);
-extern void PC_Task_Proc(void const * argument);
-extern void Servo_Task_Proc(void const * argument);
-extern void Motor_Task_Proc(void const * argument);
-extern void Encoder_Task_Proc(void const * argument);
-extern void IMU_Task_Proc(void const * argument);
-extern void Ble_Task_Proc(void const * argument);
-
-void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
-
-/* GetIdleTaskMemory prototype (linked to static allocation support) */
-void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
-
-/* GetTimerTaskMemory prototype (linked to static allocation support) */
-void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer, StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize );
-
-/* Hook prototypes */
-
-
-#ifndef XC_FREERTOS_MAKE_FLAG
+#if !APP_RTOS_EXTERNAL_TASKS
 /* USER CODE END FunctionPrototypes */
 
 void Key_Task_Proc(void const * argument);
@@ -127,25 +89,8 @@ unsigned long getRunTimeCounterValue(void);
 
 /* USER CODE BEGIN 1 */
 #endif
-/* Functions needed when configGENERATE_RUN_TIME_STATS is on */
-
-//void TaskFunction(void *pvParameters)
-//{
-//    vTaskSetApplicationTaskTag(NULL, __LINE__); // 设置任务标签
-//    // 任务的其他代码
-//}
-
-
-__weak void configureTimerForRunTimeStats(void)
-{
-//	HAL_TIM_Base_Start_IT(&htim13);
-//	TIM12Count = 0;
-}
-
-__weak unsigned long getRunTimeCounterValue(void)
-{
-	return 0;
-}
+__weak void configureTimerForRunTimeStats(void) {}
+__weak unsigned long getRunTimeCounterValue(void) {return 0;}
 /* USER CODE END 1 */
 
 /* USER CODE BEGIN GET_IDLE_TASK_MEMORY */
@@ -181,8 +126,8 @@ void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer, Stack
   */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
+app_tasks_init();
+/* USER CODE END Init */
 
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */
@@ -197,13 +142,8 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE END RTOS_TIMERS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
-  /* add queues, ... */
-	
-  printf("rtos loading...........\r\n");
-	printf("\\   |   /\r\n");
-	printf("-  xcjk  -\r\n");
-	printf("/    |   \\\r\n");
-  /* USER CODE END RTOS_QUEUES */
+#if !APP_RTOS_EXTERNAL_TASKS
+/* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
   /* definition and creation of KeyTask */
@@ -247,53 +187,13 @@ void MX_FREERTOS_Init(void) {
   ServoTaskHandle = osThreadCreate(osThread(ServoTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
-	
-		if(RGBTaskHandle != NULL)
-	{ printf("rgb_task_creat_sucess!\r\n"); }
-
-	if(BuzzerTaskHandle != NULL)
-	{ printf("buzzer_task_creat_sucess!\r\n"); }
-
-
-	if(LCDTaskHandle != NULL)
-	{ printf("lcd_task_creat_sucess!\r\n"); }
-
-	if(KeyTaskHandle != NULL)
-	{ printf("key_task_creat_sucess!\r\n"); }
-
-	if(PCTaskHandle != NULL)
-	{ printf("pc_task_creat_sucess!\r\n"); }
-
-
-
-	if(ServoTaskHandle != NULL)
-	{ printf("servo_task_creat_sucess!\r\n"); }
-
-	if(MotorTaskHandle != NULL)
-	{ printf("motor_task_creat_sucess!\r\n"); }    //指示打印是否正常
-	
-	if(EncoderTaskHandle != NULL)
-	{ printf("Encoder_task_creat_sucess!\r\n"); }    //指示打印是否正常
-	
-	if(IMUTaskHandle != NULL)
-	{ printf("MPU6050_task_creat_sucess!\r\n"); }    //指示打印是否正常
-	
-    printf("  /\\_/\\  \r\n");
-    printf(" ( o.o ) \r\n");
-    printf("  > ^ <  \r\n");
-	printf(" 星橙祝您使用一路顺风！(ノ￣▽￣)   \r\n");
-  /* USER CODE END RTOS_THREADS */
+#endif
+/* USER CODE END RTOS_THREADS */
 
 }
 
 /* USER CODE BEGIN Header_Key_Task_Proc */
-#ifndef XC_FREERTOS_MAKE_FLAG
-/**
-* @brief Function implementing the KeyTask thread.
-* @param argument: Not used
-* @retval None
-*/
+#if !APP_RTOS_EXTERNAL_TASKS
 /* USER CODE END Header_Key_Task_Proc */
 void Key_Task_Proc(void const * argument)
 {

@@ -18,11 +18,11 @@ ros/ws_starbot/build/
 *.map
 *.lst
 *.lnp
-*.htm
-*.html
 *.dep
 *.uvguix.*
 *.uvoptx
 *.scvd
-.vscode/
 .idea/
+
+*.su
+CMakeUserPresets.json

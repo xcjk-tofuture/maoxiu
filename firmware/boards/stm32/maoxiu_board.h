@@ -1,0 +1,19 @@
+#ifndef MAOXIU_BOARD_H
+#define MAOXIU_BOARD_H
+/* STM32 F407: board geometry and original encoder / PWM scaling. */
+#define MAOXIU_CONTROL_MS 10u
+#define MAOXIU_OUTPUT_DIVIDER 2u
+#define MAOXIU_ENCODER_HZ 100.0f
+#define MAOXIU_WHEEL_PERIMETER_M (0.060f * 3.1415926f)
+#define MAOXIU_ENCODER_COUNTS (30.0f * 500.0f * 4.0f)
+#define MAOXIU_HALF_SPAN_M (0.250f / 2.0f + 0.220f / 2.0f)
+#define MAOXIU_PWM_PERIOD 16799
+#define MAOXIU_PWM_LIMIT 16700.0f
+#define MAOXIU_KP 1800.0f
+#define MAOXIU_KI 180.0f
+#define MAOXIU_MIN_VOLTAGE 6.0f
+#define MAOXIU_COMMAND_TIMEOUT_MS 500u
+#define MAOXIU_MAX_LINEAR_MPS 2.0f
+#define MAOXIU_MAX_ANGULAR_RADPS 6.0f
+#define MAOXIU_ADC_VOLTS_PER_COUNT (33.0f/4096.0f)
+#endif
