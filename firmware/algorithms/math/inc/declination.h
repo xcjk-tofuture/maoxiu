@@ -6,4 +6,3 @@
 float CompassGetDeclination(float lat, float lon);
 
 #endif
-

@@ -1,23 +1,21 @@
 #include "rotation.h"
 
 /**********************************************************************************************************
-*函 数 名: RotateVector3f
-*功能说明: 向量方向变换
-*形    参: 旋转方式 原始向量指针
-*返 回 值: 无
-**********************************************************************************************************/
-void RotateVector3f(enum Rotation rot, Vector3f_t* v)
-{
+ *函 数 名: RotateVector3f
+ *功能说明: 向量方向变换
+ *形    参: 旋转方式 原始向量指针
+ *返 回 值: 无
+ **********************************************************************************************************/
+void RotateVector3f(enum Rotation rot, Vector3f_t *v) {
     float tmp;
 
-    switch (rot)
-    {
+    switch (rot) {
     case ROTATION_NONE:
     case ROTATION_MAX:
         return;
 
     case ROTATION_YAW_45: {
-        tmp  = HALF_SQRT_2 * (v->x - v->y);
+        tmp = HALF_SQRT_2 * (v->x - v->y);
         v->y = HALF_SQRT_2 * (v->x + v->y);
         v->x = tmp;
         return;
@@ -31,8 +29,8 @@ void RotateVector3f(enum Rotation rot, Vector3f_t* v)
     }
 
     case ROTATION_YAW_135: {
-        tmp  = -HALF_SQRT_2 * (v->x + v->y);
-        v->y =  HALF_SQRT_2 * (v->x - v->y);
+        tmp = -HALF_SQRT_2 * (v->x + v->y);
+        v->y = HALF_SQRT_2 * (v->x - v->y);
         v->x = tmp;
         return;
     }
@@ -43,7 +41,7 @@ void RotateVector3f(enum Rotation rot, Vector3f_t* v)
         return;
 
     case ROTATION_YAW_225: {
-        tmp  = HALF_SQRT_2 * (v->y - v->x);
+        tmp = HALF_SQRT_2 * (v->y - v->x);
         v->y = -HALF_SQRT_2 * (v->x + v->y);
         v->x = tmp;
         return;
@@ -57,7 +55,7 @@ void RotateVector3f(enum Rotation rot, Vector3f_t* v)
     }
 
     case ROTATION_YAW_315: {
-        tmp  = HALF_SQRT_2 * (v->x + v->y);
+        tmp = HALF_SQRT_2 * (v->x + v->y);
         v->y = HALF_SQRT_2 * (v->y - v->x);
         v->x = tmp;
         return;
@@ -70,7 +68,7 @@ void RotateVector3f(enum Rotation rot, Vector3f_t* v)
     }
 
     case ROTATION_ROLL_180_YAW_45: {
-        tmp  = HALF_SQRT_2 * (v->x + v->y);
+        tmp = HALF_SQRT_2 * (v->x + v->y);
         v->y = HALF_SQRT_2 * (v->x - v->y);
         v->x = tmp;
         v->z = -v->z;
@@ -87,7 +85,7 @@ void RotateVector3f(enum Rotation rot, Vector3f_t* v)
 
     case ROTATION_ROLL_180_YAW_135: {
         tmp = HALF_SQRT_2 * (v->y - v->x);
-        v->y   = HALF_SQRT_2 * (v->y + v->x);
+        v->y = HALF_SQRT_2 * (v->y + v->x);
         v->x = tmp;
         v->z = -v->z;
         return;
@@ -101,7 +99,7 @@ void RotateVector3f(enum Rotation rot, Vector3f_t* v)
 
     case ROTATION_ROLL_180_YAW_225: {
         tmp = -HALF_SQRT_2 * (v->x + v->y);
-        v->y   =  HALF_SQRT_2 * (v->y - v->x);
+        v->y = HALF_SQRT_2 * (v->y - v->x);
         v->x = tmp;
         v->z = -v->z;
         return;
@@ -116,7 +114,7 @@ void RotateVector3f(enum Rotation rot, Vector3f_t* v)
     }
 
     case ROTATION_ROLL_180_YAW_315: {
-        tmp  =  HALF_SQRT_2 * (v->x - v->y);
+        tmp = HALF_SQRT_2 * (v->x - v->y);
         v->y = -HALF_SQRT_2 * (v->x + v->y);
         v->x = tmp;
         v->z = -v->z;
@@ -131,10 +129,10 @@ void RotateVector3f(enum Rotation rot, Vector3f_t* v)
     }
 
     case ROTATION_ROLL_90_YAW_45: {
-        tmp  = v->z;
+        tmp = v->z;
         v->z = v->y;
         v->y = -tmp;
-        tmp  = HALF_SQRT_2 * (v->x - v->y);
+        tmp = HALF_SQRT_2 * (v->x - v->y);
         v->y = HALF_SQRT_2 * (v->x + v->y);
         v->x = tmp;
         return;
@@ -151,11 +149,11 @@ void RotateVector3f(enum Rotation rot, Vector3f_t* v)
     }
 
     case ROTATION_ROLL_90_YAW_135: {
-        tmp  = v->z;
+        tmp = v->z;
         v->z = v->y;
         v->y = -tmp;
-        tmp  = -HALF_SQRT_2 * (v->x + v->y);
-        v->y =  HALF_SQRT_2 * (v->x - v->y);
+        tmp = -HALF_SQRT_2 * (v->x + v->y);
+        v->y = HALF_SQRT_2 * (v->x - v->y);
         v->x = tmp;
         return;
     }
@@ -168,10 +166,10 @@ void RotateVector3f(enum Rotation rot, Vector3f_t* v)
     }
 
     case ROTATION_ROLL_270_YAW_45: {
-        tmp  = v->z;
+        tmp = v->z;
         v->z = -v->y;
         v->y = tmp;
-        tmp  = HALF_SQRT_2 * (v->x - v->y);
+        tmp = HALF_SQRT_2 * (v->x - v->y);
         v->y = HALF_SQRT_2 * (v->x + v->y);
         v->x = tmp;
         return;
@@ -188,11 +186,11 @@ void RotateVector3f(enum Rotation rot, Vector3f_t* v)
     }
 
     case ROTATION_ROLL_270_YAW_135: {
-        tmp  = v->z;
+        tmp = v->z;
         v->z = -v->y;
         v->y = tmp;
-        tmp  = -HALF_SQRT_2 * (v->x + v->y);
-        v->y =  HALF_SQRT_2 * (v->x - v->y);
+        tmp = -HALF_SQRT_2 * (v->x + v->y);
+        v->y = HALF_SQRT_2 * (v->x - v->y);
         v->x = tmp;
         return;
     }
@@ -249,9 +247,9 @@ void RotateVector3f(enum Rotation rot, Vector3f_t* v)
         float tmpx = v->x;
         float tmpy = v->y;
         float tmpz = v->z;
-        v->x =  0.143039f * tmpx +  0.368776f * tmpy + -0.918446f * tmpz;
+        v->x = 0.143039f * tmpx + 0.368776f * tmpy + -0.918446f * tmpz;
         v->y = -0.332133f * tmpx + -0.856289f * tmpy + -0.395546f * tmpz;
-        v->z = -0.932324f * tmpx +  0.361625f * tmpy +  0.000000f * tmpz;
+        v->z = -0.932324f * tmpx + 0.361625f * tmpy + 0.000000f * tmpz;
         return;
     }
 
@@ -264,5 +262,3 @@ void RotateVector3f(enum Rotation rot, Vector3f_t* v)
     }
     }
 }
-
-

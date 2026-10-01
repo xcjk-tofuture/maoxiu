@@ -2,35 +2,33 @@
 #define PID_H
 #include <stdint.h>
 
-typedef struct
-{
-	float LastFeedBack;			//ÉÏ´Î·´À¡
-	float LastDifferential;		//Î¢·ÖÖµ
-	float Error,LastError;		//Îó²î
-	float Hz;					//ÆµÂÊ
-	float Integrate;			//»ı·ÖÖµ
-    float Differential;			//Î¢·ÖÖµ
-	float FeedBackDifferential;//·´À¡Î¢·Ö
-	float   dFilter;
-	float Out;
-}PID;
+typedef struct {
+    float LastFeedBack;         // ä¸Šæ¬¡åé¦ˆ
+    float LastDifferential;     // å¾®åˆ†å€¼
+    float Error, LastError;     // è¯¯å·®
+    float Hz;                   // é¢‘ç‡
+    float Integrate;            // ç§¯åˆ†å€¼
+    float Differential;         // å¾®åˆ†å€¼
+    float FeedBackDifferential; // åé¦ˆå¾®åˆ†
+    float dFilter;
+    float Out;
+} PID;
 
-typedef struct
-{
-	float Kp;					//±ÈÀıÏµÊı
-    float Ki;					//»ı·ÖÏµÊı
-    float Kd;					//·´À¡Î¢·ÖÏµÊı
-	 float Kf;					//Ç°À¡ÏµÊı
-	float ErrorMax;				//Îó²îÏŞ·ù
-    float IntegrateMax;			//»ı·ÖÏŞ·ùÖµ
-	float DifferentialMax;		//»ı·ÖÏŞ·ùÖµ
-}PID_DATA;
+typedef struct {
+    float Kp;              // æ¯”ä¾‹ç³»æ•°
+    float Ki;              // ç§¯åˆ†ç³»æ•°
+    float Kd;              // åé¦ˆå¾®åˆ†ç³»æ•°
+    float Kf;              // å‰é¦ˆç³»æ•°
+    float ErrorMax;        // è¯¯å·®é™å¹…
+    float IntegrateMax;    // ç§¯åˆ†é™å¹…å€¼
+    float DifferentialMax; // ç§¯åˆ†é™å¹…å€¼
+} PID_DATA;
 
-float PID_Control(PID *PID_Controler,PID_DATA * Data,float T,float Feedforward,float Expect,float FeedBack,float dCutFreq);
-extern void PID_DataInit(PID_DATA *Data ,float* PID_Data);
+float PID_Control(PID *PID_Controler, PID_DATA *Data, float T, float Feedforward, float Expect,
+                  float FeedBack, float dCutFreq);
+extern void PID_DataInit(PID_DATA *Data, float *PID_Data);
 void PID_Reset_I(PID *PID_Controler);
 float GetControlError(PID *PID_Controler);
 float GetControlD(PID *PID_Controler);
 
 #endif
-

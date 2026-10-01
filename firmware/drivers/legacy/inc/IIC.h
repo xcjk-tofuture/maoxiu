@@ -1,18 +1,17 @@
 #ifndef _IIC_H
 #define _IIC_H
 
-
 /*
-Ó²¼şI2CÄ£Ê½
-ĞèÒª£º
+ç¡¬ä»¶I2Cæ¨¡å¼
+éœ€è¦ï¼š
 1.I2C
     I2C
-    (Ä¬ÈÏÉèÖÃ)
-    ±ê×¼Ä£Ê½
-    Ê±ÖÓÆµÂÊ100kHz
-    µØÖ·³¤¶È7bit
-    ²»ÓÃÌîĞ´Éè±¸µØÖ·
-È¡ÏûÏÂ·½×¢ÊÍ
+    (é»˜è®¤è®¾ç½®)
+    æ ‡å‡†æ¨¡å¼
+    æ—¶é’Ÿé¢‘ç‡100kHz
+    åœ°å€é•¿åº¦7bit
+    ä¸ç”¨å¡«å†™è®¾å¤‡åœ°å€
+å–æ¶ˆä¸‹æ–¹æ³¨é‡Š
 */
 
 // extern I2C_HandleTypeDef hi2c2;
@@ -20,24 +19,24 @@
 // #define MPU6050_Hardware_I2C
 
 /*
-Èí¼şI2CÄ£Ê½
-ĞèÒª£º
-1.GPIO 2¸ö
-    ¾ùÎª¿ªÂ©Êä³ö£¨ÉÏ²»ÉÏÀ­È¡¾öÓÚÍâ²¿µçÂ·£©
-    ×î¸ßµÈ¼¶
-È¡ÏûÏÂ·½×¢ÊÍ,°´ÕÕ×Ô¼ºµÄ¹Ü½Å¸ü¸Ä¼´¿É
+è½¯ä»¶I2Cæ¨¡å¼
+éœ€è¦ï¼š
+1.GPIO 2ä¸ª
+    å‡ä¸ºå¼€æ¼è¾“å‡ºï¼ˆä¸Šä¸ä¸Šæ‹‰å–å†³äºå¤–éƒ¨ç”µè·¯ï¼‰
+    æœ€é«˜ç­‰çº§
+å–æ¶ˆä¸‹æ–¹æ³¨é‡Š,æŒ‰ç…§è‡ªå·±çš„ç®¡è„šæ›´æ”¹å³å¯
 */
 
-#define MPU_ADDR  0x68
+#define MPU_ADDR 0x68
 void I2CInit(void);
 #define MPU6050_Software_I2C
 
 #ifdef MPU6050_Software_I2C
-#define I2C_Group_SCL GPIOB // I2CµÄÊ±ÖÓGPIO×éºÅ
-#define I2C_SCL GPIO_PIN_10  // I2CÊ±ÖÓµÄGPIO¶Ë¿ÚºÅ
+#define I2C_Group_SCL GPIOB // I2Cçš„æ—¶é’ŸGPIOç»„å·
+#define I2C_SCL GPIO_PIN_10 // I2Cæ—¶é’Ÿçš„GPIOç«¯å£å·
 
-#define I2C_Group_SDA GPIOB // I2CµÄÊı¾İGPIO×éºÅ
-#define I2C_SDA GPIO_PIN_11  // I2CÊı¾İµÄGPIO¶Ë¿ÚºÅ
+#define I2C_Group_SDA GPIOB // I2Cçš„æ•°æ®GPIOç»„å·
+#define I2C_SDA GPIO_PIN_11 // I2Cæ•°æ®çš„GPIOç«¯å£å·
 
 #define I2C_Write_SCL(x) HAL_GPIO_WritePin(I2C_Group_SCL, I2C_SCL, x)
 #define I2C_Write_SDA(x) HAL_GPIO_WritePin(I2C_Group_SDA, I2C_SDA, x)
@@ -46,10 +45,8 @@ void I2CInit(void);
 #define I2C_Read_SDA() HAL_GPIO_ReadPin(I2C_Group_SDA, I2C_SDA)
 #endif
 
-
 #ifdef MPU6050_Hardware_I2C
 
 #endif
-
 
 #endif

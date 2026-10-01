@@ -1,98 +1,93 @@
 /*----------------------------------------------------------------
-ÎÄ¼þ¹¦ÄÜ£º×ËÌ¬ ¸ß¶ÈµÈPIDµÄ·â×°º¯Êý ÒÔ±ãÓÚ¿ØÖÆÊ±µÄÖ±½Óµ÷ÓÃ
+æ–‡ä»¶åŠŸèƒ½ï¼šå§¿æ€ é«˜åº¦ç­‰PIDçš„å°è£…å‡½æ•° ä»¥ä¾¿äºŽæŽ§åˆ¶æ—¶çš„ç›´æŽ¥è°ƒç”¨
 ------------------------------------------------------------------*/
 #include "pid.h"
 #include "mathTool.h"
-//#include "flight_control.h"
-//#include "signal_management.h"
-//#include "flight_status.h"
+// #include "flight_control.h"
+// #include "signal_management.h"
+// #include "flight_status.h"
 /**********************************************************************************************************
-*º¯ Êý Ãû: PID_Control
-*¹¦ÄÜËµÃ÷: PID¿ØÖÆ
-*ÐÎ    ²Î: PIDÖ÷½á¹¹Ìå PIDÊý¾Ý½á¹¹Ìå ÖÜÆÚT  N  ÆÚÍûÁ¿ ·´À¡Á¿
-*·µ »Ø Öµ: PIDÊä³öOUT
-**********************************************************************************************************/
-float PID_Control(PID *PID_Controler,PID_DATA * Data,float T,float Feedforward,float Expect,float FeedBack,float dCutFreq)
-{
-	if (!PID_Controler || !Data || !(T > 0.0f) || !isfinite(T) || !isfinite(Expect) || !isfinite(FeedBack) || !isfinite(dCutFreq) || dCutFreq < 0.0f) return 0.0f;
-	PID_Controler->Hz = 1/T;
-		if(dCutFreq == 0)
-       PID_Controler->dFilter = 0;   
+ *å‡½ æ•° å: PID_Control
+ *åŠŸèƒ½è¯´æ˜Ž: PIDæŽ§åˆ¶
+ *å½¢    å‚: PIDä¸»ç»“æž„ä½“ PIDæ•°æ®ç»“æž„ä½“ å‘¨æœŸT  N  æœŸæœ›é‡ åé¦ˆé‡
+ *è¿” å›ž å€¼: PIDè¾“å‡ºOUT
+ **********************************************************************************************************/
+float PID_Control(PID *PID_Controler, PID_DATA *Data, float T, float Feedforward, float Expect,
+                  float FeedBack, float dCutFreq) {
+    if (!PID_Controler || !Data || !(T > 0.0f) || !isfinite(T) || !isfinite(Expect) ||
+        !isfinite(FeedBack) || !isfinite(dCutFreq) || dCutFreq < 0.0f)
+        return 0.0f;
+    PID_Controler->Hz = 1 / T;
+    if (dCutFreq == 0)
+        PID_Controler->dFilter = 0;
     else
-         PID_Controler->dFilter = 1 / (2 *  My_PI * dCutFreq);
-	/*********************Îó²î¼ÆËã*********************/
-	PID_Controler->Error = Expect - FeedBack;//ÆÚÍû¼õÈ¥·´À¡µÃµ½Îó²î
-	PID_Controler->Error = LIMIT(PID_Controler->Error,-Data->ErrorMax,Data->ErrorMax);//Îó²îÏÞ·ù
-	/*********************»ý·ÖÓëÏÞ·ù*********************/
-		    /*********************»ý·ÖÓëÏÞ·ù*********************/
-	PID_Controler->Integrate += Data-> Ki * PID_Controler->Error * T;//¼ÆËã»ý·ÖÖµ
-	PID_Controler->Integrate = LIMIT(PID_Controler->Integrate,-Data->IntegrateMax,Data->IntegrateMax);//»ý·ÖÏÞ·ù
+        PID_Controler->dFilter = 1 / (2 * My_PI * dCutFreq);
+    /*********************è¯¯å·®è®¡ç®—*********************/
+    PID_Controler->Error = Expect - FeedBack; // æœŸæœ›å‡åŽ»åé¦ˆå¾—åˆ°è¯¯å·®
+    PID_Controler->Error = LIMIT(PID_Controler->Error, -Data->ErrorMax, Data->ErrorMax); // è¯¯å·®é™å¹…
+    /*********************ç§¯åˆ†ä¸Žé™å¹…*********************/
+    /*********************ç§¯åˆ†ä¸Žé™å¹…*********************/
+    PID_Controler->Integrate += Data->Ki * PID_Controler->Error * T; // è®¡ç®—ç§¯åˆ†å€¼
+    PID_Controler->Integrate =
+        LIMIT(PID_Controler->Integrate, -Data->IntegrateMax, Data->IntegrateMax); // ç§¯åˆ†é™å¹…
 
-	/*********************Î¢·Ö¼ÆËã*********************/
-	PID_Controler->FeedBackDifferential = (PID_Controler->Error - PID_Controler->LastError) * PID_Controler->Hz;//Îó²îÎ¢·Ö
-	PID_Controler->Differential = Data-> Kd * PID_Controler->FeedBackDifferential;//¼ÆËãÎ¢·ÖÁ¿
-	PID_Controler->Differential = PID_Controler->LastDifferential + (T/(1 / (2 * My_PI * dCutFreq) + T)) * (PID_Controler->Differential - PID_Controler->LastDifferential);
-	PID_Controler->Differential = LIMIT(PID_Controler->Differential,-Data->DifferentialMax,Data->DifferentialMax);//Î¢·ÖÏÞ·ù
-	PID_Controler->LastDifferential = PID_Controler->Differential;
-	/*********************×ÜÊä³ö¼ÆËã*********************/
-	PID_Controler->Out = Feedforward * Data->Kf + Data->Kp *  PID_Controler->Error + PID_Controler-> Differential +PID_Controler->Integrate;
-	
-	PID_Controler->LastError = PID_Controler->Error;//±£´æÉÏ´ÎÎó²î
-	PID_Controler->LastFeedBack= FeedBack;//±£´æÉÏ´Î·´À¡
-	return PID_Controler->Out;//·µ»Ø¿ØÖÆÁ¿
-}
+    /*********************å¾®åˆ†è®¡ç®—*********************/
+    PID_Controler->FeedBackDifferential =
+        (PID_Controler->Error - PID_Controler->LastError) * PID_Controler->Hz;    // è¯¯å·®å¾®åˆ†
+    PID_Controler->Differential = Data->Kd * PID_Controler->FeedBackDifferential; // è®¡ç®—å¾®åˆ†é‡
+    PID_Controler->Differential =
+        PID_Controler->LastDifferential +
+        (T / (1 / (2 * My_PI * dCutFreq) + T)) *
+            (PID_Controler->Differential - PID_Controler->LastDifferential);
+    PID_Controler->Differential = LIMIT(PID_Controler->Differential, -Data->DifferentialMax,
+                                        Data->DifferentialMax); // å¾®åˆ†é™å¹…
+    PID_Controler->LastDifferential = PID_Controler->Differential;
+    /*********************æ€»è¾“å‡ºè®¡ç®—*********************/
+    PID_Controler->Out = Feedforward * Data->Kf + Data->Kp * PID_Controler->Error +
+                         PID_Controler->Differential + PID_Controler->Integrate;
 
-
-/**********************************************************************************************************
-*º¯ Êý Ãû: PID_Reset_I
-*¹¦ÄÜËµÃ÷: Î¢·ÖÏîÇåÁã
-*ÐÎ    ²Î: PIDÖ÷½á¹¹Ìå
-*·µ »Ø Öµ: ÎÞ
-**********************************************************************************************************/
-void PID_Reset_I(PID *PID_Controler)
-{
-    PID_Controler->Integrate = 0;
+    PID_Controler->LastError = PID_Controler->Error; // ä¿å­˜ä¸Šæ¬¡è¯¯å·®
+    PID_Controler->LastFeedBack = FeedBack;          // ä¿å­˜ä¸Šæ¬¡åé¦ˆ
+    return PID_Controler->Out;                       // è¿”å›žæŽ§åˆ¶é‡
 }
 
 /**********************************************************************************************************
-*º¯ Êý Ãû: GetControlError
-*¹¦ÄÜËµÃ÷: »ñÈ¡Îó²îÁ¿
-*ÐÎ    ²Î: PIDÖ÷½á¹¹Ìå
-*·µ »Ø Öµ: ÎÞ
-**********************************************************************************************************/
-float GetControlError(PID *PID_Controler)
-{
-    return PID_Controler->Error;
-}
+ *å‡½ æ•° å: PID_Reset_I
+ *åŠŸèƒ½è¯´æ˜Ž: å¾®åˆ†é¡¹æ¸…é›¶
+ *å½¢    å‚: PIDä¸»ç»“æž„ä½“
+ *è¿” å›ž å€¼: æ— 
+ **********************************************************************************************************/
+void PID_Reset_I(PID *PID_Controler) { PID_Controler->Integrate = 0; }
 
 /**********************************************************************************************************
-*º¯ Êý Ãû: GetControlD
-*¹¦ÄÜËµÃ÷: »ñÈ¡Î¢·ÖÁ¿
-*ÐÎ    ²Î: PIDÖ÷½á¹¹Ìå
-*·µ »Ø Öµ: ÎÞ
-**********************************************************************************************************/
-float GetControlD(PID *PID_Controler)
-{
-    return PID_Controler->FeedBackDifferential;
-}
-
+ *å‡½ æ•° å: GetControlError
+ *åŠŸèƒ½è¯´æ˜Ž: èŽ·å–è¯¯å·®é‡
+ *å½¢    å‚: PIDä¸»ç»“æž„ä½“
+ *è¿” å›ž å€¼: æ— 
+ **********************************************************************************************************/
+float GetControlError(PID *PID_Controler) { return PID_Controler->Error; }
 
 /**********************************************************************************************************
-*º¯ Êý Ãû: PID_Init
-*¹¦ÄÜËµÃ÷: PID³õÊ¼»¯
-*ÐÎ    ²Î: PIDÖ÷½á¹¹Ìå
-*·µ »Ø Öµ: ÎÞ
-**********************************************************************************************************/
- void PID_DataInit(PID_DATA *Data ,float* PID_Data)
-{
-    /*PID²ÎÊý*/
-	Data->Kp = PID_Data[0];
-  Data->Ki = PID_Data[1];
-	Data->Kd = PID_Data[2];
-	Data->Kf = PID_Data[3];
-  Data->ErrorMax = PID_Data[4];
-	Data->IntegrateMax = PID_Data[5];
-	Data->DifferentialMax = PID_Data[6];
+ *å‡½ æ•° å: GetControlD
+ *åŠŸèƒ½è¯´æ˜Ž: èŽ·å–å¾®åˆ†é‡
+ *å½¢    å‚: PIDä¸»ç»“æž„ä½“
+ *è¿” å›ž å€¼: æ— 
+ **********************************************************************************************************/
+float GetControlD(PID *PID_Controler) { return PID_Controler->FeedBackDifferential; }
+
+/**********************************************************************************************************
+ *å‡½ æ•° å: PID_Init
+ *åŠŸèƒ½è¯´æ˜Ž: PIDåˆå§‹åŒ–
+ *å½¢    å‚: PIDä¸»ç»“æž„ä½“
+ *è¿” å›ž å€¼: æ— 
+ **********************************************************************************************************/
+void PID_DataInit(PID_DATA *Data, float *PID_Data) {
+    /*PIDå‚æ•°*/
+    Data->Kp = PID_Data[0];
+    Data->Ki = PID_Data[1];
+    Data->Kd = PID_Data[2];
+    Data->Kf = PID_Data[3];
+    Data->ErrorMax = PID_Data[4];
+    Data->IntegrateMax = PID_Data[5];
+    Data->DifferentialMax = PID_Data[6];
 }
-
-

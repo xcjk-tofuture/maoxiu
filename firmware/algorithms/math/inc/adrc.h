@@ -2,72 +2,68 @@
 #define ADRC_H
 #include <stdint.h>
 
-/*°²ÅÅ¹ı¶È¹ı³Ì*/
-typedef struct
-{
-	float v1;
-	float v2;
-	float r0;
-	float h0;
-	float h;
-	uint16_t N;
-}ADRC_TD_Def;
+/*å®‰æ’è¿‡åº¦è¿‡ç¨‹*/
+typedef struct {
+    float v1;
+    float v2;
+    float r0;
+    float h0;
+    float h;
+    uint16_t N;
+} ADRC_TD_Def;
 
-/*À©ÕÅ×´Ì¬¹Û²âÆ÷*/
-typedef struct
-{
-	float h;
-	uint16_t   N1;
-	float beta1;
-	float beta2;
-	float beta3;
-	float zeta;//ÏßĞÔ¶ÎµÄÇø¼ä³¤¶È
-	float u;
-	float b;
-	/* ESO */
-	float z1;
-	float z2;
-	float z3;
-	
-}ADRC_ESO_Def;
+/*æ‰©å¼ çŠ¶æ€è§‚æµ‹å™¨*/
+typedef struct {
+    float h;
+    uint16_t N1;
+    float beta1;
+    float beta2;
+    float beta3;
+    float zeta; // çº¿æ€§æ®µçš„åŒºé—´é•¿åº¦
+    float u;
+    float b;
+    /* ESO */
+    float z1;
+    float z2;
+    float z3;
 
-/*ÏµÍ³×´Ì¬Îó²î·´À¡ÂÊ*/
-typedef struct
-{
-	float beta0;//ÏßĞÔ
-	float beta1;//·ÇÏßĞÔ×éºÏ²ÎÊı
-	float beta2;//u0=beta_1*e1+beta_2*e2+(beta_0*e0);
-	float alpha1;
-	float alpha2;
-	float zeta;
-	
-	float c;
-	float r1;
-	float h1;
-	
-	float e1;
-	float e2;
-	float b0;//ÈÅ¶¯²¹³¥
-    float u0;//·ÇÏßĞÔ×éºÏÏµÍ³Êä³ö
-	float u;//´øÈÅ¶¯²¹³¥ºóµÄÊä³ö
+} ADRC_ESO_Def;
 
-}ADRC_NLSEF_Def;
+/*ç³»ç»ŸçŠ¶æ€è¯¯å·®åé¦ˆç‡*/
+typedef struct {
+    float beta0; // çº¿æ€§
+    float beta1; // éçº¿æ€§ç»„åˆå‚æ•°
+    float beta2; // u0=beta_1*e1+beta_2*e2+(beta_0*e0);
+    float alpha1;
+    float alpha2;
+    float zeta;
 
-typedef struct
-{
-	ADRC_TD_Def TD;
-	ADRC_ESO_Def ESO;
-	ADRC_NLSEF_Def NLSEF;
+    float c;
+    float r1;
+    float h1;
 
-}ADRC_Def;
+    float e1;
+    float e2;
+    float b0; // æ‰°åŠ¨è¡¥å¿
+    float u0; // éçº¿æ€§ç»„åˆç³»ç»Ÿè¾“å‡º
+    float u;  // å¸¦æ‰°åŠ¨è¡¥å¿åçš„è¾“å‡º
+
+} ADRC_NLSEF_Def;
+
+typedef struct {
+    ADRC_TD_Def TD;
+    ADRC_ESO_Def ESO;
+    ADRC_NLSEF_Def NLSEF;
+
+} ADRC_Def;
 
 float ADRC_Fhan(float v1, float v2, float r0, float h0);
 int16_t Sign_ADRC(float Input);
-void ADRC_TD(ADRC_TD_Def*TD,float ADRC_Expect);
-void ADRC_ESO(ADRC_ESO_Def*ESO,float y);
-void ADRC_NLSEF(ADRC_NLSEF_Def* NELSEF,ADRC_ESO_Def*ESO,ADRC_TD_Def*TD);
+void ADRC_TD(ADRC_TD_Def *TD, float ADRC_Expect);
+void ADRC_ESO(ADRC_ESO_Def *ESO, float y);
+void ADRC_NLSEF(ADRC_NLSEF_Def *NELSEF, ADRC_ESO_Def *ESO, ADRC_TD_Def *TD);
 float ADRC_Fal(float e, float alpha, float delta);
-void ADRC_Init(ADRC_Def*ADRC ,float *ADRC_Data);
-float ADRC_Control(ADRC_Def*ADRC,float Expect,float FeedBack ,float T);
+void ADRC_Init(ADRC_Def *ADRC, float *ADRC_Data);
+float ADRC_Control(ADRC_Def *ADRC, float Expect, float FeedBack, float T);
 
 #endif

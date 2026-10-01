@@ -1,25 +1,22 @@
 #ifndef __PID_H
 #define __PID_H
 
-//ÉùÃ÷Ò»¸ö½á¹¹ÌåÀàĞÍ
-typedef struct
-{
-	float target_val;//Ä¿±êÖµ
-	float actual_val;//Êµ¼ÊÖµ
-	float err;//µ±Ç°Æ«²î
-	float err_last;//ÉÏ´ÎÆ«²î
-	float err_sum;//ÀúÊ·ÀÛ¼ÆÆ«²î
-	float kp,ki,kd;//±ÈÀı£¬»ı·Ö£¬Î¢·ÖÏµÊı
+// å£°æ˜ä¸€ä¸ªç»“æ„ä½“ç±»å‹
+typedef struct {
+    float target_val; // ç›®æ ‡å€¼
+    float actual_val; // å®é™…å€¼
+    float err;        // å½“å‰åå·®
+    float err_last;   // ä¸Šæ¬¡åå·®
+    float err_sum;    // å†å²ç´¯è®¡åå·®
+    float kp, ki, kd; // æ¯”ä¾‹ï¼Œç§¯åˆ†ï¼Œå¾®åˆ†ç³»æ•°
 } tPid;
 
-float P_realize(tPid * pid,float actual_val);
+float P_realize(tPid *pid, float actual_val);
 void PID_speedinit(void);
 void PID_angelInit(void);
 void PID_positionInit(void);
-float PI_realize(tPid * pid,float actual_val);
-float PID_realize(tPid * pid,float actual_val);
-int Position_PID (tPid *pid,int target);
-
+float PI_realize(tPid *pid, float actual_val);
+float PID_realize(tPid *pid, float actual_val);
+int Position_PID(tPid *pid, int target);
 
 #endif
-

@@ -16,4 +16,3 @@ void Vector6f_Sub(float v1[6], float v2[6], float v3[6]);
 void Matrix6MulVector6(float m[6][6], float v[6], float result[6]);
 
 #endif
-

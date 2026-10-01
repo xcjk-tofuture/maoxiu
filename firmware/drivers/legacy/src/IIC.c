@@ -2,10 +2,8 @@
 #include "IIC.h"
 #if defined(MPU6050_Software_I2C)
 
-
-void I2CInit(void)
-{
-		GPIO_InitTypeDef GPIO_InitStructure = {0};
+void I2CInit(void) {
+    GPIO_InitTypeDef GPIO_InitStructure = {0};
 
     GPIO_InitStructure.Pin = I2C_SDA | I2C_SCL;
     GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
@@ -13,8 +11,7 @@ void I2CInit(void)
     GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
     HAL_GPIO_Init(I2C_Group_SCL, &GPIO_InitStructure);
 }
-void SDA_Input_Mode()
-{
+void SDA_Input_Mode() {
     GPIO_InitTypeDef GPIO_InitStructure = {0};
 
     GPIO_InitStructure.Pin = I2C_SDA;
@@ -25,12 +22,11 @@ void SDA_Input_Mode()
 }
 
 /**
-  * @brief SDAÏßÊä³öÄ£Ê½ÅäÖÃ
-  * @param None
-  * @retval None
-  */
-void SDA_Output_Mode()
-{
+ * @brief SDAçº¿è¾“å‡ºæ¨¡å¼é…ç½®
+ * @param None
+ * @retval None
+ */
+void SDA_Output_Mode() {
     GPIO_InitTypeDef GPIO_InitStructure = {0};
 
     GPIO_InitStructure.Pin = I2C_SDA;
@@ -41,253 +37,237 @@ void SDA_Output_Mode()
 }
 
 /**
- * @brief Ò»¶ÎÑÓ³Ù
- * @param ÎŞ
- * @return ÎŞ
+ * @brief ä¸€æ®µå»¶è¿Ÿ
+ * @param æ— 
+ * @return æ— 
  * @author HZ12138
  * @date 2022-07-27 08:53:30
  */
-void I2C_Delay()
-{
-	int z = 0xff;
-	while (z--)
-		;
+void I2C_Delay() {
+    int z = 0xff;
+    while (z--)
+        ;
 }
 /**
- * @brief ²úÉúI2CÆğÊ¼ĞÅºÅ
- * @param ÎŞ
- * @return ÎŞ
+ * @brief äº§ç”ŸI2Cèµ·å§‹ä¿¡å·
+ * @param æ— 
+ * @return æ— 
  * @author HZ12138
  * @date 2022-07-27 08:54:48
  */
-void I2C_Start(void)
-{
+void I2C_Start(void) {
 
-	I2C_Write_SDA(GPIO_PIN_SET);   //ĞèÔÚSCLÖ®Ç°Éè¶¨
-	I2C_Write_SCL(GPIO_PIN_SET);   // SCL->¸ß
-	I2C_Delay();				   //ÑÓÊ±
-	I2C_Write_SDA(GPIO_PIN_RESET); // SDAÓÉ1->0,²úÉú¿ªÊ¼ĞÅºÅ
-	I2C_Delay();				   //ÑÓÊ±
-	I2C_Write_SCL(GPIO_PIN_RESET); // SCL->µÍ
+    I2C_Write_SDA(GPIO_PIN_SET);   // éœ€åœ¨SCLä¹‹å‰è®¾å®š
+    I2C_Write_SCL(GPIO_PIN_SET);   // SCL->é«˜
+    I2C_Delay();                   // å»¶æ—¶
+    I2C_Write_SDA(GPIO_PIN_RESET); // SDAç”±1->0,äº§ç”Ÿå¼€å§‹ä¿¡å·
+    I2C_Delay();                   // å»¶æ—¶
+    I2C_Write_SCL(GPIO_PIN_RESET); // SCL->ä½
 }
 /**
- * @brief ²úÉúI2C½áÊøĞÅºÅ
- * @param ÎŞ
- * @return ÎŞ
+ * @brief äº§ç”ŸI2Cç»“æŸä¿¡å·
+ * @param æ— 
+ * @return æ— 
  * @author HZ12138
  * @date 2022-07-27 08:57:03
  */
-void I2C_End(void)
-{
-	I2C_Write_SDA(GPIO_PIN_RESET); //ÔÚSCLÖ®Ç°À­µÍ
-	I2C_Write_SCL(GPIO_PIN_SET);   // SCL->¸ß
-	I2C_Delay();				   //ÑÓÊ±
-	I2C_Write_SDA(GPIO_PIN_SET);   // SDAÓÉ0->1,²úÉú½áÊøĞÅºÅ
-	I2C_Delay();				   //ÑÓÊ±
+void I2C_End(void) {
+    I2C_Write_SDA(GPIO_PIN_RESET); // åœ¨SCLä¹‹å‰æ‹‰ä½
+    I2C_Write_SCL(GPIO_PIN_SET);   // SCL->é«˜
+    I2C_Delay();                   // å»¶æ—¶
+    I2C_Write_SDA(GPIO_PIN_SET);   // SDAç”±0->1,äº§ç”Ÿç»“æŸä¿¡å·
+    I2C_Delay();                   // å»¶æ—¶
 }
 /**
- * @brief ·¢ËÍÓ¦´ğÂë
- * @param ack:0 Ó¦´ğ 1 ²»Ó¦´ï
- * @return ÎŞ
+ * @brief å‘é€åº”ç­”ç 
+ * @param ack:0 åº”ç­” 1 ä¸åº”è¾¾
+ * @return æ— 
  * @author HZ12138
  * @date 2022-07-27 09:03:38
  */
-void IIC_Send_ACK(uint8_t ack)
-{
-	if (ack == 1)
-		I2C_Write_SDA(GPIO_PIN_SET); //²úÉúÓ¦´ğµçÆ½
-	else
-		I2C_Write_SDA(GPIO_PIN_RESET);
-	I2C_Delay();
-	I2C_Write_SCL(GPIO_PIN_SET);   //·¢ËÍÓ¦´ğĞÅºÅ
-	I2C_Delay();				   //ÑÓÊ±ÖÁÉÙ4us
-	I2C_Write_SCL(GPIO_PIN_RESET); //Õû¸öÆÚ¼ä±£³ÖÓ¦´ğĞÅºÅ
+void IIC_Send_ACK(uint8_t ack) {
+    if (ack == 1)
+        I2C_Write_SDA(GPIO_PIN_SET); // äº§ç”Ÿåº”ç­”ç”µå¹³
+    else
+        I2C_Write_SDA(GPIO_PIN_RESET);
+    I2C_Delay();
+    I2C_Write_SCL(GPIO_PIN_SET);   // å‘é€åº”ç­”ä¿¡å·
+    I2C_Delay();                   // å»¶æ—¶è‡³å°‘4us
+    I2C_Write_SCL(GPIO_PIN_RESET); // æ•´ä¸ªæœŸé—´ä¿æŒåº”ç­”ä¿¡å·
 }
 /**
- * @brief ½ÓÊÜÓ¦´ğÂë
- * @param ÎŞ
- * @return Ó¦´ğÂë 0 Ó¦´ğ 1 ²»Ó¦´ï
+ * @brief æ¥å—åº”ç­”ç 
+ * @param æ— 
+ * @return åº”ç­”ç  0 åº”ç­” 1 ä¸åº”è¾¾
  * @author HZ12138
  * @date 2022-07-27 09:04:28
  */
-uint8_t IIC_Get_ACK(void)
-{
-	uint8_t ret;				 //ÓÃÀ´½ÓÊÕ·µ»ØÖµ
-	I2C_Write_SDA(GPIO_PIN_SET); //µç×èÉÏÀ­,½øÈë¶Á
-	I2C_Delay();
-	I2C_Write_SCL(GPIO_PIN_SET); //½øÈëÓ¦´ğ¼ì²â
-	I2C_Delay();				 //ÖÁÉÙÑÓÊ±4us
-	ret = I2C_Read_SDA();		 //±£´æÓ¦´ğĞÅºÅ
-	I2C_Write_SCL(GPIO_PIN_RESET);
-	return ret;
+uint8_t IIC_Get_ACK(void) {
+    uint8_t ret;                 // ç”¨æ¥æ¥æ”¶è¿”å›å€¼
+    I2C_Write_SDA(GPIO_PIN_SET); // ç”µé˜»ä¸Šæ‹‰,è¿›å…¥è¯»
+    I2C_Delay();
+    I2C_Write_SCL(GPIO_PIN_SET); // è¿›å…¥åº”ç­”æ£€æµ‹
+    I2C_Delay();                 // è‡³å°‘å»¶æ—¶4us
+    ret = I2C_Read_SDA();        // ä¿å­˜åº”ç­”ä¿¡å·
+    I2C_Write_SCL(GPIO_PIN_RESET);
+    return ret;
 }
 /**
- * @brief I2CĞ´1Byte
- * @param dat:1ByteÊı¾İ
- * @return Ó¦´ğ½á¹û 0 Ó¦´ğ 1 ²»Ó¦´ï
+ * @brief I2Cå†™1Byte
+ * @param dat:1Byteæ•°æ®
+ * @return åº”ç­”ç»“æœ 0 åº”ç­” 1 ä¸åº”è¾¾
  * @author HZ12138
  * @date 2022-07-27 09:05:14
  */
-uint8_t I2C_SendByte(uint8_t dat)
-{
-	uint8_t ack;
-	for (int i = 0; i < 8; i++)
-	{
-		// ¸ßÔÚÇ°µÍÔÚºó
-		if (dat & 0x80)
-			I2C_Write_SDA(GPIO_PIN_SET);
-		else
-			I2C_Write_SDA(GPIO_PIN_RESET);
-		I2C_Delay();
-		I2C_Write_SCL(GPIO_PIN_SET);
-		I2C_Delay(); //ÑÓÊ±ÖÁÉÙ4us
-		I2C_Write_SCL(GPIO_PIN_RESET);
-		dat <<= 1; //µÍÎ»Ïò¸ßÎ»ÒÆ¶¯
-	}
+uint8_t I2C_SendByte(uint8_t dat) {
+    uint8_t ack;
+    for (int i = 0; i < 8; i++) {
+        // é«˜åœ¨å‰ä½åœ¨å
+        if (dat & 0x80)
+            I2C_Write_SDA(GPIO_PIN_SET);
+        else
+            I2C_Write_SDA(GPIO_PIN_RESET);
+        I2C_Delay();
+        I2C_Write_SCL(GPIO_PIN_SET);
+        I2C_Delay(); // å»¶æ—¶è‡³å°‘4us
+        I2C_Write_SCL(GPIO_PIN_RESET);
+        dat <<= 1; // ä½ä½å‘é«˜ä½ç§»åŠ¨
+    }
 
-	ack = IIC_Get_ACK();
+    ack = IIC_Get_ACK();
 
-	return ack;
+    return ack;
 }
 /**
- * @brief I2C¶ÁÈ¡1ByteÊı¾İ
- * @param ack:Ó¦´ğ 0 Ó¦´ğ 1 ²»Ó¦´ï
- * @return ½ÓÊÜµ½µÄÊı¾İ
+ * @brief I2Cè¯»å–1Byteæ•°æ®
+ * @param ack:åº”ç­” 0 åº”ç­” 1 ä¸åº”è¾¾
+ * @return æ¥å—åˆ°çš„æ•°æ®
  * @author HZ12138
  * @date 2022-07-27 09:06:13
  */
-uint8_t I2C_ReadByte(uint8_t ack)
-{
-	uint8_t ret = 0;
-	// OLED_Read_SDA() ÉèÖÃÊäÈë·½Ïò
-	SDA_Input_Mode();
-	I2C_Write_SDA(GPIO_PIN_SET);
-	for (int i = 0; i < 8; i++)
-	{
-		ret <<= 1;
-		I2C_Write_SCL(GPIO_PIN_SET);
-		I2C_Delay();
-		// ¸ßÔÚÇ°µÍÔÚºó
-		if (I2C_Read_SDA())
-		{
-			ret++;
-		}
-		I2C_Write_SCL(GPIO_PIN_RESET);
-		SDA_Output_Mode();
-		I2C_Delay();
-	}
+uint8_t I2C_ReadByte(uint8_t ack) {
+    uint8_t ret = 0;
+    // OLED_Read_SDA() è®¾ç½®è¾“å…¥æ–¹å‘
+    SDA_Input_Mode();
+    I2C_Write_SDA(GPIO_PIN_SET);
+    for (int i = 0; i < 8; i++) {
+        ret <<= 1;
+        I2C_Write_SCL(GPIO_PIN_SET);
+        I2C_Delay();
+        // é«˜åœ¨å‰ä½åœ¨å
+        if (I2C_Read_SDA()) {
+            ret++;
+        }
+        I2C_Write_SCL(GPIO_PIN_RESET);
+        SDA_Output_Mode();
+        I2C_Delay();
+    }
 
-	IIC_Send_ACK(ack);
+    IIC_Send_ACK(ack);
 
-	return ret;
+    return ret;
 }
 #endif
 /**
- * @brief MUP6050 I2CÁ¬ĞøĞ´
- * @param addr:Æ÷¼şµØÖ·
- * @param reg:¼Ä´æÆ÷µØÖ·
- * @param len:³¤¶È
- * @param buf:»º³åÇøµØÖ·
- * @return ×´Ì¬ 0³É¹¦ ÆäËûÊ§°Ü
+ * @brief MUP6050 I2Cè¿ç»­å†™
+ * @param addr:å™¨ä»¶åœ°å€
+ * @param reg:å¯„å­˜å™¨åœ°å€
+ * @param len:é•¿åº¦
+ * @param buf:ç¼“å†²åŒºåœ°å€
+ * @return çŠ¶æ€ 0æˆåŠŸ å…¶ä»–å¤±è´¥
  * @author HZ12138
  * @date 2022-08-08 15:47:11
  */
-uint8_t MPU_Write_Len(uint8_t addr, uint8_t reg, uint8_t len, uint8_t *buf)
-{
+uint8_t MPU_Write_Len(uint8_t addr, uint8_t reg, uint8_t len, uint8_t *buf) {
 #if defined(MPU6050_Software_I2C)
-	uint8_t i;
-	I2C_Start();
-	I2C_SendByte((addr << 1) | 0); //·¢ËÍÆ÷¼şµØÖ·+Ğ´ÃüÁî
-	I2C_SendByte(reg);			   //Ğ´¼Ä´æÆ÷µØÖ·
-	for (i = 0; i < len; i++)
-	{
-		I2C_SendByte(buf[i]); //·¢ËÍÊı¾İ
-	}
-	I2C_End();
-	return 0;
+    uint8_t i;
+    I2C_Start();
+    I2C_SendByte((addr << 1) | 0); // å‘é€å™¨ä»¶åœ°å€+å†™å‘½ä»¤
+    I2C_SendByte(reg);             // å†™å¯„å­˜å™¨åœ°å€
+    for (i = 0; i < len; i++) {
+        I2C_SendByte(buf[i]); // å‘é€æ•°æ®
+    }
+    I2C_End();
+    return 0;
 #elif defined(MPU6050_Hardware_I2C)
-	HAL_I2C_Mem_Write(&MPU6050_I2C_Handle, MPU_WRITE, reg, I2C_MEMADD_SIZE_8BIT, buf, len, 0xfff);
-	return 0;
+    HAL_I2C_Mem_Write(&MPU6050_I2C_Handle, MPU_WRITE, reg, I2C_MEMADD_SIZE_8BIT, buf, len, 0xfff);
+    return 0;
 #endif
 }
 /**
- * @brief MUP6050 I2CÁ¬Ğø¶Á
- * @param addr:Æ÷¼şµØÖ·
- * @param reg:¼Ä´æÆ÷µØÖ·
- * @param len:³¤¶È
- * @param buf:»º³åÇøµØÖ·
- * @return ×´Ì¬ 0³É¹¦ ÆäËûÊ§°Ü
+ * @brief MUP6050 I2Cè¿ç»­è¯»
+ * @param addr:å™¨ä»¶åœ°å€
+ * @param reg:å¯„å­˜å™¨åœ°å€
+ * @param len:é•¿åº¦
+ * @param buf:ç¼“å†²åŒºåœ°å€
+ * @return çŠ¶æ€ 0æˆåŠŸ å…¶ä»–å¤±è´¥
  * @author HZ12138
  * @date 2022-08-08 15:47:11
  */
-uint8_t MPU_Read_Len(uint8_t addr, uint8_t reg, uint8_t len, uint8_t *buf)
-{
+uint8_t MPU_Read_Len(uint8_t addr, uint8_t reg, uint8_t len, uint8_t *buf) {
 #if defined(MPU6050_Software_I2C)
-	I2C_Start();
-	I2C_SendByte((addr << 1) | 0); //·¢ËÍÆ÷¼şµØÖ·+Ğ´ÃüÁî
-	I2C_SendByte(reg);			   //Ğ´¼Ä´æÆ÷µØÖ·
-	I2C_Start();
-	I2C_SendByte((addr << 1) | 1); //·¢ËÍÆ÷¼şµØÖ·+¶ÁÃüÁî
-	while (len)
-	{
-		if (len == 1)
-			*buf = I2C_ReadByte(1); //¶ÁÊı¾İ,·¢ËÍnACK
-		else
-			*buf = I2C_ReadByte(0); //¶ÁÊı¾İ,·¢ËÍACK
-		len--;
-		buf++;
-	}
-	I2C_End(); //²úÉúÒ»¸öÍ£Ö¹Ìõ¼ş
-	return 0;
+    I2C_Start();
+    I2C_SendByte((addr << 1) | 0); // å‘é€å™¨ä»¶åœ°å€+å†™å‘½ä»¤
+    I2C_SendByte(reg);             // å†™å¯„å­˜å™¨åœ°å€
+    I2C_Start();
+    I2C_SendByte((addr << 1) | 1); // å‘é€å™¨ä»¶åœ°å€+è¯»å‘½ä»¤
+    while (len) {
+        if (len == 1)
+            *buf = I2C_ReadByte(1); // è¯»æ•°æ®,å‘é€nACK
+        else
+            *buf = I2C_ReadByte(0); // è¯»æ•°æ®,å‘é€ACK
+        len--;
+        buf++;
+    }
+    I2C_End(); // äº§ç”Ÿä¸€ä¸ªåœæ­¢æ¡ä»¶
+    return 0;
 #elif defined(MPU6050_Hardware_I2C)
-	HAL_I2C_Mem_Read(&MPU6050_I2C_Handle, MPU_READ, reg, I2C_MEMADD_SIZE_8BIT, buf, len, 0xfff);
-	HAL_Delay(1);
-	return 0;
+    HAL_I2C_Mem_Read(&MPU6050_I2C_Handle, MPU_READ, reg, I2C_MEMADD_SIZE_8BIT, buf, len, 0xfff);
+    HAL_Delay(1);
+    return 0;
 #endif
 }
 /**
- * @brief MUP6050 I2CĞ´Ò»¸ö×Ö½Ú
- * @param reg:¼Ä´æÆ÷µØÖ·
- * @param data:Êı¾İ
- * @return ×´Ì¬ 0³É¹¦ ÆäËûÊ§°Ü
+ * @brief MUP6050 I2Cå†™ä¸€ä¸ªå­—èŠ‚
+ * @param reg:å¯„å­˜å™¨åœ°å€
+ * @param data:æ•°æ®
+ * @return çŠ¶æ€ 0æˆåŠŸ å…¶ä»–å¤±è´¥
  * @author HZ12138
  * @date 2022-08-08 15:47:11
  */
-uint8_t MPU_Write_Byte(uint8_t reg, uint8_t data)
-{
+uint8_t MPU_Write_Byte(uint8_t reg, uint8_t data) {
 #if defined(MPU6050_Software_I2C)
-	I2C_Start();
-	I2C_SendByte((MPU_ADDR << 1) | 0); //·¢ËÍÆ÷¼şµØÖ·+Ğ´ÃüÁî
-	I2C_SendByte(reg);				   //Ğ´¼Ä´æÆ÷µØÖ·
-	I2C_SendByte(data);				   //·¢ËÍÊı¾İ
-	I2C_End();
-	return 0;
+    I2C_Start();
+    I2C_SendByte((MPU_ADDR << 1) | 0); // å‘é€å™¨ä»¶åœ°å€+å†™å‘½ä»¤
+    I2C_SendByte(reg);                 // å†™å¯„å­˜å™¨åœ°å€
+    I2C_SendByte(data);                // å‘é€æ•°æ®
+    I2C_End();
+    return 0;
 #elif defined(MPU6050_Hardware_I2C)
-	return HAL_I2C_Mem_Write(&MPU6050_I2C_Handle, (MPU_ADDR << 1), reg, 1, &data, 1, 0xfff);
+    return HAL_I2C_Mem_Write(&MPU6050_I2C_Handle, (MPU_ADDR << 1), reg, 1, &data, 1, 0xfff);
 #endif
 }
 /**
- * @brief MUP6050 I2CĞ´Ò»¸ö×Ö½Ú
- * @param reg:¼Ä´æÆ÷µØÖ·
- * @return ¶ÁÈ¡µ½µÄÊı¾İ
+ * @brief MUP6050 I2Cå†™ä¸€ä¸ªå­—èŠ‚
+ * @param reg:å¯„å­˜å™¨åœ°å€
+ * @return è¯»å–åˆ°çš„æ•°æ®
  * @author HZ12138
  * @date 2022-08-08 15:47:11
  */
-uint8_t MPU_Read_Byte(uint8_t reg)
-{
+uint8_t MPU_Read_Byte(uint8_t reg) {
 #if defined(MPU6050_Software_I2C)
-	uint8_t res;
-	I2C_Start();
-	I2C_SendByte((MPU_ADDR << 1) | 0); //·¢ËÍÆ÷¼şµØÖ·+Ğ´ÃüÁî
-	I2C_SendByte(reg);				   //Ğ´¼Ä´æÆ÷µØÖ·
-	I2C_Start();
-	I2C_SendByte((MPU_ADDR << 1) | 1); //·¢ËÍÆ÷¼şµØÖ·+¶ÁÃüÁî
-	res = I2C_ReadByte(1);			   //¶ÁÈ¡Êı¾İ,·¢ËÍnACK
-	I2C_End();						   //²úÉúÒ»¸öÍ£Ö¹Ìõ¼ş
-	return res;
+    uint8_t res;
+    I2C_Start();
+    I2C_SendByte((MPU_ADDR << 1) | 0); // å‘é€å™¨ä»¶åœ°å€+å†™å‘½ä»¤
+    I2C_SendByte(reg);                 // å†™å¯„å­˜å™¨åœ°å€
+    I2C_Start();
+    I2C_SendByte((MPU_ADDR << 1) | 1); // å‘é€å™¨ä»¶åœ°å€+è¯»å‘½ä»¤
+    res = I2C_ReadByte(1);             // è¯»å–æ•°æ®,å‘é€nACK
+    I2C_End();                         // äº§ç”Ÿä¸€ä¸ªåœæ­¢æ¡ä»¶
+    return res;
 #elif defined(MPU6050_Hardware_I2C)
-	uint8_t zj;
-	HAL_I2C_Mem_Read(&MPU6050_I2C_Handle, (MPU_ADDR << 1), reg, 1, &zj, 1, 0xfff);
-	return zj;
+    uint8_t zj;
+    HAL_I2C_Mem_Read(&MPU6050_I2C_Handle, (MPU_ADDR << 1), reg, 1, &zj, 1, 0xfff);
+    return zj;
 #endif
 }

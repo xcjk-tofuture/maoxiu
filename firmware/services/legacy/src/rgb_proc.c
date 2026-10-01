@@ -1,55 +1,36 @@
 #include "rgb_proc.h"
 #include "board_io.h"
 
-
-
-
-
-
 osThreadId RGBTaskHandle;
 
 u8 ucLed;
 
-
 extern u8 zeroDriftFlag;
 
-
-void RGB_Task_Proc(void const * argument)           //RGBΩ¯≥Ã÷˜≥Ã–Ú
+void RGB_Task_Proc(void const *argument) // RGBËøõÁ®ã‰∏ªÁ®ãÂ∫è
 {
-  /* USER CODE BEGIN RGB_Task_Proc */
-  /* Infinite loop */
-	ucLed = 0x01;
-  for(;;)
-  {
-		if(!zeroDriftFlag)
-		{
-			ucLed ^= 0x01;
-			osDelay(200);
-		}
-		else
-		{
-			if(ucLed == 0)
-			{
-				ucLed = 0x01;
-			}
-			ucLed *= 2;
-			if(ucLed > 0x04) ucLed = 0x01;
-			osDelay(1000);
-		}	
-		//printf("23333\r\n");
-		RGB_Show_Proc(ucLed);
-		
-  }
-  /* USER CODE END RGB_Task_Proc */
+    /* USER CODE BEGIN RGB_Task_Proc */
+    /* Infinite loop */
+    ucLed = 0x01;
+    for (;;) {
+        if (!zeroDriftFlag) {
+            ucLed ^= 0x01;
+            osDelay(200);
+        } else {
+            if (ucLed == 0) {
+                ucLed = 0x01;
+            }
+            ucLed *= 2;
+            if (ucLed > 0x04)
+                ucLed = 0x01;
+            osDelay(1000);
+        }
+        // printf("23333\r\n");
+        RGB_Show_Proc(ucLed);
+    }
+    /* USER CODE END RGB_Task_Proc */
 }
 
+// ‰∏ãÈù¢ÈÉΩÊòØÈ©±Âä®
 
-
-
-
-
-//œ¬√Ê∂º ««˝∂Ø
-
-
-
-void RGB_Show_Proc(u8 color) {maoxiu_board_rgb_write(color);}
+void RGB_Show_Proc(u8 color) { maoxiu_board_rgb_write(color); }

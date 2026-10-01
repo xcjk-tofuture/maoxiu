@@ -1,0 +1,9 @@
+firmware/** text eol=lf
+os/vendor/** -text
+firmware/os/ports/** -text
+.vscode/** text eol=lf
+cmake/** text eol=lf
+tests/** text eol=lf
+docs/** text eol=lf
+CMakeLists.txt text eol=lf
+CMakePresets.json text eol=lf

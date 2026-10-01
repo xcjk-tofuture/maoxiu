@@ -25,8 +25,8 @@
 #include "dmpmap.h"
 #include "usart.h"
 
-//定义目标板采用MSP430
-#define  MOTION_DRIVER_TARGET_MSP430
+// 瀹氫箟鐩爣鏉块噰鐢∕SP430
+#define MOTION_DRIVER_TARGET_MSP430
 
 /* The following functions must be defined for this platform:
  * i2c_write(unsigned char slave_addr, unsigned char reg_addr,
@@ -37,21 +37,21 @@
  * get_ms(unsigned long *count)
  */
 #if defined MOTION_DRIVER_TARGET_MSP430
-//#include "msp430.h"
-//#include "msp430_clock.h"
-#define delay_ms    delay_ms
-#define get_ms      mget_ms
-#define log_i 		printf
-#define log_e  		printf
+// #include "msp430.h"
+// #include "msp430_clock.h"
+#define delay_ms delay_ms
+#define get_ms mget_ms
+#define log_i printf
+#define log_e printf
 
 #elif defined EMPL_TARGET_MSP430
 #include "msp430.h"
 #include "msp430_clock.h"
 #include "log.h"
-#define delay_ms    msp430_delay_ms
-#define get_ms      msp430_get_clock_ms
-#define log_i       MPL_LOGI
-#define log_e       MPL_LOGE
+#define delay_ms msp430_delay_ms
+#define get_ms msp430_get_clock_ms
+#define log_i MPL_LOGI
+#define log_e MPL_LOGE
 
 #elif defined EMPL_TARGET_UC3L0
 /* Instead of using the standard TWI driver from the ASF library, we're using
@@ -62,191 +62,191 @@
 #include "log.h"
 #include "uc3l0_clock.h"
 /* delay_ms is a function already defined in ASF. */
-#define get_ms  uc3l0_get_clock_ms
-#define log_i       MPL_LOGI
-#define log_e       MPL_LOGE
+#define get_ms uc3l0_get_clock_ms
+#define log_i MPL_LOGI
+#define log_e MPL_LOGE
 
 #else
-#error  Gyro driver is missing the system layer implementations.
+#error Gyro driver is missing the system layer implementations.
 #endif
 
 /* These defines are copied from dmpDefaultMPU6050.c in the general MPL
  * releases. These defines may change for each DMP image, so be sure to modify
  * these values when switching to a new image.
  */
-#define CFG_LP_QUAT             (2712)
-#define END_ORIENT_TEMP         (1866)
-#define CFG_27                  (2742)
-#define CFG_20                  (2224)
-#define CFG_23                  (2745)
-#define CFG_FIFO_ON_EVENT       (2690)
-#define END_PREDICTION_UPDATE   (1761)
-#define CGNOTICE_INTR           (2620)
-#define X_GRT_Y_TMP             (1358)
-#define CFG_DR_INT              (1029)
-#define CFG_AUTH                (1035)
-#define UPDATE_PROP_ROT         (1835)
-#define END_COMPARE_Y_X_TMP2    (1455)
-#define SKIP_X_GRT_Y_TMP        (1359)
-#define SKIP_END_COMPARE        (1435)
-#define FCFG_3                  (1088)
-#define FCFG_2                  (1066)
-#define FCFG_1                  (1062)
-#define END_COMPARE_Y_X_TMP3    (1434)
-#define FCFG_7                  (1073)
-#define FCFG_6                  (1106)
-#define FLAT_STATE_END          (1713)
-#define SWING_END_4             (1616)
-#define SWING_END_2             (1565)
-#define SWING_END_3             (1587)
-#define SWING_END_1             (1550)
-#define CFG_8                   (2718)
-#define CFG_15                  (2727)
-#define CFG_16                  (2746)
-#define CFG_EXT_GYRO_BIAS       (1189)
-#define END_COMPARE_Y_X_TMP     (1407)
-#define DO_NOT_UPDATE_PROP_ROT  (1839)
-#define CFG_7                   (1205)
-#define FLAT_STATE_END_TEMP     (1683)
-#define END_COMPARE_Y_X         (1484)
-#define SKIP_SWING_END_1        (1551)
-#define SKIP_SWING_END_3        (1588)
-#define SKIP_SWING_END_2        (1566)
-#define TILTG75_START           (1672)
-#define CFG_6                   (2753)
-#define TILTL75_END             (1669)
-#define END_ORIENT              (1884)
-#define CFG_FLICK_IN            (2573)
-#define TILTL75_START           (1643)
-#define CFG_MOTION_BIAS         (1208)
-#define X_GRT_Y                 (1408)
-#define TEMPLABEL               (2324)
-#define CFG_ANDROID_ORIENT_INT  (1853)
-#define CFG_GYRO_RAW_DATA       (2722)
-#define X_GRT_Y_TMP2            (1379)
+#define CFG_LP_QUAT (2712)
+#define END_ORIENT_TEMP (1866)
+#define CFG_27 (2742)
+#define CFG_20 (2224)
+#define CFG_23 (2745)
+#define CFG_FIFO_ON_EVENT (2690)
+#define END_PREDICTION_UPDATE (1761)
+#define CGNOTICE_INTR (2620)
+#define X_GRT_Y_TMP (1358)
+#define CFG_DR_INT (1029)
+#define CFG_AUTH (1035)
+#define UPDATE_PROP_ROT (1835)
+#define END_COMPARE_Y_X_TMP2 (1455)
+#define SKIP_X_GRT_Y_TMP (1359)
+#define SKIP_END_COMPARE (1435)
+#define FCFG_3 (1088)
+#define FCFG_2 (1066)
+#define FCFG_1 (1062)
+#define END_COMPARE_Y_X_TMP3 (1434)
+#define FCFG_7 (1073)
+#define FCFG_6 (1106)
+#define FLAT_STATE_END (1713)
+#define SWING_END_4 (1616)
+#define SWING_END_2 (1565)
+#define SWING_END_3 (1587)
+#define SWING_END_1 (1550)
+#define CFG_8 (2718)
+#define CFG_15 (2727)
+#define CFG_16 (2746)
+#define CFG_EXT_GYRO_BIAS (1189)
+#define END_COMPARE_Y_X_TMP (1407)
+#define DO_NOT_UPDATE_PROP_ROT (1839)
+#define CFG_7 (1205)
+#define FLAT_STATE_END_TEMP (1683)
+#define END_COMPARE_Y_X (1484)
+#define SKIP_SWING_END_1 (1551)
+#define SKIP_SWING_END_3 (1588)
+#define SKIP_SWING_END_2 (1566)
+#define TILTG75_START (1672)
+#define CFG_6 (2753)
+#define TILTL75_END (1669)
+#define END_ORIENT (1884)
+#define CFG_FLICK_IN (2573)
+#define TILTL75_START (1643)
+#define CFG_MOTION_BIAS (1208)
+#define X_GRT_Y (1408)
+#define TEMPLABEL (2324)
+#define CFG_ANDROID_ORIENT_INT (1853)
+#define CFG_GYRO_RAW_DATA (2722)
+#define X_GRT_Y_TMP2 (1379)
 
-#define D_0_22                  (22+512)
-#define D_0_24                  (24+512)
+#define D_0_22 (22 + 512)
+#define D_0_24 (24 + 512)
 
-#define D_0_36                  (36)
-#define D_0_52                  (52)
-#define D_0_96                  (96)
-#define D_0_104                 (104)
-#define D_0_108                 (108)
-#define D_0_163                 (163)
-#define D_0_188                 (188)
-#define D_0_192                 (192)
-#define D_0_224                 (224)
-#define D_0_228                 (228)
-#define D_0_232                 (232)
-#define D_0_236                 (236)
+#define D_0_36 (36)
+#define D_0_52 (52)
+#define D_0_96 (96)
+#define D_0_104 (104)
+#define D_0_108 (108)
+#define D_0_163 (163)
+#define D_0_188 (188)
+#define D_0_192 (192)
+#define D_0_224 (224)
+#define D_0_228 (228)
+#define D_0_232 (232)
+#define D_0_236 (236)
 
-#define D_1_2                   (256 + 2)
-#define D_1_4                   (256 + 4)
-#define D_1_8                   (256 + 8)
-#define D_1_10                  (256 + 10)
-#define D_1_24                  (256 + 24)
-#define D_1_28                  (256 + 28)
-#define D_1_36                  (256 + 36)
-#define D_1_40                  (256 + 40)
-#define D_1_44                  (256 + 44)
-#define D_1_72                  (256 + 72)
-#define D_1_74                  (256 + 74)
-#define D_1_79                  (256 + 79)
-#define D_1_88                  (256 + 88)
-#define D_1_90                  (256 + 90)
-#define D_1_92                  (256 + 92)
-#define D_1_96                  (256 + 96)
-#define D_1_98                  (256 + 98)
-#define D_1_106                 (256 + 106)
-#define D_1_108                 (256 + 108)
-#define D_1_112                 (256 + 112)
-#define D_1_128                 (256 + 144)
-#define D_1_152                 (256 + 12)
-#define D_1_160                 (256 + 160)
-#define D_1_176                 (256 + 176)
-#define D_1_178                 (256 + 178)
-#define D_1_218                 (256 + 218)
-#define D_1_232                 (256 + 232)
-#define D_1_236                 (256 + 236)
-#define D_1_240                 (256 + 240)
-#define D_1_244                 (256 + 244)
-#define D_1_250                 (256 + 250)
-#define D_1_252                 (256 + 252)
-#define D_2_12                  (512 + 12)
-#define D_2_96                  (512 + 96)
-#define D_2_108                 (512 + 108)
-#define D_2_208                 (512 + 208)
-#define D_2_224                 (512 + 224)
-#define D_2_236                 (512 + 236)
-#define D_2_244                 (512 + 244)
-#define D_2_248                 (512 + 248)
-#define D_2_252                 (512 + 252)
+#define D_1_2 (256 + 2)
+#define D_1_4 (256 + 4)
+#define D_1_8 (256 + 8)
+#define D_1_10 (256 + 10)
+#define D_1_24 (256 + 24)
+#define D_1_28 (256 + 28)
+#define D_1_36 (256 + 36)
+#define D_1_40 (256 + 40)
+#define D_1_44 (256 + 44)
+#define D_1_72 (256 + 72)
+#define D_1_74 (256 + 74)
+#define D_1_79 (256 + 79)
+#define D_1_88 (256 + 88)
+#define D_1_90 (256 + 90)
+#define D_1_92 (256 + 92)
+#define D_1_96 (256 + 96)
+#define D_1_98 (256 + 98)
+#define D_1_106 (256 + 106)
+#define D_1_108 (256 + 108)
+#define D_1_112 (256 + 112)
+#define D_1_128 (256 + 144)
+#define D_1_152 (256 + 12)
+#define D_1_160 (256 + 160)
+#define D_1_176 (256 + 176)
+#define D_1_178 (256 + 178)
+#define D_1_218 (256 + 218)
+#define D_1_232 (256 + 232)
+#define D_1_236 (256 + 236)
+#define D_1_240 (256 + 240)
+#define D_1_244 (256 + 244)
+#define D_1_250 (256 + 250)
+#define D_1_252 (256 + 252)
+#define D_2_12 (512 + 12)
+#define D_2_96 (512 + 96)
+#define D_2_108 (512 + 108)
+#define D_2_208 (512 + 208)
+#define D_2_224 (512 + 224)
+#define D_2_236 (512 + 236)
+#define D_2_244 (512 + 244)
+#define D_2_248 (512 + 248)
+#define D_2_252 (512 + 252)
 
-#define CPASS_BIAS_X            (35 * 16 + 4)
-#define CPASS_BIAS_Y            (35 * 16 + 8)
-#define CPASS_BIAS_Z            (35 * 16 + 12)
-#define CPASS_MTX_00            (36 * 16)
-#define CPASS_MTX_01            (36 * 16 + 4)
-#define CPASS_MTX_02            (36 * 16 + 8)
-#define CPASS_MTX_10            (36 * 16 + 12)
-#define CPASS_MTX_11            (37 * 16)
-#define CPASS_MTX_12            (37 * 16 + 4)
-#define CPASS_MTX_20            (37 * 16 + 8)
-#define CPASS_MTX_21            (37 * 16 + 12)
-#define CPASS_MTX_22            (43 * 16 + 12)
-#define D_EXT_GYRO_BIAS_X       (61 * 16)
-#define D_EXT_GYRO_BIAS_Y       (61 * 16) + 4
-#define D_EXT_GYRO_BIAS_Z       (61 * 16) + 8
-#define D_ACT0                  (40 * 16)
-#define D_ACSX                  (40 * 16 + 4)
-#define D_ACSY                  (40 * 16 + 8)
-#define D_ACSZ                  (40 * 16 + 12)
+#define CPASS_BIAS_X (35 * 16 + 4)
+#define CPASS_BIAS_Y (35 * 16 + 8)
+#define CPASS_BIAS_Z (35 * 16 + 12)
+#define CPASS_MTX_00 (36 * 16)
+#define CPASS_MTX_01 (36 * 16 + 4)
+#define CPASS_MTX_02 (36 * 16 + 8)
+#define CPASS_MTX_10 (36 * 16 + 12)
+#define CPASS_MTX_11 (37 * 16)
+#define CPASS_MTX_12 (37 * 16 + 4)
+#define CPASS_MTX_20 (37 * 16 + 8)
+#define CPASS_MTX_21 (37 * 16 + 12)
+#define CPASS_MTX_22 (43 * 16 + 12)
+#define D_EXT_GYRO_BIAS_X (61 * 16)
+#define D_EXT_GYRO_BIAS_Y (61 * 16) + 4
+#define D_EXT_GYRO_BIAS_Z (61 * 16) + 8
+#define D_ACT0 (40 * 16)
+#define D_ACSX (40 * 16 + 4)
+#define D_ACSY (40 * 16 + 8)
+#define D_ACSZ (40 * 16 + 12)
 
-#define FLICK_MSG               (45 * 16 + 4)
-#define FLICK_COUNTER           (45 * 16 + 8)
-#define FLICK_LOWER             (45 * 16 + 12)
-#define FLICK_UPPER             (46 * 16 + 12)
+#define FLICK_MSG (45 * 16 + 4)
+#define FLICK_COUNTER (45 * 16 + 8)
+#define FLICK_LOWER (45 * 16 + 12)
+#define FLICK_UPPER (46 * 16 + 12)
 
-#define D_AUTH_OUT              (992)
-#define D_AUTH_IN               (996)
-#define D_AUTH_A                (1000)
-#define D_AUTH_B                (1004)
+#define D_AUTH_OUT (992)
+#define D_AUTH_IN (996)
+#define D_AUTH_A (1000)
+#define D_AUTH_B (1004)
 
-#define D_PEDSTD_BP_B           (768 + 0x1C)
-#define D_PEDSTD_HP_A           (768 + 0x78)
-#define D_PEDSTD_HP_B           (768 + 0x7C)
-#define D_PEDSTD_BP_A4          (768 + 0x40)
-#define D_PEDSTD_BP_A3          (768 + 0x44)
-#define D_PEDSTD_BP_A2          (768 + 0x48)
-#define D_PEDSTD_BP_A1          (768 + 0x4C)
-#define D_PEDSTD_INT_THRSH      (768 + 0x68)
-#define D_PEDSTD_CLIP           (768 + 0x6C)
-#define D_PEDSTD_SB             (768 + 0x28)
-#define D_PEDSTD_SB_TIME        (768 + 0x2C)
-#define D_PEDSTD_PEAKTHRSH      (768 + 0x98)
-#define D_PEDSTD_TIML           (768 + 0x2A)
-#define D_PEDSTD_TIMH           (768 + 0x2E)
-#define D_PEDSTD_PEAK           (768 + 0X94)
-#define D_PEDSTD_STEPCTR        (768 + 0x60)
-#define D_PEDSTD_TIMECTR        (964)
-#define D_PEDSTD_DECI           (768 + 0xA0)
+#define D_PEDSTD_BP_B (768 + 0x1C)
+#define D_PEDSTD_HP_A (768 + 0x78)
+#define D_PEDSTD_HP_B (768 + 0x7C)
+#define D_PEDSTD_BP_A4 (768 + 0x40)
+#define D_PEDSTD_BP_A3 (768 + 0x44)
+#define D_PEDSTD_BP_A2 (768 + 0x48)
+#define D_PEDSTD_BP_A1 (768 + 0x4C)
+#define D_PEDSTD_INT_THRSH (768 + 0x68)
+#define D_PEDSTD_CLIP (768 + 0x6C)
+#define D_PEDSTD_SB (768 + 0x28)
+#define D_PEDSTD_SB_TIME (768 + 0x2C)
+#define D_PEDSTD_PEAKTHRSH (768 + 0x98)
+#define D_PEDSTD_TIML (768 + 0x2A)
+#define D_PEDSTD_TIMH (768 + 0x2E)
+#define D_PEDSTD_PEAK (768 + 0X94)
+#define D_PEDSTD_STEPCTR (768 + 0x60)
+#define D_PEDSTD_TIMECTR (964)
+#define D_PEDSTD_DECI (768 + 0xA0)
 
-#define D_HOST_NO_MOT           (976)
-#define D_ACCEL_BIAS            (660)
+#define D_HOST_NO_MOT (976)
+#define D_ACCEL_BIAS (660)
 
-#define D_ORIENT_GAP            (76)
+#define D_ORIENT_GAP (76)
 
-#define D_TILT0_H               (48)
-#define D_TILT0_L               (50)
-#define D_TILT1_H               (52)
-#define D_TILT1_L               (54)
-#define D_TILT2_H               (56)
-#define D_TILT2_L               (58)
-#define D_TILT3_H               (60)
-#define D_TILT3_L               (62)
+#define D_TILT0_H (48)
+#define D_TILT0_L (50)
+#define D_TILT1_H (52)
+#define D_TILT1_L (54)
+#define D_TILT2_H (56)
+#define D_TILT2_L (58)
+#define D_TILT3_H (60)
+#define D_TILT3_L (62)
 
-#define DMP_CODE_SIZE           (3062)
+#define DMP_CODE_SIZE (3062)
 
 static const unsigned char dmp_memory[DMP_CODE_SIZE] = {
     /* bank # 0 */
@@ -453,30 +453,28 @@ static const unsigned char dmp_memory[DMP_CODE_SIZE] = {
     0xf2, 0x2a, 0xf1, 0xa9, 0x2e, 0x82, 0x92, 0xa8, 0xf2, 0x31, 0x80, 0xa6, 0x96, 0xf1, 0xd9, 0x00,
     0xac, 0x8c, 0x9c, 0x0c, 0x30, 0xac, 0xde, 0xd0, 0xde, 0xff, 0xd8, 0x8c, 0x9c, 0xac, 0xd0, 0x10,
     0xac, 0xde, 0x80, 0x92, 0xa2, 0xf2, 0x4c, 0x82, 0xa8, 0xf1, 0xca, 0xf2, 0x35, 0xf1, 0x96, 0x88,
-    0xa6, 0xd9, 0x00, 0xd8, 0xf1, 0xff
-};
+    0xa6, 0xd9, 0x00, 0xd8, 0xf1, 0xff};
 
 static const unsigned short sStartAddress = 0x0400;
 
 /* END OF SECTION COPIED FROM dmpDefaultMPU6050.c */
 
-#define INT_SRC_TAP             (0x01)
-#define INT_SRC_ANDROID_ORIENT  (0x08)
+#define INT_SRC_TAP (0x01)
+#define INT_SRC_ANDROID_ORIENT (0x08)
 
-#define DMP_FEATURE_SEND_ANY_GYRO   (DMP_FEATURE_SEND_RAW_GYRO | \
-                                     DMP_FEATURE_SEND_CAL_GYRO)
+#define DMP_FEATURE_SEND_ANY_GYRO (DMP_FEATURE_SEND_RAW_GYRO | DMP_FEATURE_SEND_CAL_GYRO)
 
-#define MAX_PACKET_LENGTH   (32)
+#define MAX_PACKET_LENGTH (32)
 
-#define DMP_SAMPLE_RATE     (200)
-#define GYRO_SF             (46850825LL * 200 / DMP_SAMPLE_RATE)
+#define DMP_SAMPLE_RATE (200)
+#define GYRO_SF (46850825LL * 200 / DMP_SAMPLE_RATE)
 
 #define FIFO_CORRUPTION_CHECK
 #ifdef FIFO_CORRUPTION_CHECK
-#define QUAT_ERROR_THRESH       (1L<<24)
-#define QUAT_MAG_SQ_NORMALIZED  (1L<<28)
-#define QUAT_MAG_SQ_MIN         (QUAT_MAG_SQ_NORMALIZED - QUAT_ERROR_THRESH)
-#define QUAT_MAG_SQ_MAX         (QUAT_MAG_SQ_NORMALIZED + QUAT_ERROR_THRESH)
+#define QUAT_ERROR_THRESH (1L << 24)
+#define QUAT_MAG_SQ_NORMALIZED (1L << 28)
+#define QUAT_MAG_SQ_MIN (QUAT_MAG_SQ_NORMALIZED - QUAT_ERROR_THRESH)
+#define QUAT_MAG_SQ_MAX (QUAT_MAG_SQ_NORMALIZED + QUAT_ERROR_THRESH)
 #endif
 
 struct dmp_s {
@@ -488,32 +486,23 @@ struct dmp_s {
     unsigned char packet_length;
 };
 
-//static struct dmp_s dmp = {
-//    .tap_cb = NULL,
-//    .android_orient_cb = NULL,
-//    .orient = 0,
-//    .feature_mask = 0,
-//    .fifo_rate = 0,
-//    .packet_length = 0
-//};
+// static struct dmp_s dmp = {
+//     .tap_cb = NULL,
+//     .android_orient_cb = NULL,
+//     .orient = 0,
+//     .feature_mask = 0,
+//     .fifo_rate = 0,
+//     .packet_length = 0
+// };
 
-static struct dmp_s dmp={
-  NULL,
-  NULL,
-  0,
-  0,
-  0,
-  0
-};
+static struct dmp_s dmp = {NULL, NULL, 0, 0, 0, 0};
 
 /**
  *  @brief  Load the DMP with this image.
  *  @return 0 if successful.
  */
-int dmp_load_motion_driver_firmware(void)
-{
-    return mpu_load_firmware(DMP_CODE_SIZE, dmp_memory, sStartAddress,
-        DMP_SAMPLE_RATE);
+int dmp_load_motion_driver_firmware(void) {
+    return mpu_load_firmware(DMP_CODE_SIZE, dmp_memory, sStartAddress, DMP_SAMPLE_RATE);
 }
 
 /**
@@ -523,8 +512,7 @@ int dmp_load_motion_driver_firmware(void)
  *  @param[in]  orient  Gyro and accel orientation in body frame.
  *  @return     0 if successful.
  */
-int dmp_set_orientation(unsigned short orient)
-{
+int dmp_set_orientation(unsigned short orient) {
     unsigned char gyro_regs[3], accel_regs[3];
     const unsigned char gyro_axes[3] = {DINA4C, DINACD, DINA6C};
     const unsigned char accel_axes[3] = {DINA0C, DINAC9, DINA2C};
@@ -578,8 +566,7 @@ int dmp_set_orientation(unsigned short orient)
  *  @param[in]  bias    Gyro biases in q16.
  *  @return     0 if successful.
  */
-int dmp_set_gyro_bias(long *bias)
-{
+int dmp_set_gyro_bias(long *bias) {
     long gyro_bias_body[3];
     unsigned char regs[4];
 
@@ -630,8 +617,7 @@ int dmp_set_gyro_bias(long *bias)
  *  @param[in]  bias    Accel biases in q16.
  *  @return     0 if successful.
  */
-int dmp_set_accel_bias(long *bias)
-{
+int dmp_set_accel_bias(long *bias) {
     long accel_bias_body[3];
     unsigned char regs[12];
     long long accel_sf;
@@ -682,10 +668,9 @@ int dmp_set_accel_bias(long *bias)
  *  @param[in]  rate    Desired fifo rate (Hz).
  *  @return     0 if successful.
  */
-int dmp_set_fifo_rate(unsigned short rate)
-{
-    const unsigned char regs_end[12] = {DINAFE, DINAF2, DINAAB,
-        0xc4, DINAAA, DINAF1, DINADF, DINADF, 0xBB, 0xAF, DINADF, DINADF};
+int dmp_set_fifo_rate(unsigned short rate) {
+    const unsigned char regs_end[12] = {DINAFE, DINAF2, DINAAB, 0xc4, DINAAA, DINAF1,
+                                        DINADF, DINADF, 0xBB,   0xAF, DINADF, DINADF};
     unsigned short div;
     unsigned char tmp[8];
 
@@ -696,7 +681,7 @@ int dmp_set_fifo_rate(unsigned short rate)
     tmp[1] = (unsigned char)(div & 0xFF);
     if (mpu_write_mem(D_0_22, 2, tmp))
         return -1;
-    if (mpu_write_mem(CFG_6, 12, (unsigned char*)regs_end))
+    if (mpu_write_mem(CFG_6, 12, (unsigned char *)regs_end))
         return -1;
 
     dmp.fifo_rate = rate;
@@ -708,8 +693,7 @@ int dmp_set_fifo_rate(unsigned short rate)
  *  @param[out] rate    Current fifo rate (Hz).
  *  @return     0 if successful.
  */
-int dmp_get_fifo_rate(unsigned short *rate)
-{
+int dmp_get_fifo_rate(unsigned short *rate) {
     rate[0] = dmp.fifo_rate;
     return 0;
 }
@@ -720,8 +704,7 @@ int dmp_get_fifo_rate(unsigned short *rate)
  *  @param[in]  thresh  Tap threshold, in mg/ms.
  *  @return     0 if successful.
  */
-int dmp_set_tap_thresh(unsigned char axis, unsigned short thresh)
-{
+int dmp_set_tap_thresh(unsigned char axis, unsigned short thresh) {
     unsigned char tmp[4], accel_fsr;
     float scaled_thresh;
     unsigned short dmp_thresh, dmp_thresh_2;
@@ -763,19 +746,19 @@ int dmp_set_tap_thresh(unsigned char axis, unsigned short thresh)
     if (axis & TAP_X) {
         if (mpu_write_mem(DMP_TAP_THX, 2, tmp))
             return -1;
-        if (mpu_write_mem(D_1_36, 2, tmp+2))
+        if (mpu_write_mem(D_1_36, 2, tmp + 2))
             return -1;
     }
     if (axis & TAP_Y) {
         if (mpu_write_mem(DMP_TAP_THY, 2, tmp))
             return -1;
-        if (mpu_write_mem(D_1_40, 2, tmp+2))
+        if (mpu_write_mem(D_1_40, 2, tmp + 2))
             return -1;
     }
     if (axis & TAP_Z) {
         if (mpu_write_mem(DMP_TAP_THZ, 2, tmp))
             return -1;
-        if (mpu_write_mem(D_1_44, 2, tmp+2))
+        if (mpu_write_mem(D_1_44, 2, tmp + 2))
             return -1;
     }
     return 0;
@@ -786,8 +769,7 @@ int dmp_set_tap_thresh(unsigned char axis, unsigned short thresh)
  *  @param[in]  axis    1, 2, and 4 for XYZ, respectively.
  *  @return     0 if successful.
  */
-int dmp_set_tap_axes(unsigned char axis)
-{
+int dmp_set_tap_axes(unsigned char axis) {
     unsigned char tmp = 0;
 
     if (axis & TAP_X)
@@ -804,8 +786,7 @@ int dmp_set_tap_axes(unsigned char axis)
  *  @param[in]  min_taps    Minimum consecutive taps (1-4).
  *  @return     0 if successful.
  */
-int dmp_set_tap_count(unsigned char min_taps)
-{
+int dmp_set_tap_count(unsigned char min_taps) {
     unsigned char tmp;
 
     if (min_taps < 1)
@@ -822,8 +803,7 @@ int dmp_set_tap_count(unsigned char min_taps)
  *  @param[in]  time    Milliseconds between taps.
  *  @return     0 if successful.
  */
-int dmp_set_tap_time(unsigned short time)
-{
+int dmp_set_tap_time(unsigned short time) {
     unsigned short dmp_time;
     unsigned char tmp[2];
 
@@ -838,8 +818,7 @@ int dmp_set_tap_time(unsigned short time)
  *  @param[in]  time    Max milliseconds between taps.
  *  @return     0 if successful.
  */
-int dmp_set_tap_time_multi(unsigned short time)
-{
+int dmp_set_tap_time_multi(unsigned short time) {
     unsigned short dmp_time;
     unsigned char tmp[2];
 
@@ -856,8 +835,7 @@ int dmp_set_tap_time_multi(unsigned short time)
  *  @param[in]  thresh  Gyro threshold in dps.
  *  @return     0 if successful.
  */
-int dmp_set_shake_reject_thresh(long sf, unsigned short thresh)
-{
+int dmp_set_shake_reject_thresh(long sf, unsigned short thresh) {
     unsigned char tmp[4];
     long thresh_scaled = sf / 1000 * thresh;
     tmp[0] = (unsigned char)(((long)thresh_scaled >> 24) & 0xFF);
@@ -875,14 +853,13 @@ int dmp_set_shake_reject_thresh(long sf, unsigned short thresh)
  *  @param[in]  time    Time in milliseconds.
  *  @return     0 if successful.
  */
-int dmp_set_shake_reject_time(unsigned short time)
-{
+int dmp_set_shake_reject_time(unsigned short time) {
     unsigned char tmp[2];
 
     time /= (1000 / DMP_SAMPLE_RATE);
     tmp[0] = time >> 8;
     tmp[1] = time & 0xFF;
-    return mpu_write_mem(D_1_90,2,tmp);
+    return mpu_write_mem(D_1_90, 2, tmp);
 }
 
 /**
@@ -893,14 +870,13 @@ int dmp_set_shake_reject_time(unsigned short time)
  *  @param[in]  time    Time in milliseconds.
  *  @return     0 if successful.
  */
-int dmp_set_shake_reject_timeout(unsigned short time)
-{
+int dmp_set_shake_reject_timeout(unsigned short time) {
     unsigned char tmp[2];
 
     time /= (1000 / DMP_SAMPLE_RATE);
     tmp[0] = time >> 8;
     tmp[1] = time & 0xFF;
-    return mpu_write_mem(D_1_88,2,tmp);
+    return mpu_write_mem(D_1_88, 2, tmp);
 }
 
 /**
@@ -908,8 +884,7 @@ int dmp_set_shake_reject_timeout(unsigned short time)
  *  @param[out] count   Number of steps detected.
  *  @return     0 if successful.
  */
-int dmp_get_pedometer_step_count(unsigned long *count)
-{
+int dmp_get_pedometer_step_count(unsigned long *count) {
     unsigned char tmp[4];
     if (!count)
         return -1;
@@ -918,7 +893,7 @@ int dmp_get_pedometer_step_count(unsigned long *count)
         return -1;
 
     count[0] = ((unsigned long)tmp[0] << 24) | ((unsigned long)tmp[1] << 16) |
-        ((unsigned long)tmp[2] << 8) | tmp[3];
+               ((unsigned long)tmp[2] << 8) | tmp[3];
     return 0;
 }
 
@@ -929,8 +904,7 @@ int dmp_get_pedometer_step_count(unsigned long *count)
  *  @param[in]  count   New step count.
  *  @return     0 if successful.
  */
-int dmp_set_pedometer_step_count(unsigned long count)
-{
+int dmp_set_pedometer_step_count(unsigned long count) {
     unsigned char tmp[4];
 
     tmp[0] = (unsigned char)((count >> 24) & 0xFF);
@@ -945,8 +919,7 @@ int dmp_set_pedometer_step_count(unsigned long count)
  *  @param[in]  time    Walk time in milliseconds.
  *  @return     0 if successful.
  */
-int dmp_get_pedometer_walk_time(unsigned long *time)
-{
+int dmp_get_pedometer_walk_time(unsigned long *time) {
     unsigned char tmp[4];
     if (!time)
         return -1;
@@ -955,7 +928,8 @@ int dmp_get_pedometer_walk_time(unsigned long *time)
         return -1;
 
     time[0] = (((unsigned long)tmp[0] << 24) | ((unsigned long)tmp[1] << 16) |
-        ((unsigned long)tmp[2] << 8) | tmp[3]) * 20;
+               ((unsigned long)tmp[2] << 8) | tmp[3]) *
+              20;
     return 0;
 }
 
@@ -965,8 +939,7 @@ int dmp_get_pedometer_walk_time(unsigned long *time)
  *  a race condition if called while the pedometer is enabled.
  *  @param[in]  time    New walk time in milliseconds.
  */
-int dmp_set_pedometer_walk_time(unsigned long time)
-{
+int dmp_set_pedometer_walk_time(unsigned long time) {
     unsigned char tmp[4];
 
     time /= 20;
@@ -995,8 +968,7 @@ int dmp_set_pedometer_walk_time(unsigned long time)
  *  @param[in]  mask    Mask of features to enable.
  *  @return     0 if successful.
  */
-int dmp_enable_feature(unsigned short mask)
-{
+int dmp_enable_feature(unsigned short mask) {
     unsigned char tmp[10];
 
     /* TODO: All of these settings can probably be integrated into the default
@@ -1032,14 +1004,14 @@ int dmp_enable_feature(unsigned short mask)
     tmp[7] = 0xA3;
     tmp[8] = 0xA3;
     tmp[9] = 0xA3;
-    mpu_write_mem(CFG_15,10,tmp);
+    mpu_write_mem(CFG_15, 10, tmp);
 
     /* Send gesture data to the FIFO. */
     if (mask & (DMP_FEATURE_TAP | DMP_FEATURE_ANDROID_ORIENT))
         tmp[0] = DINA20;
     else
         tmp[0] = 0xD8;
-    mpu_write_mem(CFG_27,1,tmp);
+    mpu_write_mem(CFG_27, 1, tmp);
 
     if (mask & DMP_FEATURE_GYRO_CAL)
         dmp_enable_gyro_cal(1);
@@ -1117,8 +1089,7 @@ int dmp_enable_feature(unsigned short mask)
  *  @param[out] Mask of enabled features.
  *  @return     0 if successful.
  */
-int dmp_get_enabled_features(unsigned short *mask)
-{
+int dmp_get_enabled_features(unsigned short *mask) {
     mask[0] = dmp.feature_mask;
     return 0;
 }
@@ -1132,8 +1103,7 @@ int dmp_get_enabled_features(unsigned short *mask)
  *  @param[in]  enable  1 to enable gyro calibration.
  *  @return     0 if successful.
  */
-int dmp_enable_gyro_cal(unsigned char enable)
-{
+int dmp_enable_gyro_cal(unsigned char enable) {
     if (enable) {
         unsigned char regs[9] = {0xb8, 0xaa, 0xb3, 0x8d, 0xb4, 0x98, 0x0d, 0x35, 0x5d};
         return mpu_write_mem(CFG_MOTION_BIAS, 9, regs);
@@ -1150,16 +1120,14 @@ int dmp_enable_gyro_cal(unsigned char enable)
  *  @param[in]  enable  1 to enable 3-axis quaternion.
  *  @return     0 if successful.
  */
-int dmp_enable_lp_quat(unsigned char enable)
-{
+int dmp_enable_lp_quat(unsigned char enable) {
     unsigned char regs[4];
     if (enable) {
         regs[0] = DINBC0;
         regs[1] = DINBC2;
         regs[2] = DINBC4;
         regs[3] = DINBC6;
-    }
-    else
+    } else
         memset(regs, 0x8B, 4);
 
     mpu_write_mem(CFG_LP_QUAT, 4, regs);
@@ -1174,8 +1142,7 @@ int dmp_enable_lp_quat(unsigned char enable)
  *  @param[in]   enable  1 to enable 6-axis quaternion.
  *  @return      0 if successful.
  */
-int dmp_enable_6x_lp_quat(unsigned char enable)
-{
+int dmp_enable_6x_lp_quat(unsigned char enable) {
     unsigned char regs[4];
     if (enable) {
         regs[0] = DINA20;
@@ -1195,8 +1162,7 @@ int dmp_enable_6x_lp_quat(unsigned char enable)
  *  @param[in]  gesture Gesture data from DMP packet.
  *  @return     0 if successful.
  */
-static int decode_gesture(unsigned char *gesture)
-{
+static int decode_gesture(unsigned char *gesture) {
     unsigned char tap, android_orient;
 
     android_orient = gesture[3] & 0xC0;
@@ -1227,20 +1193,17 @@ static int decode_gesture(unsigned char *gesture)
  *  @param[in]  mode    DMP_INT_GESTURE or DMP_INT_CONTINUOUS.
  *  @return     0 if successful.
  */
-int dmp_set_interrupt_mode(unsigned char mode)
-{
-    const unsigned char regs_continuous[11] =
-        {0xd8, 0xb1, 0xb9, 0xf3, 0x8b, 0xa3, 0x91, 0xb6, 0x09, 0xb4, 0xd9};
-    const unsigned char regs_gesture[11] =
-        {0xda, 0xb1, 0xb9, 0xf3, 0x8b, 0xa3, 0x91, 0xb6, 0xda, 0xb4, 0xda};
+int dmp_set_interrupt_mode(unsigned char mode) {
+    const unsigned char regs_continuous[11] = {0xd8, 0xb1, 0xb9, 0xf3, 0x8b, 0xa3,
+                                               0x91, 0xb6, 0x09, 0xb4, 0xd9};
+    const unsigned char regs_gesture[11] = {0xda, 0xb1, 0xb9, 0xf3, 0x8b, 0xa3,
+                                            0x91, 0xb6, 0xda, 0xb4, 0xda};
 
     switch (mode) {
     case DMP_INT_CONTINUOUS:
-        return mpu_write_mem(CFG_FIFO_ON_EVENT, 11,
-            (unsigned char*)regs_continuous);
+        return mpu_write_mem(CFG_FIFO_ON_EVENT, 11, (unsigned char *)regs_continuous);
     case DMP_INT_GESTURE:
-        return mpu_write_mem(CFG_FIFO_ON_EVENT, 11,
-            (unsigned char*)regs_gesture);
+        return mpu_write_mem(CFG_FIFO_ON_EVENT, 11, (unsigned char *)regs_gesture);
     default:
         return -1;
     }
@@ -1266,9 +1229,8 @@ int dmp_set_interrupt_mode(unsigned char mode)
  *  @param[out] more        Number of remaining packets.
  *  @return     0 if successful.
  */
-int dmp_read_fifo(short *gyro, short *accel, long *quat,
-    unsigned long *timestamp, short *sensors, unsigned char *more)
-{
+int dmp_read_fifo(short *gyro, short *accel, long *quat, unsigned long *timestamp, short *sensors,
+                  unsigned char *more) {
     unsigned char fifo_data[MAX_PACKET_LENGTH];
     unsigned char ii = 0;
 
@@ -1287,13 +1249,13 @@ int dmp_read_fifo(short *gyro, short *accel, long *quat,
         long quat_q14[4], quat_mag_sq;
 #endif
         quat[0] = ((long)fifo_data[0] << 24) | ((long)fifo_data[1] << 16) |
-            ((long)fifo_data[2] << 8) | fifo_data[3];
+                  ((long)fifo_data[2] << 8) | fifo_data[3];
         quat[1] = ((long)fifo_data[4] << 24) | ((long)fifo_data[5] << 16) |
-            ((long)fifo_data[6] << 8) | fifo_data[7];
+                  ((long)fifo_data[6] << 8) | fifo_data[7];
         quat[2] = ((long)fifo_data[8] << 24) | ((long)fifo_data[9] << 16) |
-            ((long)fifo_data[10] << 8) | fifo_data[11];
+                  ((long)fifo_data[10] << 8) | fifo_data[11];
         quat[3] = ((long)fifo_data[12] << 24) | ((long)fifo_data[13] << 16) |
-            ((long)fifo_data[14] << 8) | fifo_data[15];
+                  ((long)fifo_data[14] << 8) | fifo_data[15];
         ii += 16;
 #ifdef FIFO_CORRUPTION_CHECK
         /* We can detect a corrupted FIFO by monitoring the quaternion data and
@@ -1309,9 +1271,8 @@ int dmp_read_fifo(short *gyro, short *accel, long *quat,
         quat_q14[2] = quat[2] >> 16;
         quat_q14[3] = quat[3] >> 16;
         quat_mag_sq = quat_q14[0] * quat_q14[0] + quat_q14[1] * quat_q14[1] +
-            quat_q14[2] * quat_q14[2] + quat_q14[3] * quat_q14[3];
-        if ((quat_mag_sq < QUAT_MAG_SQ_MIN) ||
-            (quat_mag_sq > QUAT_MAG_SQ_MAX)) {
+                      quat_q14[2] * quat_q14[2] + quat_q14[3] * quat_q14[3];
+        if ((quat_mag_sq < QUAT_MAG_SQ_MIN) || (quat_mag_sq > QUAT_MAG_SQ_MAX)) {
             /* Quaternion is outside of the acceptable threshold. */
             mpu_reset_fifo();
             sensors[0] = 0;
@@ -1322,17 +1283,17 @@ int dmp_read_fifo(short *gyro, short *accel, long *quat,
     }
 
     if (dmp.feature_mask & DMP_FEATURE_SEND_RAW_ACCEL) {
-        accel[0] = ((short)fifo_data[ii+0] << 8) | fifo_data[ii+1];
-        accel[1] = ((short)fifo_data[ii+2] << 8) | fifo_data[ii+3];
-        accel[2] = ((short)fifo_data[ii+4] << 8) | fifo_data[ii+5];
+        accel[0] = ((short)fifo_data[ii + 0] << 8) | fifo_data[ii + 1];
+        accel[1] = ((short)fifo_data[ii + 2] << 8) | fifo_data[ii + 3];
+        accel[2] = ((short)fifo_data[ii + 4] << 8) | fifo_data[ii + 5];
         ii += 6;
         sensors[0] |= INV_XYZ_ACCEL;
     }
 
     if (dmp.feature_mask & DMP_FEATURE_SEND_ANY_GYRO) {
-        gyro[0] = ((short)fifo_data[ii+0] << 8) | fifo_data[ii+1];
-        gyro[1] = ((short)fifo_data[ii+2] << 8) | fifo_data[ii+3];
-        gyro[2] = ((short)fifo_data[ii+4] << 8) | fifo_data[ii+5];
+        gyro[0] = ((short)fifo_data[ii + 0] << 8) | fifo_data[ii + 1];
+        gyro[1] = ((short)fifo_data[ii + 2] << 8) | fifo_data[ii + 3];
+        gyro[2] = ((short)fifo_data[ii + 4] << 8) | fifo_data[ii + 5];
         ii += 6;
         sensors[0] |= INV_XYZ_GYRO;
     }
@@ -1359,8 +1320,7 @@ int dmp_read_fifo(short *gyro, short *accel, long *quat,
  *  @param[in]  func    Callback function.
  *  @return     0 if successful.
  */
-int dmp_register_tap_cb(void (*func)(unsigned char, unsigned char))
-{
+int dmp_register_tap_cb(void (*func)(unsigned char, unsigned char)) {
     dmp.tap_cb = func;
     return 0;
 }
@@ -1370,8 +1330,7 @@ int dmp_register_tap_cb(void (*func)(unsigned char, unsigned char))
  *  @param[in]  func    Callback function.
  *  @return     0 if successful.
  */
-int dmp_register_android_orient_cb(void (*func)(unsigned char))
-{
+int dmp_register_android_orient_cb(void (*func)(unsigned char)) {
     dmp.android_orient_cb = func;
     return 0;
 }
@@ -1379,4 +1338,3 @@ int dmp_register_android_orient_cb(void (*func)(unsigned char))
 /**
  *  @}
  */
-
