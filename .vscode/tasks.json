@@ -1,0 +1,48 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "CMake: configure",
+      "type": "process",
+      "command": "cmake",
+      "args": [
+        "--preset",
+        "debug"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "CMake: build",
+      "type": "process",
+      "command": "cmake",
+      "args": [
+        "--build",
+        "--preset",
+        "debug"
+      ],
+      "dependsOn": "CMake: configure",
+      "dependsOrder": "sequence",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [
+        "$gcc"
+      ]
+    },
+    {
+      "label": "OpenOCD: flash",
+      "type": "process",
+      "command": "cmake",
+      "args": [
+        "--build",
+        "build/debug",
+        "--target",
+        "flash"
+      ],
+      "dependsOn": "CMake: build",
+      "dependsOrder": "sequence",
+      "problemMatcher": []
+    }
+  ]
+}

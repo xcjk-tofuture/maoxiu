@@ -24,5 +24,7 @@ ros/ws_starbot/build/
 *.uvguix.*
 *.uvoptx
 *.scvd
-.vscode/
 .idea/
+
+*.su
+CMakeUserPresets.json

@@ -1,0 +1,429 @@
+/* GNU syntax translation of the following original device startup; vector order retained.
+
+*/
+.syntax unified
+.cpu cortex-m4
+.fpu fpv4-sp-d16
+.thumb
+.global g_pfnVectors
+.section .isr_vector,"a",%progbits
+g_pfnVectors:
+ .word _estack
+ .word Reset_Handler
+ .word NMI_Handler
+ .word HardFault_Handler
+ .word MemManage_Handler
+ .word BusFault_Handler
+ .word UsageFault_Handler
+ .word 0
+ .word 0
+ .word 0
+ .word 0
+ .word SVC_Handler
+ .word DebugMon_Handler
+ .word 0
+ .word PendSV_Handler
+ .word SysTick_Handler
+ .word GPIOA_Handler
+ .word GPIOB_Handler
+ .word GPIOC_Handler
+ .word GPIOD_Handler
+ .word GPIOE_Handler
+ .word UART0_Handler
+ .word UART1_Handler
+ .word SSI0_Handler
+ .word I2C0_Handler
+ .word PMW0_FAULT_Handler
+ .word PWM0_0_Handler
+ .word PWM0_1_Handler
+ .word PWM0_2_Handler
+ .word QEI0_Handler
+ .word ADC0SS0_Handler
+ .word ADC0SS1_Handler
+ .word ADC0SS2_Handler
+ .word ADC0SS3_Handler
+ .word WDT0_Handler
+ .word TIMER0A_Handler
+ .word TIMER0B_Handler
+ .word TIMER1A_Handler
+ .word TIMER1B_Handler
+ .word TIMER2A_Handler
+ .word TIMER2B_Handler
+ .word COMP0_Handler
+ .word COMP1_Handler
+ .word COMP2_Handler
+ .word SYSCTL_Handler
+ .word FLASH_Handler
+ .word GPIOF_Handler
+ .word GPIOG_Handler
+ .word GPIOH_Handler
+ .word UART2_Handler
+ .word SSI1_Handler
+ .word TIMER3A_Handler
+ .word TIMER3B_Handler
+ .word I2C1_Handler
+ .word QEI1_Handler
+ .word CAN0_Handler
+ .word CAN1_Handler
+ .word CAN2_Handler
+ .word 0
+ .word HIB_Handler
+ .word USB0_Handler
+ .word PWM0_3_Handler
+ .word UDMA_Handler
+ .word UDMAERR_Handler
+ .word ADC1SS0_Handler
+ .word ADC1SS1_Handler
+ .word ADC1SS2_Handler
+ .word ADC1SS3_Handler
+ .word 0
+ .word 0
+ .word GPIOJ_Handler
+ .word GPIOK_Handler
+ .word GPIOL_Handler
+ .word SSI2_Handler
+ .word SSI3_Handler
+ .word UART3_Handler
+ .word UART4_Handler
+ .word UART5_Handler
+ .word UART6_Handler
+ .word UART7_Handler
+ .word 0
+ .word 0
+ .word 0
+ .word 0
+ .word I2C2_Handler
+ .word I2C3_Handler
+ .word TIMER4A_Handler
+ .word TIMER4B_Handler
+ .word 0
+ .word 0
+ .word 0
+ .word 0
+ .word 0
+ .word 0
+ .word 0
+ .word 0
+ .word 0
+ .word 0
+ .word 0
+ .word 0
+ .word 0
+ .word 0
+ .word 0
+ .word 0
+ .word 0
+ .word 0
+ .word 0
+ .word 0
+ .word TIMER5A_Handler
+ .word TIMER5B_Handler
+ .word WTIMER0A_Handler
+ .word WTIMER0B_Handler
+ .word WTIMER1A_Handler
+ .word WTIMER1B_Handler
+ .word WTIMER2A_Handler
+ .word WTIMER2B_Handler
+ .word WTIMER3A_Handler
+ .word WTIMER3B_Handler
+ .word WTIMER4A_Handler
+ .word WTIMER4B_Handler
+ .word WTIMER5A_Handler
+ .word WTIMER5B_Handler
+ .word FPU_Handler
+ .word 0
+ .word 0
+ .word I2C4_Handler
+ .word I2C5_Handler
+ .word GPIOM_Handler
+ .word GPION_Handler
+ .word QEI2_Handler
+ .word 0
+ .word 0
+ .word GPIOP0_Handler
+ .word GPIOP1_Handler
+ .word GPIOP2_Handler
+ .word GPIOP3_Handler
+ .word GPIOP4_Handler
+ .word GPIOP5_Handler
+ .word GPIOP6_Handler
+ .word GPIOP7_Handler
+ .word GPIOQ0_Handler
+ .word GPIOQ1_Handler
+ .word GPIOQ2_Handler
+ .word GPIOQ3_Handler
+ .word GPIOQ4_Handler
+ .word GPIOQ5_Handler
+ .word GPIOQ6_Handler
+ .word GPIOQ7_Handler
+ .word GPIOR_Handler
+ .word GPIOS_Handler
+ .word PMW1_0_Handler
+ .word PWM1_1_Handler
+ .word PWM1_2_Handler
+ .word PWM1_3_Handler
+ .word PWM1_FAULT_Handler
+
+.section .text.Reset_Handler,"ax",%progbits
+.thumb_func
+.global Reset_Handler
+Reset_Handler:
+ ldr r0, =_sidata
+ ldr r1, =_sdata
+ ldr r2, =_edata
+1: cmp r1, r2
+ bcs 2f
+ ldr r3, [r0], #4
+ str r3, [r1], #4
+ b 1b
+2: ldr r1, =_sbss
+ ldr r2, =_ebss
+ movs r3, #0
+3: cmp r1, r2
+ bcs 4f
+ str r3, [r1], #4
+ b 3b
+4: bl SystemInit
+ bl __libc_init_array
+ bl main
+ b .
+.section .text.Default_Handler,"ax",%progbits
+.thumb_func
+Default_Handler:
+ b .
+.weak ADC0SS0_Handler
+.thumb_set ADC0SS0_Handler,Default_Handler
+.weak ADC0SS1_Handler
+.thumb_set ADC0SS1_Handler,Default_Handler
+.weak ADC0SS2_Handler
+.thumb_set ADC0SS2_Handler,Default_Handler
+.weak ADC0SS3_Handler
+.thumb_set ADC0SS3_Handler,Default_Handler
+.weak ADC1SS0_Handler
+.thumb_set ADC1SS0_Handler,Default_Handler
+.weak ADC1SS1_Handler
+.thumb_set ADC1SS1_Handler,Default_Handler
+.weak ADC1SS2_Handler
+.thumb_set ADC1SS2_Handler,Default_Handler
+.weak ADC1SS3_Handler
+.thumb_set ADC1SS3_Handler,Default_Handler
+.weak BusFault_Handler
+.thumb_set BusFault_Handler,Default_Handler
+.weak CAN0_Handler
+.thumb_set CAN0_Handler,Default_Handler
+.weak CAN1_Handler
+.thumb_set CAN1_Handler,Default_Handler
+.weak CAN2_Handler
+.thumb_set CAN2_Handler,Default_Handler
+.weak COMP0_Handler
+.thumb_set COMP0_Handler,Default_Handler
+.weak COMP1_Handler
+.thumb_set COMP1_Handler,Default_Handler
+.weak COMP2_Handler
+.thumb_set COMP2_Handler,Default_Handler
+.weak DebugMon_Handler
+.thumb_set DebugMon_Handler,Default_Handler
+.weak FLASH_Handler
+.thumb_set FLASH_Handler,Default_Handler
+.weak FPU_Handler
+.thumb_set FPU_Handler,Default_Handler
+.weak GPIOA_Handler
+.thumb_set GPIOA_Handler,Default_Handler
+.weak GPIOB_Handler
+.thumb_set GPIOB_Handler,Default_Handler
+.weak GPIOC_Handler
+.thumb_set GPIOC_Handler,Default_Handler
+.weak GPIOD_Handler
+.thumb_set GPIOD_Handler,Default_Handler
+.weak GPIOE_Handler
+.thumb_set GPIOE_Handler,Default_Handler
+.weak GPIOF_Handler
+.thumb_set GPIOF_Handler,Default_Handler
+.weak GPIOG_Handler
+.thumb_set GPIOG_Handler,Default_Handler
+.weak GPIOH_Handler
+.thumb_set GPIOH_Handler,Default_Handler
+.weak GPIOJ_Handler
+.thumb_set GPIOJ_Handler,Default_Handler
+.weak GPIOK_Handler
+.thumb_set GPIOK_Handler,Default_Handler
+.weak GPIOL_Handler
+.thumb_set GPIOL_Handler,Default_Handler
+.weak GPIOM_Handler
+.thumb_set GPIOM_Handler,Default_Handler
+.weak GPION_Handler
+.thumb_set GPION_Handler,Default_Handler
+.weak GPIOP0_Handler
+.thumb_set GPIOP0_Handler,Default_Handler
+.weak GPIOP1_Handler
+.thumb_set GPIOP1_Handler,Default_Handler
+.weak GPIOP2_Handler
+.thumb_set GPIOP2_Handler,Default_Handler
+.weak GPIOP3_Handler
+.thumb_set GPIOP3_Handler,Default_Handler
+.weak GPIOP4_Handler
+.thumb_set GPIOP4_Handler,Default_Handler
+.weak GPIOP5_Handler
+.thumb_set GPIOP5_Handler,Default_Handler
+.weak GPIOP6_Handler
+.thumb_set GPIOP6_Handler,Default_Handler
+.weak GPIOP7_Handler
+.thumb_set GPIOP7_Handler,Default_Handler
+.weak GPIOQ0_Handler
+.thumb_set GPIOQ0_Handler,Default_Handler
+.weak GPIOQ1_Handler
+.thumb_set GPIOQ1_Handler,Default_Handler
+.weak GPIOQ2_Handler
+.thumb_set GPIOQ2_Handler,Default_Handler
+.weak GPIOQ3_Handler
+.thumb_set GPIOQ3_Handler,Default_Handler
+.weak GPIOQ4_Handler
+.thumb_set GPIOQ4_Handler,Default_Handler
+.weak GPIOQ5_Handler
+.thumb_set GPIOQ5_Handler,Default_Handler
+.weak GPIOQ6_Handler
+.thumb_set GPIOQ6_Handler,Default_Handler
+.weak GPIOQ7_Handler
+.thumb_set GPIOQ7_Handler,Default_Handler
+.weak GPIOR_Handler
+.thumb_set GPIOR_Handler,Default_Handler
+.weak GPIOS_Handler
+.thumb_set GPIOS_Handler,Default_Handler
+.weak HIB_Handler
+.thumb_set HIB_Handler,Default_Handler
+.weak HardFault_Handler
+.thumb_set HardFault_Handler,Default_Handler
+.weak I2C0_Handler
+.thumb_set I2C0_Handler,Default_Handler
+.weak I2C1_Handler
+.thumb_set I2C1_Handler,Default_Handler
+.weak I2C2_Handler
+.thumb_set I2C2_Handler,Default_Handler
+.weak I2C3_Handler
+.thumb_set I2C3_Handler,Default_Handler
+.weak I2C4_Handler
+.thumb_set I2C4_Handler,Default_Handler
+.weak I2C5_Handler
+.thumb_set I2C5_Handler,Default_Handler
+.weak MemManage_Handler
+.thumb_set MemManage_Handler,Default_Handler
+.weak NMI_Handler
+.thumb_set NMI_Handler,Default_Handler
+.weak PMW0_FAULT_Handler
+.thumb_set PMW0_FAULT_Handler,Default_Handler
+.weak PMW1_0_Handler
+.thumb_set PMW1_0_Handler,Default_Handler
+.weak PWM0_0_Handler
+.thumb_set PWM0_0_Handler,Default_Handler
+.weak PWM0_1_Handler
+.thumb_set PWM0_1_Handler,Default_Handler
+.weak PWM0_2_Handler
+.thumb_set PWM0_2_Handler,Default_Handler
+.weak PWM0_3_Handler
+.thumb_set PWM0_3_Handler,Default_Handler
+.weak PWM1_1_Handler
+.thumb_set PWM1_1_Handler,Default_Handler
+.weak PWM1_2_Handler
+.thumb_set PWM1_2_Handler,Default_Handler
+.weak PWM1_3_Handler
+.thumb_set PWM1_3_Handler,Default_Handler
+.weak PWM1_FAULT_Handler
+.thumb_set PWM1_FAULT_Handler,Default_Handler
+.weak PendSV_Handler
+.thumb_set PendSV_Handler,Default_Handler
+.weak QEI0_Handler
+.thumb_set QEI0_Handler,Default_Handler
+.weak QEI1_Handler
+.thumb_set QEI1_Handler,Default_Handler
+.weak QEI2_Handler
+.thumb_set QEI2_Handler,Default_Handler
+.weak SSI0_Handler
+.thumb_set SSI0_Handler,Default_Handler
+.weak SSI1_Handler
+.thumb_set SSI1_Handler,Default_Handler
+.weak SSI2_Handler
+.thumb_set SSI2_Handler,Default_Handler
+.weak SSI3_Handler
+.thumb_set SSI3_Handler,Default_Handler
+.weak SVC_Handler
+.thumb_set SVC_Handler,Default_Handler
+.weak SYSCTL_Handler
+.thumb_set SYSCTL_Handler,Default_Handler
+.weak SysTick_Handler
+.thumb_set SysTick_Handler,Default_Handler
+.weak TIMER0A_Handler
+.thumb_set TIMER0A_Handler,Default_Handler
+.weak TIMER0B_Handler
+.thumb_set TIMER0B_Handler,Default_Handler
+.weak TIMER1A_Handler
+.thumb_set TIMER1A_Handler,Default_Handler
+.weak TIMER1B_Handler
+.thumb_set TIMER1B_Handler,Default_Handler
+.weak TIMER2A_Handler
+.thumb_set TIMER2A_Handler,Default_Handler
+.weak TIMER2B_Handler
+.thumb_set TIMER2B_Handler,Default_Handler
+.weak TIMER3A_Handler
+.thumb_set TIMER3A_Handler,Default_Handler
+.weak TIMER3B_Handler
+.thumb_set TIMER3B_Handler,Default_Handler
+.weak TIMER4A_Handler
+.thumb_set TIMER4A_Handler,Default_Handler
+.weak TIMER4B_Handler
+.thumb_set TIMER4B_Handler,Default_Handler
+.weak TIMER5A_Handler
+.thumb_set TIMER5A_Handler,Default_Handler
+.weak TIMER5B_Handler
+.thumb_set TIMER5B_Handler,Default_Handler
+.weak UART0_Handler
+.thumb_set UART0_Handler,Default_Handler
+.weak UART1_Handler
+.thumb_set UART1_Handler,Default_Handler
+.weak UART2_Handler
+.thumb_set UART2_Handler,Default_Handler
+.weak UART3_Handler
+.thumb_set UART3_Handler,Default_Handler
+.weak UART4_Handler
+.thumb_set UART4_Handler,Default_Handler
+.weak UART5_Handler
+.thumb_set UART5_Handler,Default_Handler
+.weak UART6_Handler
+.thumb_set UART6_Handler,Default_Handler
+.weak UART7_Handler
+.thumb_set UART7_Handler,Default_Handler
+.weak UDMAERR_Handler
+.thumb_set UDMAERR_Handler,Default_Handler
+.weak UDMA_Handler
+.thumb_set UDMA_Handler,Default_Handler
+.weak USB0_Handler
+.thumb_set USB0_Handler,Default_Handler
+.weak UsageFault_Handler
+.thumb_set UsageFault_Handler,Default_Handler
+.weak WDT0_Handler
+.thumb_set WDT0_Handler,Default_Handler
+.weak WTIMER0A_Handler
+.thumb_set WTIMER0A_Handler,Default_Handler
+.weak WTIMER0B_Handler
+.thumb_set WTIMER0B_Handler,Default_Handler
+.weak WTIMER1A_Handler
+.thumb_set WTIMER1A_Handler,Default_Handler
+.weak WTIMER1B_Handler
+.thumb_set WTIMER1B_Handler,Default_Handler
+.weak WTIMER2A_Handler
+.thumb_set WTIMER2A_Handler,Default_Handler
+.weak WTIMER2B_Handler
+.thumb_set WTIMER2B_Handler,Default_Handler
+.weak WTIMER3A_Handler
+.thumb_set WTIMER3A_Handler,Default_Handler
+.weak WTIMER3B_Handler
+.thumb_set WTIMER3B_Handler,Default_Handler
+.weak WTIMER4A_Handler
+.thumb_set WTIMER4A_Handler,Default_Handler
+.weak WTIMER4B_Handler
+.thumb_set WTIMER4B_Handler,Default_Handler
+.weak WTIMER5A_Handler
+.thumb_set WTIMER5A_Handler,Default_Handler
+.weak WTIMER5B_Handler
+.thumb_set WTIMER5B_Handler,Default_Handler
+
+.section .note.GNU-stack,"",%progbits

@@ -2,7 +2,7 @@
 #define CHASSIS_SERVICE_H
 #include <stdint.h>
 #include "chassis_math.h"
-enum { CHASSIS_IDLE=0, CHASSIS_ACTIVE=1, CHASSIS_UNDERVOLTAGE=2, CHASSIS_TIMEOUT=3 };
+enum { CHASSIS_IDLE=0, CHASSIS_ACTIVE=1, CHASSIS_UNDERVOLTAGE=2, CHASSIS_TIMEOUT=3, CHASSIS_UNCALIBRATED=4 };
 typedef struct {
     uint8_t wheels;
     float span_m,kp,ki,pwm_limit,min_voltage;

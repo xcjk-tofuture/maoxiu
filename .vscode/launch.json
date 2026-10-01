@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "OpenOCD ICDI",
+      "type": "cortex-debug",
+      "request": "launch",
+      "servertype": "openocd",
+      "cwd": "${workspaceFolder}",
+      "executable": "${workspaceFolder}/build/debug/maoxiu_tm4c.elf",
+      "configFiles": [
+        "${workspaceFolder}/openocd/board.cfg"
+      ],
+      "runToEntryPoint": "main",
+      "gdbPath": "arm-none-eabi-gdb",
+      "preLaunchTask": "CMake: build"
+    }
+  ]
+}

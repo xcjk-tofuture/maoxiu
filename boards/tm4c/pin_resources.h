@@ -1,0 +1,23 @@
+#ifndef TM4C_PIN_RESOURCES_H
+#define TM4C_PIN_RESOURCES_H
+//PIN-MAP
+#define RGB_R_Pin GPIO_PIN_1
+#define RGB_R_GPIO_Port GPIO_PORTF_BASE
+#define RGB_G_Pin GPIO_PIN_2
+#define RGB_G_GPIO_Port GPIO_PORTF_BASE
+#define RGB_B_Pin GPIO_PIN_3
+#define RGB_B_GPIO_Port GPIO_PORTF_BASE
+
+
+#define LCD_DC_GPIO_Port GPIO_PORTB_BASE
+#define LCD_DC_Pin GPIO_PIN_3
+#define LCD_RES_GPIO_Port GPIO_PORTB_BASE
+#define LCD_RES_Pin GPIO_PIN_2
+#define LCD_CS_GPIO_Port GPIO_PORTA_BASE
+#define LCD_CS_Pin GPIO_PIN_3
+
+
+
+
+
+#endif
