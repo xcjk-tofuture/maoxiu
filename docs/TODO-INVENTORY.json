@@ -1,0 +1,7 @@
+{
+  "baseline_inventory": "baseline/inventory.json",
+  "own_or_imported_notes": [],
+  "third_party": "vendor/SDK original TODO preserved; see baseline inventory and SOURCES.md",
+  "removed_experiments": "REMOVED-EXPERIMENTS.json",
+  "candidate_scope": "TODO.md; no implementation started"
+}

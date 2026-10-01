@@ -1,0 +1,295 @@
+[1/1] Cleaning all built files...
+Cleaning... 73 files.
+[1/73] Building C object CMakeFiles/maoxiu_tm4c.dir/platform/tm4c/key_irq.c.obj
+[2/73] Building C object CMakeFiles/maoxiu_tm4c.dir/os/key_events.c.obj
+[3/73] Building C object CMakeFiles/maoxiu_tm4c.dir/platform/tm4c/board_devices.c.obj
+[4/73] Building C object CMakeFiles/maoxiu_tm4c.dir/platform/tm4c/motor_io.c.obj
+[5/73] Building C object CMakeFiles/maoxiu_tm4c.dir/platform/tm4c/emergency_stop.c.obj
+[6/73] Building C object CMakeFiles/maoxiu_tm4c.dir/services/tm4c_legacy/src/buzzer_proc.c.obj
+[7/73] Building C object CMakeFiles/maoxiu_tm4c.dir/algorithms/tm4c_legacy/WP_Math.c.obj
+[8/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/aes.c.obj
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/aes.c: In function 'AESIntRegister':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/aes.c:1175:25: warning: unused parameter 'ui32Base' [-Wunused-parameter]
+ 1175 | AESIntRegister(uint32_t ui32Base, void (*pfnHandler)(void))
+      |                ~~~~~~~~~^~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/aes.c: In function 'AESIntUnregister':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/aes.c:1209:27: warning: unused parameter 'ui32Base' [-Wunused-parameter]
+ 1209 | AESIntUnregister(uint32_t ui32Base)
+      |                  ~~~~~~~~~^~~~~~~~
+[9/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/adc.c.obj
+[10/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/comp.c.obj
+[11/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/can.c.obj
+[12/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/cpu.c.obj
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/cpu.c: In function 'CPUbasepriSet':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/cpu.c:341:24: warning: unused parameter 'ui32NewBasepri' [-Wunused-parameter]
+  341 | CPUbasepriSet(uint32_t ui32NewBasepri)
+      |               ~~~~~~~~~^~~~~~~~~~~~~~
+[13/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/crc.c.obj
+[14/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/des.c.obj
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/des.c: In function 'DESIntRegister':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/des.c:682:25: warning: unused parameter 'ui32Base' [-Wunused-parameter]
+  682 | DESIntRegister(uint32_t ui32Base, void (*pfnHandler)(void))
+      |                ~~~~~~~~~^~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/des.c: In function 'DESIntUnregister':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/des.c:716:27: warning: unused parameter 'ui32Base' [-Wunused-parameter]
+  716 | DESIntUnregister(uint32_t ui32Base)
+      |                  ~~~~~~~~~^~~~~~~~
+[15/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/eeprom.c.obj
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/eeprom.c: In function 'EEPROMIntEnable':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/eeprom.c:992:26: warning: unused parameter 'ui32IntFlags' [-Wunused-parameter]
+  992 | EEPROMIntEnable(uint32_t ui32IntFlags)
+      |                 ~~~~~~~~~^~~~~~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/eeprom.c: In function 'EEPROMIntDisable':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/eeprom.c:1028:27: warning: unused parameter 'ui32IntFlags' [-Wunused-parameter]
+ 1028 | EEPROMIntDisable(uint32_t ui32IntFlags)
+      |                  ~~~~~~~~~^~~~~~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/eeprom.c: In function 'EEPROMIntClear':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/eeprom.c:1112:25: warning: unused parameter 'ui32IntFlags' [-Wunused-parameter]
+ 1112 | EEPROMIntClear(uint32_t ui32IntFlags)
+      |                ~~~~~~~~~^~~~~~~~~~~~
+[16/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/epi.c.obj
+In file included from C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/epi.c:48:
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/epi.h: In function 'EPIWorkaroundWordWrite':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/epi.h:524:5: warning: 'register' is not at beginning of declaration [-Wold-style-declaration]
+  524 |     volatile register uint32_t ui32Scratch;
+      |     ^~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/epi.h: In function 'EPIWorkaroundWordRead':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/epi.h:547:5: warning: 'register' is not at beginning of declaration [-Wold-style-declaration]
+  547 |     volatile register uint32_t ui32Data, ui32Scratch;
+      |     ^~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/epi.h: In function 'EPIWorkaroundHWordWrite':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/epi.h:579:5: warning: 'register' is not at beginning of declaration [-Wold-style-declaration]
+  579 |     volatile register uint32_t ui32Scratch;
+      |     ^~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/epi.h: In function 'EPIWorkaroundByteWrite':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/epi.h:635:5: warning: 'register' is not at beginning of declaration [-Wold-style-declaration]
+  635 |     volatile register uint32_t ui32Scratch;
+      |     ^~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/epi.c: In function 'EPIConfigGPModeSet':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/epi.c:1336:54: warning: unused parameter 'ui32MaxWait' [-Wunused-parameter]
+ 1336 |                    uint32_t ui32FrameCount, uint32_t ui32MaxWait)
+      |                                             ~~~~~~~~~^~~~~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/epi.c: In function '_EPIIntNumberGet':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/epi.c:2070:27: warning: unused parameter 'ui32Base' [-Wunused-parameter]
+ 2070 | _EPIIntNumberGet(uint32_t ui32Base)
+      |                  ~~~~~~~~~^~~~~~~~
+[17/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/fpu.c.obj
+[18/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/flash.c.obj
+[19/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/emac.c.obj
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/emac.c: In function 'EMACNumAddrGet':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/emac.c:1276:25: warning: unused parameter 'ui32Base' [-Wunused-parameter]
+ 1276 | EMACNumAddrGet(uint32_t ui32Base)
+      |                ~~~~~~~~~^~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/emac.c: In function 'EMACIntRegister':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/emac.c:2355:26: warning: unused parameter 'ui32Base' [-Wunused-parameter]
+ 2355 | EMACIntRegister(uint32_t ui32Base, void (*pfnHandler)(void))
+      |                 ~~~~~~~~~^~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/emac.c: In function 'EMACIntUnregister':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/emac.c:2390:28: warning: unused parameter 'ui32Base' [-Wunused-parameter]
+ 2390 | EMACIntUnregister(uint32_t ui32Base)
+      |                   ~~~~~~~~~^~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/emac.c: In function 'EMACPHYExtendedRead':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/emac.c:2962:30: warning: unused parameter 'ui32Base' [-Wunused-parameter]
+ 2962 | EMACPHYExtendedRead(uint32_t ui32Base, uint8_t ui8PhyAddr,
+      |                     ~~~~~~~~~^~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/emac.c: In function 'EMACPHYExtendedWrite':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/emac.c:3002:31: warning: unused parameter 'ui32Base' [-Wunused-parameter]
+ 3002 | EMACPHYExtendedWrite(uint32_t ui32Base, uint8_t ui8PhyAddr,
+      |                      ~~~~~~~~~^~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/emac.c: In function 'EMACRemoteWakeUpFrameFilterSet':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/emac.c:4441:5: warning: converting a packed 'tEMACWakeUpFrameFilter' pointer (alignment 1) to a 'uint32_t' {aka 'long unsigned int'} pointer (alignment 4) may result in an unaligned pointer value [-Waddress-of-packed-member]
+ 4441 |     pui32Data = (uint32_t *)pFilter;
+      |     ^~~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/emac.c: In function 'EMACRemoteWakeUpFrameFilterGet':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/emac.c:4524:5: warning: converting a packed 'tEMACWakeUpFrameFilter' pointer (alignment 1) to a 'uint32_t' {aka 'long unsigned int'} pointer (alignment 4) may result in an unaligned pointer value [-Waddress-of-packed-member]
+ 4524 |     pui32Data = (uint32_t *)pFilter;
+      |     ^~~~~~~~~
+In file included from C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/emac.c:55:
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/emac.h:833:9: note: defined here
+  833 | typedef struct
+      |         ^~~~~~
+[20/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/interrupt.c.obj
+[21/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/gpio.c.obj
+[22/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/i2c.c.obj
+[23/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/hibernate.c.obj
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/hibernate.c: In function 'HibernateEnableExpClk':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/hibernate.c:138:32: warning: unused parameter 'ui32HibClk' [-Wunused-parameter]
+  138 | HibernateEnableExpClk(uint32_t ui32HibClk)
+      |                       ~~~~~~~~~^~~~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/hibernate.c: In function 'HibernateRTCMatchSet':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/hibernate.c:691:31: warning: unused parameter 'ui32Match' [-Wunused-parameter]
+  691 | HibernateRTCMatchSet(uint32_t ui32Match, uint32_t ui32Value)
+      |                      ~~~~~~~~~^~~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/hibernate.c: In function 'HibernateRTCMatchGet':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/hibernate.c:720:31: warning: unused parameter 'ui32Match' [-Wunused-parameter]
+  720 | HibernateRTCMatchGet(uint32_t ui32Match)
+      |                      ~~~~~~~~~^~~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/hibernate.c: In function 'HibernateRTCSSMatchSet':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/hibernate.c:748:33: warning: unused parameter 'ui32Match' [-Wunused-parameter]
+  748 | HibernateRTCSSMatchSet(uint32_t ui32Match, uint32_t ui32Value)
+      |                        ~~~~~~~~~^~~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/hibernate.c: In function 'HibernateRTCSSMatchGet':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/hibernate.c:778:33: warning: unused parameter 'ui32Match' [-Wunused-parameter]
+  778 | HibernateRTCSSMatchGet(uint32_t ui32Match)
+      |                        ~~~~~~~~~^~~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/hibernate.c: In function 'HibernateCalendarMatchSet':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/hibernate.c:1752:36: warning: unused parameter 'ui32Index' [-Wunused-parameter]
+ 1752 | HibernateCalendarMatchSet(uint32_t ui32Index, struct tm *psTime)
+      |                           ~~~~~~~~~^~~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/hibernate.c: In function 'HibernateCalendarMatchGet':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/hibernate.c:1787:36: warning: unused parameter 'ui32Index' [-Wunused-parameter]
+ 1787 | HibernateCalendarMatchGet(uint32_t ui32Index, struct tm *psTime)
+      |                           ~~~~~~~~~^~~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/hibernate.c: In function 'HibernateTamperIODisable':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/hibernate.c:2135:41: warning: left shift of negative value [-Wshift-negative-value]
+ 2135 |     HWREG(HIB_TPIO) &= ((~HIB_TPIO_EN0) << (ui32Input << 3));
+      |                                         ^~
+[24/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/mpu.c.obj
+[25/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/lcd.c.obj
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/lcd.c: In function 'LCDClockReset':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/lcd.c:181:24: warning: unused parameter 'ui32Base' [-Wunused-parameter]
+  181 | LCDClockReset(uint32_t ui32Base, uint32_t ui32Clocks)
+      |               ~~~~~~~~~^~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/lcd.c: In function 'LCDRasterPaletteSet':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/lcd.c:1367:30: warning: unused parameter 'ui32Base' [-Wunused-parameter]
+ 1367 | LCDRasterPaletteSet(uint32_t ui32Base, uint32_t ui32Type, uint32_t *pui32Addr,
+      |                     ~~~~~~~~~^~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/lcd.c: In function 'LCDIntRegister':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/lcd.c:1744:25: warning: unused parameter 'ui32Base' [-Wunused-parameter]
+ 1744 | LCDIntRegister(uint32_t ui32Base, void (*pfnHandler)(void))
+      |                ~~~~~~~~~^~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/lcd.c: In function 'LCDIntUnregister':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/lcd.c:1782:27: warning: unused parameter 'ui32Base' [-Wunused-parameter]
+ 1782 | LCDIntUnregister(uint32_t ui32Base)
+      |                  ~~~~~~~~~^~~~~~~~
+[26/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/onewire.c.obj
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/onewire.c: In function '_OneWireIntNumberGet':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/onewire.c:446:31: warning: unused parameter 'ui32Base' [-Wunused-parameter]
+  446 | _OneWireIntNumberGet(uint32_t ui32Base)
+      |                      ~~~~~~~~~^~~~~~~~
+[27/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/pwm.c.obj
+[28/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/qei.c.obj
+[29/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/shamd5.c.obj
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/shamd5.c: In function 'SHAMD5IntRegister':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/shamd5.c:363:28: warning: unused parameter 'ui32Base' [-Wunused-parameter]
+  363 | SHAMD5IntRegister(uint32_t ui32Base, void (*pfnHandler)(void))
+      |                   ~~~~~~~~~^~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/shamd5.c: In function 'SHAMD5IntUnregister':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/shamd5.c:397:30: warning: unused parameter 'ui32Base' [-Wunused-parameter]
+  397 | SHAMD5IntUnregister(uint32_t ui32Base)
+      |                     ~~~~~~~~~^~~~~~~~
+[30/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/ssi.c.obj
+[31/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/sw_crc.c.obj
+[32/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/systick.c.obj
+[33/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/sysexc.c.obj
+[34/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/sysctl.c.obj
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/sysctl.c: In function 'SysCtlDelay':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/sysctl.c:1839:22: warning: unused parameter 'ui32Count' [-Wunused-parameter]
+ 1839 | SysCtlDelay(uint32_t ui32Count)
+      |             ~~~~~~~~~^~~~~~~~~
+[35/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/timer.c.obj
+[36/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/udma.c.obj
+[37/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/uart.c.obj
+[38/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/watchdog.c.obj
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/watchdog.c: In function 'WatchdogIntRegister':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/watchdog.c:353:30: warning: unused parameter 'ui32Base' [-Wunused-parameter]
+  353 | WatchdogIntRegister(uint32_t ui32Base, void (*pfnHandler)(void))
+      |                     ~~~~~~~~~^~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/watchdog.c: In function 'WatchdogIntUnregister':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/watchdog.c:395:32: warning: unused parameter 'ui32Base' [-Wunused-parameter]
+  395 | WatchdogIntUnregister(uint32_t ui32Base)
+      |                       ~~~~~~~~~^~~~~~~~
+[39/73] Building C object CMakeFiles/maoxiu_tm4c.dir/algorithms/chassis/chassis_math.c.obj
+[40/73] Building C object CMakeFiles/maoxiu_tm4c.dir/Lib/src/driverlib/usb.c.obj
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/usb.c: In function '_USBIntNumberGet':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/usb.c:819:27: warning: unused parameter 'ui32Base' [-Wunused-parameter]
+  819 | _USBIntNumberGet(uint32_t ui32Base)
+      |                  ~~~~~~~~~^~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/usb.c: In function 'USBHostEndpointPing':
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/usb.c:1329:30: warning: unused parameter 'ui32Base' [-Wunused-parameter]
+ 1329 | USBHostEndpointPing(uint32_t ui32Base, uint32_t ui32Endpoint, bool bEnable)
+      |                     ~~~~~~~~~^~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/Lib/src/driverlib/usb.c:1329:49: warning: unused parameter 'ui32Endpoint' [-Wunused-parameter]
+ 1329 | USBHostEndpointPing(uint32_t ui32Base, uint32_t ui32Endpoint, bool bEnable)
+      |                                        ~~~~~~~~~^~~~~~~~~~~~
+[41/73] Building C object CMakeFiles/maoxiu_tm4c.dir/app/tm4c/control_task.c.obj
+[42/73] Building C object CMakeFiles/maoxiu_tm4c.dir/app/tm4c/FreeRTOS.c.obj
+[43/73] Building C object CMakeFiles/maoxiu_tm4c.dir/drivers/tm4c/maoxiu_motor.c.obj
+[44/73] Building C object CMakeFiles/maoxiu_tm4c.dir/app/tm4c/main.c.obj
+[45/73] Building C object CMakeFiles/maoxiu_tm4c.dir/app/tm4c/pc_service.c.obj
+[46/73] Building C object CMakeFiles/maoxiu_tm4c.dir/os/failure_hooks.c.obj
+[47/73] Building C object CMakeFiles/maoxiu_tm4c.dir/drivers/tm4c/src/lcd_init.c.obj
+[48/73] Building C object CMakeFiles/maoxiu_tm4c.dir/drivers/tm4c/src/mpu6050.c.obj
+[49/73] Building C object CMakeFiles/maoxiu_tm4c.dir/drivers/tm4c/src/lcd.c.obj
+[50/73] Building C object CMakeFiles/maoxiu_tm4c.dir/os/vendor/FreeRTOS-Kernel-10.5.1/list.c.obj
+[51/73] Building C object CMakeFiles/maoxiu_tm4c.dir/os/vendor/FreeRTOS-Kernel-10.5.1/portable/GCC/ARM_CM4F/port.c.obj
+[52/73] Building C object CMakeFiles/maoxiu_tm4c.dir/os/vendor/FreeRTOS-Kernel-10.5.1/event_groups.c.obj
+[53/73] Building C object CMakeFiles/maoxiu_tm4c.dir/os/vendor/FreeRTOS-Kernel-10.5.1/portable/MemMang/heap_4.c.obj
+[54/73] Building C object CMakeFiles/maoxiu_tm4c.dir/os/vendor/FreeRTOS-Kernel-10.5.1/stream_buffer.c.obj
+[55/73] Building C object CMakeFiles/maoxiu_tm4c.dir/os/vendor/FreeRTOS-Kernel-10.5.1/queue.c.obj
+[56/73] Building C object CMakeFiles/maoxiu_tm4c.dir/os/vendor/FreeRTOS-Kernel-10.5.1/timers.c.obj
+[57/73] Building C object CMakeFiles/maoxiu_tm4c.dir/os/vendor/FreeRTOS-Kernel-10.5.1/tasks.c.obj
+[58/73] Building C object CMakeFiles/maoxiu_tm4c.dir/platform/tm4c/bsp/src/bsp_adc.c.obj
+[59/73] Building C object CMakeFiles/maoxiu_tm4c.dir/platform/tm4c/bsp/src/bsp_gpio.c.obj
+[60/73] Building C object CMakeFiles/maoxiu_tm4c.dir/platform/tm4c/bsp/src/bsp_iic.c.obj
+[61/73] Building C object CMakeFiles/maoxiu_tm4c.dir/platform/tm4c/bsp/src/bsp_spi.c.obj
+[62/73] Building ASM object CMakeFiles/maoxiu_tm4c.dir/platform/tm4c/startup_tm4c123.S.obj
+[63/73] Building C object CMakeFiles/maoxiu_tm4c.dir/platform/tm4c/bsp/src/bsp_tim.c.obj
+C:/Users/20493/Desktop/maoxiu-tm4c/platform/tm4c/bsp/src/bsp_tim.c: In function 'TIM0_Period_Handler':
+C:/Users/20493/Desktop/maoxiu-tm4c/platform/tm4c/bsp/src/bsp_tim.c:39:21: warning: unused variable 'time_count' [-Wunused-variable]
+   39 |     static uint32_t time_count = 0; // 计时数
+      |                     ^~~~~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/platform/tm4c/bsp/src/bsp_tim.c: In function 'WTIM1_Period_Handler':
+C:/Users/20493/Desktop/maoxiu-tm4c/platform/tm4c/bsp/src/bsp_tim.c:80:20: warning: unused variable 'trigger' [-Wunused-variable]
+   80 |     static uint8_t trigger = 0;     // led翻转标志位置
+      |                    ^~~~~~~
+C:/Users/20493/Desktop/maoxiu-tm4c/platform/tm4c/bsp/src/bsp_tim.c:79:21: warning: unused variable 'time_count' [-Wunused-variable]
+   79 |     static uint32_t time_count = 0; // 计时数
+      |                     ^~~~~~~~~~
+[64/73] Building C object CMakeFiles/maoxiu_tm4c.dir/platform/tm4c/system.c.obj
+[65/73] Building C object CMakeFiles/maoxiu_tm4c.dir/services/chassis_service.c.obj
+[66/73] Building C object CMakeFiles/maoxiu_tm4c.dir/platform/tm4c/bsp/src/bsp_uart.c.obj
+C:/Users/20493/Desktop/maoxiu-tm4c/platform/tm4c/bsp/src/bsp_uart.c: In function 'fputc':
+C:/Users/20493/Desktop/maoxiu-tm4c/platform/tm4c/bsp/src/bsp_uart.c:368:25: warning: unused parameter 'f' [-Wunused-parameter]
+  368 | int fputc(int ch, FILE *f) {
+      |                   ~~~~~~^
+C:/Users/20493/Desktop/maoxiu-tm4c/platform/tm4c/bsp/src/bsp_uart.c: In function 'fgetc':
+C:/Users/20493/Desktop/maoxiu-tm4c/platform/tm4c/bsp/src/bsp_uart.c:373:17: warning: unused parameter 'f' [-Wunused-parameter]
+  373 | int fgetc(FILE *f) {
+      |           ~~~~~~^
+[67/73] Building C object CMakeFiles/maoxiu_tm4c.dir/services/protocol/star_dispatch.c.obj
+[68/73] Building C object CMakeFiles/maoxiu_tm4c.dir/services/protocol/star_protocol.c.obj
+[69/73] Building C object CMakeFiles/maoxiu_tm4c.dir/services/tm4c_legacy/src/rgb_proc.c.obj
+[70/73] Building C object CMakeFiles/maoxiu_tm4c.dir/services/tm4c_legacy/src/lcd_proc.c.obj
+C:/Users/20493/Desktop/maoxiu-tm4c/services/tm4c_legacy/src/lcd_proc.c: In function 'LCD_Task_Proc':
+C:/Users/20493/Desktop/maoxiu-tm4c/services/tm4c_legacy/src/lcd_proc.c:29:36: warning: pointer targets in passing argument 3 of 'LCD_ShowString' differ in signedness [-Wpointer-sign]
+   29 |         LCD_ShowString(10 + 36, 0, "V2.0 RTOS", YELLOW, BLACK, 16, 0);
+      |                                    ^~~~~~~~~~~
+      |                                    |
+      |                                    char *
+In file included from C:/Users/20493/Desktop/maoxiu-tm4c/services/tm4c_legacy/src/lcd_proc.c:3:
+C:/Users/20493/Desktop/maoxiu-tm4c/drivers/tm4c/inc/lcd.h:13:45: note: expected 'const u8 *' {aka 'const unsigned char *'} but argument is of type 'char *'
+   13 | void LCD_ShowString(u16 x, u16 y, const u8 *p, u16 fc, u16 bc, u8 sizey, u8 mode); // 显示字符串
+      |                                   ~~~~~~~~~~^
+C:/Users/20493/Desktop/maoxiu-tm4c/services/tm4c_legacy/src/lcd_proc.c:15:32: warning: unused parameter 'argument' [-Wunused-parameter]
+   15 | void LCD_Task_Proc(void const *argument) {
+      |                    ~~~~~~~~~~~~^~~~~~~~
+[71/73] Building C object CMakeFiles/maoxiu_tm4c.dir/services/tm4c_legacy/src/mpu6050_proc.c.obj
+C:/Users/20493/Desktop/maoxiu-tm4c/services/tm4c_legacy/src/mpu6050_proc.c: In function 'MPU6050_Task_Proc':
+C:/Users/20493/Desktop/maoxiu-tm4c/services/tm4c_legacy/src/mpu6050_proc.c:19:36: warning: unused parameter 'argument' [-Wunused-parameter]
+   19 | void MPU6050_Task_Proc(void const *argument) {
+      |                        ~~~~~~~~~~~~^~~~~~~~
+[72/73] Building C object CMakeFiles/maoxiu_tm4c.dir/platform/syscalls.c.obj
+[73/73] Linking C executable maoxiu_tm4c.elf
+C:/Users/20493/Desktop/embedded-tools/arm-gnu-toolchain-13.3.rel1-mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/bin/ld.exe: maoxiu_tm4c.elf: section `.data' can't be allocated in segment 0
+LOAD: .isr_vector .text .ARM.exidx .init_array .fini_array .data
+C:/Users/20493/Desktop/embedded-tools/arm-gnu-toolchain-13.3.rel1-mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/bin/ld.exe: maoxiu_tm4c.elf: section .bss lma 0x5505840000d434 adjusted to 0x55058f00000000
+C:/Users/20493/Desktop/embedded-tools/arm-gnu-toolchain-13.3.rel1-mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/bin/ld.exe: maoxiu_tm4c.elf: section .heap lma 0x5505840000d434 adjusted to 0x55058f00000000
+C:/Users/20493/Desktop/embedded-tools/arm-gnu-toolchain-13.3.rel1-mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/bin/ld.exe: maoxiu_tm4c.elf: section .stack lma 0x5505840000d434 adjusted to 0x55058f00000000
+C:/Users/20493/Desktop/embedded-tools/arm-gnu-toolchain-13.3.rel1-mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/bin/ld.exe: maoxiu_tm4c.elf: section `.stack' can't be allocated in segment 1
+LOAD: .data .vtable .bss .heap .stack
+Memory region         Used Size  Region Size  %age Used
+           FLASH:       54324 B       256 KB     20.72%
+             RAM:       23016 B        32 KB     70.24%
+   text	   data	    bss	    dec	    hex	filename
+  53824	    496	  21992	  76312	  12a18	C:/Users/20493/Desktop/maoxiu-tm4c/build/debug/maoxiu_tm4c.elf

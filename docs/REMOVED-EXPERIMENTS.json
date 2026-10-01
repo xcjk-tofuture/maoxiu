@@ -1,0 +1,5 @@
+[
+  "services/tm4c_legacy/inc/buzzer_proc.h",
+  "services/tm4c_legacy/src/servo_proc.c",
+  "services/tm4c_legacy/inc/servo_proc.h"
+]

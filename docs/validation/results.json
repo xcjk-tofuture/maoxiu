@@ -1,0 +1,143 @@
+{
+  "debug": {
+    "build": "PASS",
+    "flash_bytes": 54324,
+    "ram_static_heap_stack_reservation_bytes": 23016,
+    "warnings": 50,
+    "largest_compiler_stack_frames": [
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/app/tm4c/pc_service.c:82:6:maoxiu_pc_task",
+        "bytes": 304,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/services/protocol/star_protocol.c:74:6:star_parser_feed",
+        "bytes": 184,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/app/tm4c/pc_service.c:62:13:transmit",
+        "bytes": 160,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/app/tm4c/pc_service.c:74:13:received",
+        "bytes": 144,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/services/tm4c_legacy/src/mpu6050_proc.c:70:6:imuUpdate",
+        "bytes": 96,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/app/tm4c/control_task.c:48:6:maoxiu_control_task",
+        "bytes": 80,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/drivers/tm4c/src/lcd.c:210:6:LCD_ShowChar",
+        "bytes": 64,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/drivers/tm4c/src/lcd.c:296:6:LCD_ShowIntNum",
+        "bytes": 64,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/drivers/tm4c/src/lcd.c:323:6:LCD_ShowFloatNum1",
+        "bytes": 64,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/drivers/tm4c/src/lcd.c:115:6:LCD_DrawLine",
+        "bytes": 56,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/drivers/tm4c/src/lcd.c:179:6:Draw_Circle",
+        "bytes": 56,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/services/tm4c_legacy/src/lcd_proc.c:15:6:LCD_Task_Proc",
+        "bytes": 56,
+        "classification": "static"
+      }
+    ],
+    "elf_sha256": "91a0ba397f5cc3a743dd7dbe3a2acb74ca05d2a8a5e9eb42b180606915bf3b50"
+  },
+  "release": {
+    "build": "PASS",
+    "flash_bytes": 52068,
+    "ram_static_heap_stack_reservation_bytes": 23008,
+    "warnings": 52,
+    "largest_compiler_stack_frames": [
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/app/tm4c/pc_service.c:82:6:maoxiu_pc_task",
+        "bytes": 320,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/services/protocol/star_protocol.c:74:6:star_parser_feed",
+        "bytes": 184,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/app/tm4c/pc_service.c:62:13:transmit",
+        "bytes": 168,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/app/tm4c/pc_service.c:74:13:received",
+        "bytes": 144,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/services/tm4c_legacy/src/mpu6050_proc.c:70:6:imuUpdate",
+        "bytes": 112,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/app/tm4c/control_task.c:48:6:maoxiu_control_task",
+        "bytes": 88,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/drivers/tm4c/src/lcd.c:296:6:LCD_ShowIntNum",
+        "bytes": 72,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/drivers/tm4c/src/lcd.c:323:6:LCD_ShowFloatNum1",
+        "bytes": 72,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/drivers/tm4c/src/lcd.c:210:6:LCD_ShowChar",
+        "bytes": 64,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/drivers/tm4c/src/lcd.c:115:6:LCD_DrawLine",
+        "bytes": 56,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/drivers/tm4c/src/lcd.c:179:6:Draw_Circle",
+        "bytes": 56,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu-tm4c/drivers/tm4c/src/lcd.c:266:6:LCD_ShowString",
+        "bytes": 56,
+        "classification": "static"
+      }
+    ],
+    "elf_sha256": "3f82da81b84208bcafad0ea8873485e84d378ad2b205d4045de90d15114ffb02"
+  },
+  "host_tests": "PASS",
+  "OpenOCD_config_parse_and_flash_command_generation": "PASS; no probe initialization or flash performed",
+  "hardware": "PENDING; see ACCEPTANCE.md"
+}
