@@ -5,6 +5,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include(cmake/sources.cmake)
 add_executable(maoxiu_tm4c ${FIRMWARE_SOURCES})
 set_target_properties(maoxiu_tm4c PROPERTIES SUFFIX ".elf")
+set_property(TARGET maoxiu_tm4c APPEND PROPERTY LINK_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/boards/tm4c/firmware.ld)
 target_include_directories(maoxiu_tm4c PRIVATE ${FIRMWARE_INCLUDES})
 target_compile_definitions(maoxiu_tm4c PRIVATE PART_TM4C1233H6PM TARGET_IS_BLIZZARD_RB1 gcc)
 target_compile_options(maoxiu_tm4c PRIVATE -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard
