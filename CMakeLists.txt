@@ -5,6 +5,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include(cmake/sources.cmake)
 add_executable(maoxiu_stm32 ${FIRMWARE_SOURCES})
 set_target_properties(maoxiu_stm32 PROPERTIES SUFFIX ".elf")
+set_property(TARGET maoxiu_stm32 APPEND PROPERTY LINK_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/firmware/boards/stm32/firmware.ld)
 target_include_directories(maoxiu_stm32 PRIVATE ${FIRMWARE_INCLUDES})
 target_compile_definitions(maoxiu_stm32 PRIVATE USE_HAL_DRIVER STM32F407xx)
 target_compile_options(maoxiu_stm32 PRIVATE -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard
