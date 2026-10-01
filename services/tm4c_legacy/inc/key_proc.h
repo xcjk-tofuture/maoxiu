@@ -5,12 +5,6 @@
 #include "task.h"
 #include "main.h"
 
-
-
-
-
-
 void KEY_EXIT_Handler();
-
 
 #endif

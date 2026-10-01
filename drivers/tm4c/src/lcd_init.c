@@ -2,150 +2,121 @@
 #include "include.h"
 #include "lcd_init.h"
 
-//static void delay_us(uint32_t us)
+// static void delay_us(uint32_t us)
 //{
-//    uint32_t delay = (HAL_RCC_GetHCLKFreq() / 4000000 * us);
-//    while (delay--)
-//    {
-//        ;
-//    }
-//}
+//     uint32_t delay = (HAL_RCC_GetHCLKFreq() / 4000000 * us);
+//     while (delay--)
+//     {
+//         ;
+//     }
+// }
 
 /**********************************************************************************************************
-*∫Ø  ˝ √˚: SoftDelayMs
-*π¶ƒ‹Àµ√˜: ∫¡√Îº∂»Ìº˛—” ±£¨ª˘”⁄STM32F4 168M÷˜∆µµƒµ˜ ‘÷µ£¨≤ªÕ¨µ•∆¨ª˙”–À˘«¯±
-*–Œ    ≤Œ: —” ± ±º‰
-*∑µ ªÿ ÷µ: Œﬁ
-**********************************************************************************************************/
-void delay_ms(uint32_t ms)
-{
-
-	My_Delay_ms(ms);
-}
+ *ÂáΩ Êï∞ Âêç: SoftDelayMs
+ *ÂäüËÉΩËØ¥Êòé: ÊØ´ÁßíÁ∫ßËΩØ‰ª∂Âª∂Êó∂ÔºåÂü∫‰∫éSTM32F4 168M‰∏ªÈ¢ëÁöÑË∞ÉËØïÂÄºÔºå‰∏çÂêåÂçïÁâáÊú∫ÊúâÊâÄÂå∫Âà´
+ *ÂΩ¢    ÂèÇ: Âª∂Êó∂Êó∂Èó¥
+ *Ëøî Âõû ÂÄº: Êó†
+ **********************************************************************************************************/
+void delay_ms(uint32_t ms) { My_Delay_ms(ms); }
 
 /**********************************************************************************************************
-*∫Ø  ˝ √˚: SoftDelayUs
-*π¶ƒ‹Àµ√˜: Œ¢√Îº∂»Ìº˛—” ±£¨ª˘”⁄STM32F4 168M÷˜∆µµƒµ˜ ‘÷µ£¨≤ªÕ¨µ•∆¨ª˙”–À˘«¯±
-*–Œ    ≤Œ: —” ± ±º‰
-*∑µ ªÿ ÷µ: Œﬁ
-**********************************************************************************************************/
-void delay_us(uint32_t us)
-{
+ *ÂáΩ Êï∞ Âêç: SoftDelayUs
+ *ÂäüËÉΩËØ¥Êòé: ÂæÆÁßíÁ∫ßËΩØ‰ª∂Âª∂Êó∂ÔºåÂü∫‰∫éSTM32F4 168M‰∏ªÈ¢ëÁöÑË∞ÉËØïÂÄºÔºå‰∏çÂêåÂçïÁâáÊú∫ÊúâÊâÄÂå∫Âà´
+ *ÂΩ¢    ÂèÇ: Âª∂Êó∂Êó∂Èó¥
+ *Ëøî Âõû ÂÄº: Êó†
+ **********************************************************************************************************/
+void delay_us(uint32_t us) { My_Delay_us(us); }
 
-	My_Delay_us(us);
-	
-}
-
-
-//void LCD_GPIO_Init(void)
+// void LCD_GPIO_Init(void)
 //{
-//  GPIO_InitTypeDef  GPIO_InitStructure;
-//	
-//	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA|RCC_AHB1Periph_GPIOB|RCC_AHB1Periph_GPIOC|RCC_AHB1Periph_GPIOD|RCC_AHB1Periph_GPIOE|RCC_AHB1Periph_GPIOG, ENABLE);// πƒ‹PORTA~E,PORTG ±÷”
-// 
-//  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
-//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;//∆’Õ® ‰≥ˆƒ£ Ω
-//  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;//Õ∆ÕÏ ‰≥ˆ
-//  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;//100MHz
-//  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;//…œ¿≠
-//  GPIO_Init(GPIOG, &GPIO_InitStructure);//≥ı ºªØ
+//   GPIO_InitTypeDef  GPIO_InitStructure;
+//
+//	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA|RCC_AHB1Periph_GPIOB|RCC_AHB1Periph_GPIOC|RCC_AHB1Periph_GPIOD|RCC_AHB1Periph_GPIOE|RCC_AHB1Periph_GPIOG,
+//ENABLE);//‰ΩøËÉΩPORTA~E,PORTGÊó∂Èíü
+//
+//   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
+//   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;//ÊôÆÈÄöËæìÂá∫Ê®°Âºè
+//   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;//Êé®ÊåΩËæìÂá∫
+//   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;//100MHz
+//   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;//‰∏äÊãâ
+//   GPIO_Init(GPIOG, &GPIO_InitStructure);//ÂàùÂßãÂåñ
 //	GPIO_SetBits(GPIOG,GPIO_Pin_12);
-//	
-//  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1|GPIO_Pin_4|GPIO_Pin_5|GPIO_Pin_15 ;
-//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;//∆’Õ® ‰≥ˆƒ£ Ω
-//  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;//Õ∆ÕÏ ‰≥ˆ
-//  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;//100MHz
-//  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;//…œ¿≠
-//  GPIO_Init(GPIOD, &GPIO_InitStructure);//≥ı ºªØ
+//
+//   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1|GPIO_Pin_4|GPIO_Pin_5|GPIO_Pin_15 ;
+//   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;//ÊôÆÈÄöËæìÂá∫Ê®°Âºè
+//   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;//Êé®ÊåΩËæìÂá∫
+//   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;//100MHz
+//   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;//‰∏äÊãâ
+//   GPIO_Init(GPIOD, &GPIO_InitStructure);//ÂàùÂßãÂåñ
 //	GPIO_SetBits(GPIOD,GPIO_Pin_1|GPIO_Pin_4|GPIO_Pin_5|GPIO_Pin_15);
 
 //  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8|GPIO_Pin_10;
-//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;//∆’Õ® ‰≥ˆƒ£ Ω
-//  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;//Õ∆ÕÏ ‰≥ˆ
+//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;//ÊôÆÈÄöËæìÂá∫Ê®°Âºè
+//  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;//Êé®ÊåΩËæìÂá∫
 //  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;//100MHz
-//  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;//…œ¿≠
-//  GPIO_Init(GPIOE, &GPIO_InitStructure);//≥ı ºªØ
+//  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;//‰∏äÊãâ
+//  GPIO_Init(GPIOE, &GPIO_InitStructure);//ÂàùÂßãÂåñ
 //	GPIO_SetBits(GPIOE,GPIO_Pin_8|GPIO_Pin_10);
 //}
 
-
-
-
-
-void LCD_WriteData(uint8_t *buff, size_t buff_size)
-{
-		LCD_CS_Clr();
-		LCD_DC_Clr();//–¥√¸¡Ó
+void LCD_WriteData(uint8_t *buff, size_t buff_size) {
+    LCD_CS_Clr();
+    LCD_DC_Clr(); // ÂÜôÂëΩ‰ª§
 #ifdef USE_SPI_DMA
     HAL_SPI_Transmit_DMA(&ST7735_SPI_PORT, buff, buff_size);
     while (hspi2.State == HAL_SPI_STATE_BUSY_TX)
         ;
 #else
-		vSPI_Transmit(buff, buff_size);
-		LCD_CS_Set();	
+    vSPI_Transmit(buff, buff_size);
+    LCD_CS_Set();
 #endif
 }
 
-
 /******************************************************************************
-      ∫Ø ˝Àµ√˜£∫LCD¥Æ–– ˝æ›–¥»Î∫Ø ˝
-      »Îø⁄ ˝æ›£∫dat  “™–¥»Îµƒ¥Æ–– ˝æ›
-      ∑µªÿ÷µ£∫  Œﬁ
+      ÂáΩÊï∞ËØ¥ÊòéÔºöLCD‰∏≤Ë°åÊï∞ÊçÆÂÜôÂÖ•ÂáΩÊï∞
+      ÂÖ•Âè£Êï∞ÊçÆÔºödat  Ë¶ÅÂÜôÂÖ•ÁöÑ‰∏≤Ë°åÊï∞ÊçÆ
+      ËøîÂõûÂÄºÔºö  Êó†
 ******************************************************************************/
-void LCD_Writ_Bus(u8 dat) 
-{	
-	LCD_CS_Clr();
-	vSPI_Transmit(&dat, 1);
-  LCD_CS_Set();	
+void LCD_Writ_Bus(u8 dat) {
+    LCD_CS_Clr();
+    vSPI_Transmit(&dat, 1);
+    LCD_CS_Set();
 }
 
+/******************************************************************************
+      ÂáΩÊï∞ËØ¥ÊòéÔºöLCDÂÜôÂÖ•Êï∞ÊçÆ
+      ÂÖ•Âè£Êï∞ÊçÆÔºödat ÂÜôÂÖ•ÁöÑÊï∞ÊçÆ
+      ËøîÂõûÂÄºÔºö  Êó†
+******************************************************************************/
+void LCD_WR_DATA8(u8 dat) { LCD_Writ_Bus(dat); }
 
 /******************************************************************************
-      ∫Ø ˝Àµ√˜£∫LCD–¥»Î ˝æ›
-      »Îø⁄ ˝æ›£∫dat –¥»Îµƒ ˝æ›
-      ∑µªÿ÷µ£∫  Œﬁ
+      ÂáΩÊï∞ËØ¥ÊòéÔºöLCDÂÜôÂÖ•Êï∞ÊçÆ
+      ÂÖ•Âè£Êï∞ÊçÆÔºödat ÂÜôÂÖ•ÁöÑÊï∞ÊçÆ
+      ËøîÂõûÂÄºÔºö  Êó†
 ******************************************************************************/
-void LCD_WR_DATA8(u8 dat)
-{
-	LCD_Writ_Bus(dat);
+void LCD_WR_DATA(u16 dat) {
+    LCD_Writ_Bus(dat >> 8);
+    LCD_Writ_Bus(dat);
 }
-
 
 /******************************************************************************
-      ∫Ø ˝Àµ√˜£∫LCD–¥»Î ˝æ›
-      »Îø⁄ ˝æ›£∫dat –¥»Îµƒ ˝æ›
-      ∑µªÿ÷µ£∫  Œﬁ
+      ÂáΩÊï∞ËØ¥ÊòéÔºöLCDÂÜôÂÖ•ÂëΩ‰ª§
+      ÂÖ•Âè£Êï∞ÊçÆÔºödat ÂÜôÂÖ•ÁöÑÂëΩ‰ª§
+      ËøîÂõûÂÄºÔºö  Êó†
 ******************************************************************************/
-void LCD_WR_DATA(u16 dat)
-{
-	LCD_Writ_Bus(dat>>8);
-	LCD_Writ_Bus(dat);
+void LCD_WR_REG(u8 dat) {
+    LCD_DC_Clr(); // ÂÜôÂëΩ‰ª§
+    LCD_Writ_Bus(dat);
+    LCD_DC_Set(); // ÂÜôÊï∞ÊçÆ
 }
-
-
-/******************************************************************************
-      ∫Ø ˝Àµ√˜£∫LCD–¥»Î√¸¡Ó
-      »Îø⁄ ˝æ›£∫dat –¥»Îµƒ√¸¡Ó
-      ∑µªÿ÷µ£∫  Œﬁ
-******************************************************************************/
-void LCD_WR_REG(u8 dat)
-{
-	LCD_DC_Clr();//–¥√¸¡Ó
-	LCD_Writ_Bus(dat);
-	LCD_DC_Set();//–¥ ˝æ›
-}
-
-
-
-
-
 
 ///******************************************************************************
-//      ∫Ø ˝Àµ√˜£∫LCD–¥»Î ˝æ›
-//      »Îø⁄ ˝æ›£∫dat –¥»Îµƒ ˝æ›
-//      ∑µªÿ÷µ£∫  Œﬁ
+//      ÂáΩÊï∞ËØ¥ÊòéÔºöLCDÂÜôÂÖ•Êï∞ÊçÆ
+//      ÂÖ•Âè£Êï∞ÊçÆÔºödat ÂÜôÂÖ•ÁöÑÊï∞ÊçÆ
+//      ËøîÂõûÂÄºÔºö  Êó†
 //******************************************************************************/
-//void LCD_WR_DATA8(u8 dat)
+// void LCD_WR_DATA8(u8 dat)
 //{
 //	//LCD_Writ_Bus(dat);
 //	LCD_CS_Clr();
@@ -153,13 +124,12 @@ void LCD_WR_REG(u8 dat)
 //	LCD_CS_Set();
 //}
 
-
 ///******************************************************************************
-//      ∫Ø ˝Àµ√˜£∫LCD–¥»Î ˝æ›
-//      »Îø⁄ ˝æ›£∫dat –¥»Îµƒ ˝æ›
-//      ∑µªÿ÷µ£∫  Œﬁ
+//      ÂáΩÊï∞ËØ¥ÊòéÔºöLCDÂÜôÂÖ•Êï∞ÊçÆ
+//      ÂÖ•Âè£Êï∞ÊçÆÔºödat ÂÜôÂÖ•ÁöÑÊï∞ÊçÆ
+//      ËøîÂõûÂÄºÔºö  Êó†
 //******************************************************************************/
-//void LCD_WR_DATA(u16 dat)
+// void LCD_WR_DATA(u16 dat)
 //{
 //	LCD_CS_Clr();
 //	SPI_SingleWirteAndRead(1, dat>>8);
@@ -167,178 +137,163 @@ void LCD_WR_REG(u8 dat)
 //	LCD_CS_Set();
 //}
 
-
 ///******************************************************************************
-//      ∫Ø ˝Àµ√˜£∫LCD–¥»Î√¸¡Ó
-//      »Îø⁄ ˝æ›£∫dat –¥»Îµƒ√¸¡Ó
-//      ∑µªÿ÷µ£∫  Œﬁ
+//      ÂáΩÊï∞ËØ¥ÊòéÔºöLCDÂÜôÂÖ•ÂëΩ‰ª§
+//      ÂÖ•Âè£Êï∞ÊçÆÔºödat ÂÜôÂÖ•ÁöÑÂëΩ‰ª§
+//      ËøîÂõûÂÄºÔºö  Êó†
 //******************************************************************************/
-//void LCD_WR_REG(u8 dat)
+// void LCD_WR_REG(u8 dat)
 //{
-//	
-//	LCD_DC_Clr();//–¥√¸¡Ó
+//
+//	LCD_DC_Clr();//ÂÜôÂëΩ‰ª§
 //	LCD_CS_Clr();
 //	SPI_SingleWirteAndRead(1, dat);
 //	LCD_CS_Set();
-//	LCD_DC_Set();//–¥ ˝æ›
+//	LCD_DC_Set();//ÂÜôÊï∞ÊçÆ
 //}
 
-
 /******************************************************************************
-      ∫Ø ˝Àµ√˜£∫…Ë÷√∆ º∫ÕΩ· ¯µÿ÷∑
-      »Îø⁄ ˝æ›£∫x1,x2 …Ë÷√¡–µƒ∆ º∫ÕΩ· ¯µÿ÷∑
-                y1,y2 …Ë÷√––µƒ∆ º∫ÕΩ· ¯µÿ÷∑
-      ∑µªÿ÷µ£∫  Œﬁ
+      ÂáΩÊï∞ËØ¥ÊòéÔºöËÆæÁΩÆËµ∑ÂßãÂíåÁªìÊùüÂú∞ÂùÄ
+      ÂÖ•Âè£Êï∞ÊçÆÔºöx1,x2 ËÆæÁΩÆÂàóÁöÑËµ∑ÂßãÂíåÁªìÊùüÂú∞ÂùÄ
+                y1,y2 ËÆæÁΩÆË°åÁöÑËµ∑ÂßãÂíåÁªìÊùüÂú∞ÂùÄ
+      ËøîÂõûÂÄºÔºö  Êó†
 ******************************************************************************/
-void LCD_Address_Set(u16 x1,u16 y1,u16 x2,u16 y2)
-{
-	if(USE_HORIZONTAL==0)
-	{
-		LCD_WR_REG(0x2a);//¡–µÿ÷∑…Ë÷√
-		LCD_WR_DATA(x1);
-		LCD_WR_DATA(x2);
-		LCD_WR_REG(0x2b);//––µÿ÷∑…Ë÷√
-		LCD_WR_DATA(y1);
-		LCD_WR_DATA(y2);
-		LCD_WR_REG(0x2c);//¥¢¥Ê∆˜–¥
-	}
-	else if(USE_HORIZONTAL==1)
-	{
-		LCD_WR_REG(0x2a);//¡–µÿ÷∑…Ë÷√
-		LCD_WR_DATA(x1);
-		LCD_WR_DATA(x2);
-		LCD_WR_REG(0x2b);//––µÿ÷∑…Ë÷√
-		LCD_WR_DATA(y1);
-		LCD_WR_DATA(y2);
-		LCD_WR_REG(0x2c);//¥¢¥Ê∆˜–¥
-	}
-	else if(USE_HORIZONTAL==2)
-	{
-		LCD_WR_REG(0x2a);//¡–µÿ÷∑…Ë÷√
-		LCD_WR_DATA(x1);
-		LCD_WR_DATA(x2);
-		LCD_WR_REG(0x2b);//––µÿ÷∑…Ë÷√
-		LCD_WR_DATA(y1);
-		LCD_WR_DATA(y2);
-		LCD_WR_REG(0x2c);//¥¢¥Ê∆˜–¥
-	}
-	else
-	{
-		LCD_WR_REG(0x2a);//¡–µÿ÷∑…Ë÷√
-		LCD_WR_DATA(x1);
-		LCD_WR_DATA(x2);
-		LCD_WR_REG(0x2b);//––µÿ÷∑…Ë÷√
-		LCD_WR_DATA(y1);
-		LCD_WR_DATA(y2);
-		LCD_WR_REG(0x2c);//¥¢¥Ê∆˜–¥
-	}
+void LCD_Address_Set(u16 x1, u16 y1, u16 x2, u16 y2) {
+    if (USE_HORIZONTAL == 0) {
+        LCD_WR_REG(0x2a); // ÂàóÂú∞ÂùÄËÆæÁΩÆ
+        LCD_WR_DATA(x1);
+        LCD_WR_DATA(x2);
+        LCD_WR_REG(0x2b); // Ë°åÂú∞ÂùÄËÆæÁΩÆ
+        LCD_WR_DATA(y1);
+        LCD_WR_DATA(y2);
+        LCD_WR_REG(0x2c); // ÂÇ®Â≠òÂô®ÂÜô
+    } else if (USE_HORIZONTAL == 1) {
+        LCD_WR_REG(0x2a); // ÂàóÂú∞ÂùÄËÆæÁΩÆ
+        LCD_WR_DATA(x1);
+        LCD_WR_DATA(x2);
+        LCD_WR_REG(0x2b); // Ë°åÂú∞ÂùÄËÆæÁΩÆ
+        LCD_WR_DATA(y1);
+        LCD_WR_DATA(y2);
+        LCD_WR_REG(0x2c); // ÂÇ®Â≠òÂô®ÂÜô
+    } else if (USE_HORIZONTAL == 2) {
+        LCD_WR_REG(0x2a); // ÂàóÂú∞ÂùÄËÆæÁΩÆ
+        LCD_WR_DATA(x1);
+        LCD_WR_DATA(x2);
+        LCD_WR_REG(0x2b); // Ë°åÂú∞ÂùÄËÆæÁΩÆ
+        LCD_WR_DATA(y1);
+        LCD_WR_DATA(y2);
+        LCD_WR_REG(0x2c); // ÂÇ®Â≠òÂô®ÂÜô
+    } else {
+        LCD_WR_REG(0x2a); // ÂàóÂú∞ÂùÄËÆæÁΩÆ
+        LCD_WR_DATA(x1);
+        LCD_WR_DATA(x2);
+        LCD_WR_REG(0x2b); // Ë°åÂú∞ÂùÄËÆæÁΩÆ
+        LCD_WR_DATA(y1);
+        LCD_WR_DATA(y2);
+        LCD_WR_REG(0x2c); // ÂÇ®Â≠òÂô®ÂÜô
+    }
 }
 
-void LCD_Init(void)
-{
-	//LCD_GPIO_Init();//≥ı ºªØGPIO
-	
-	LCD_RES_Clr();//∏¥Œª
-	delay_ms(100);
-	LCD_RES_Set();
-	delay_ms(100);
-	
-	
-  delay_ms(100);
+void LCD_Init(void) {
+    // LCD_GPIO_Init();//ÂàùÂßãÂåñGPIO
 
-	//************* Start Initial Sequence **********//
-	LCD_WR_REG(0x11); //Sleep out 
-		
-	delay_ms(120);              //Delay 120ms 
-	//------------------------------------ST7735S Frame Rate-----------------------------------------// 
-	LCD_WR_REG(0xB1); 
-	LCD_WR_DATA8(0x05); 
-	LCD_WR_DATA8(0x3C); 
-	LCD_WR_DATA8(0x3C); 
-	LCD_WR_REG(0xB2); 
-	LCD_WR_DATA8(0x05);
-	LCD_WR_DATA8(0x3C); 
-	LCD_WR_DATA8(0x3C); 
-	LCD_WR_REG(0xB3); 
-	LCD_WR_DATA8(0x05); 
-	LCD_WR_DATA8(0x3C); 
-	LCD_WR_DATA8(0x3C); 
-	LCD_WR_DATA8(0x05); 
-	LCD_WR_DATA8(0x3C); 
-	LCD_WR_DATA8(0x3C); 
-	//------------------------------------End ST7735S Frame Rate---------------------------------// 
-	LCD_WR_REG(0xB4); //Dot inversion 
-	LCD_WR_DATA8(0x03); 
-	//------------------------------------ST7735S Power Sequence---------------------------------// 
-	LCD_WR_REG(0xC0); 
-	LCD_WR_DATA8(0x28); 
-	LCD_WR_DATA8(0x08); 
-	LCD_WR_DATA8(0x04); 
-	LCD_WR_REG(0xC1); 
-	LCD_WR_DATA8(0XC0); 
-	LCD_WR_REG(0xC2); 
-	LCD_WR_DATA8(0x0D); 
-	LCD_WR_DATA8(0x00); 
-	LCD_WR_REG(0xC3); 
-	LCD_WR_DATA8(0x8D); 
-	LCD_WR_DATA8(0x2A); 
-	LCD_WR_REG(0xC4); 
-	LCD_WR_DATA8(0x8D); 
-	LCD_WR_DATA8(0xEE); 
-	//---------------------------------End ST7735S Power Sequence-------------------------------------// 
-	LCD_WR_REG(0xC5); //VCOM 
-	LCD_WR_DATA8(0x1A); 
-	LCD_WR_REG(0x36); //MX, MY, RGB mode 
-	if(USE_HORIZONTAL==0)LCD_WR_DATA8(0x00);
-	else if(USE_HORIZONTAL==1)LCD_WR_DATA8(0xC0);
-	else if(USE_HORIZONTAL==2)LCD_WR_DATA8(0x70);
-	else LCD_WR_DATA8(0xA0); 
-	//------------------------------------ST7735S Gamma Sequence---------------------------------// 
-	LCD_WR_REG(0xE0); 
-	LCD_WR_DATA8(0x04); 
-	LCD_WR_DATA8(0x22); 
-	LCD_WR_DATA8(0x07); 
-	LCD_WR_DATA8(0x0A); 
-	LCD_WR_DATA8(0x2E); 
-	LCD_WR_DATA8(0x30); 
-	LCD_WR_DATA8(0x25); 
-	LCD_WR_DATA8(0x2A); 
-	LCD_WR_DATA8(0x28); 
-	LCD_WR_DATA8(0x26); 
-	LCD_WR_DATA8(0x2E); 
-	LCD_WR_DATA8(0x3A); 
-	LCD_WR_DATA8(0x00); 
-	LCD_WR_DATA8(0x01); 
-	LCD_WR_DATA8(0x03); 
-	LCD_WR_DATA8(0x13); 
-	LCD_WR_REG(0xE1); 
-	LCD_WR_DATA8(0x04); 
-	LCD_WR_DATA8(0x16); 
-	LCD_WR_DATA8(0x06); 
-	LCD_WR_DATA8(0x0D); 
-	LCD_WR_DATA8(0x2D); 
-	LCD_WR_DATA8(0x26); 
-	LCD_WR_DATA8(0x23); 
-	LCD_WR_DATA8(0x27); 
-	LCD_WR_DATA8(0x27); 
-	LCD_WR_DATA8(0x25); 
-	LCD_WR_DATA8(0x2D); 
-	LCD_WR_DATA8(0x3B); 
-	LCD_WR_DATA8(0x00); 
-	LCD_WR_DATA8(0x01); 
-	LCD_WR_DATA8(0x04); 
-	LCD_WR_DATA8(0x13); 
-	//------------------------------------End ST7735S Gamma Sequence-----------------------------// 
-	LCD_WR_REG(0x3A); //65k mode 
-	LCD_WR_DATA8(0x05); 
-	LCD_WR_REG(0x29); //Display on 
-	
-} 
+    LCD_RES_Clr(); // Â§ç‰Ωç
+    delay_ms(100);
+    LCD_RES_Set();
+    delay_ms(100);
 
+    delay_ms(100);
 
+    //************* Start Initial Sequence **********//
+    LCD_WR_REG(0x11); // Sleep out
 
-
-
-
-
-
+    delay_ms(120); // Delay 120ms
+    //------------------------------------ST7735S Frame
+    //Rate-----------------------------------------//
+    LCD_WR_REG(0xB1);
+    LCD_WR_DATA8(0x05);
+    LCD_WR_DATA8(0x3C);
+    LCD_WR_DATA8(0x3C);
+    LCD_WR_REG(0xB2);
+    LCD_WR_DATA8(0x05);
+    LCD_WR_DATA8(0x3C);
+    LCD_WR_DATA8(0x3C);
+    LCD_WR_REG(0xB3);
+    LCD_WR_DATA8(0x05);
+    LCD_WR_DATA8(0x3C);
+    LCD_WR_DATA8(0x3C);
+    LCD_WR_DATA8(0x05);
+    LCD_WR_DATA8(0x3C);
+    LCD_WR_DATA8(0x3C);
+    //------------------------------------End ST7735S Frame Rate---------------------------------//
+    LCD_WR_REG(0xB4); // Dot inversion
+    LCD_WR_DATA8(0x03);
+    //------------------------------------ST7735S Power Sequence---------------------------------//
+    LCD_WR_REG(0xC0);
+    LCD_WR_DATA8(0x28);
+    LCD_WR_DATA8(0x08);
+    LCD_WR_DATA8(0x04);
+    LCD_WR_REG(0xC1);
+    LCD_WR_DATA8(0XC0);
+    LCD_WR_REG(0xC2);
+    LCD_WR_DATA8(0x0D);
+    LCD_WR_DATA8(0x00);
+    LCD_WR_REG(0xC3);
+    LCD_WR_DATA8(0x8D);
+    LCD_WR_DATA8(0x2A);
+    LCD_WR_REG(0xC4);
+    LCD_WR_DATA8(0x8D);
+    LCD_WR_DATA8(0xEE);
+    //---------------------------------End ST7735S Power
+    //Sequence-------------------------------------//
+    LCD_WR_REG(0xC5); // VCOM
+    LCD_WR_DATA8(0x1A);
+    LCD_WR_REG(0x36); // MX, MY, RGB mode
+    if (USE_HORIZONTAL == 0)
+        LCD_WR_DATA8(0x00);
+    else if (USE_HORIZONTAL == 1)
+        LCD_WR_DATA8(0xC0);
+    else if (USE_HORIZONTAL == 2)
+        LCD_WR_DATA8(0x70);
+    else
+        LCD_WR_DATA8(0xA0);
+    //------------------------------------ST7735S Gamma Sequence---------------------------------//
+    LCD_WR_REG(0xE0);
+    LCD_WR_DATA8(0x04);
+    LCD_WR_DATA8(0x22);
+    LCD_WR_DATA8(0x07);
+    LCD_WR_DATA8(0x0A);
+    LCD_WR_DATA8(0x2E);
+    LCD_WR_DATA8(0x30);
+    LCD_WR_DATA8(0x25);
+    LCD_WR_DATA8(0x2A);
+    LCD_WR_DATA8(0x28);
+    LCD_WR_DATA8(0x26);
+    LCD_WR_DATA8(0x2E);
+    LCD_WR_DATA8(0x3A);
+    LCD_WR_DATA8(0x00);
+    LCD_WR_DATA8(0x01);
+    LCD_WR_DATA8(0x03);
+    LCD_WR_DATA8(0x13);
+    LCD_WR_REG(0xE1);
+    LCD_WR_DATA8(0x04);
+    LCD_WR_DATA8(0x16);
+    LCD_WR_DATA8(0x06);
+    LCD_WR_DATA8(0x0D);
+    LCD_WR_DATA8(0x2D);
+    LCD_WR_DATA8(0x26);
+    LCD_WR_DATA8(0x23);
+    LCD_WR_DATA8(0x27);
+    LCD_WR_DATA8(0x27);
+    LCD_WR_DATA8(0x25);
+    LCD_WR_DATA8(0x2D);
+    LCD_WR_DATA8(0x3B);
+    LCD_WR_DATA8(0x00);
+    LCD_WR_DATA8(0x01);
+    LCD_WR_DATA8(0x04);
+    LCD_WR_DATA8(0x13);
+    //------------------------------------End ST7735S Gamma Sequence-----------------------------//
+    LCD_WR_REG(0x3A); // 65k mode
+    LCD_WR_DATA8(0x05);
+    LCD_WR_REG(0x29); // Display on
+}

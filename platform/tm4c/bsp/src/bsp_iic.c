@@ -1,156 +1,148 @@
 #include "include.h"
 #include "bsp_iic.h"
 extern void tm4c_fatal(void);
-static void tm4c_i2c_wait(void){uint32_t left=60000;while(I2CMasterBusy(I2C1_BASE) && --left){}if(!left || I2CMasterErr(I2C1_BASE))tm4c_fatal();}
-
-
-
-
-
+static void tm4c_i2c_wait(void) {
+    uint32_t left = 60000;
+    while (I2CMasterBusy(I2C1_BASE) && --left) {
+    }
+    if (!left || I2CMasterErr(I2C1_BASE))
+        tm4c_fatal();
+}
 
 /***********************************************************
-@º¯ÊıÃû£ºInit_I2C
-@Èë¿Ú²ÎÊı£ºÎŞ
-@³ö¿Ú²ÎÊı£ºÎŞ
-¹¦ÄÜÃèÊö£ºTM4CÓ²¼şI2C³õÊ¼»¯
-@×÷Õß£ºÎŞÃûĞ¡¸ç
-@ÈÕÆÚ£º2019Äê01ÔÂ27ÈÕ
+@å‡½æ•°åï¼šInit_I2C
+@å…¥å£å‚æ•°ï¼šæ— 
+@å‡ºå£å‚æ•°ï¼šæ— 
+åŠŸèƒ½æè¿°ï¼šTM4Cç¡¬ä»¶I2Cåˆå§‹åŒ–
+@ä½œè€…ï¼šæ— åå°å“¥
+@æ—¥æœŸï¼š2019å¹´01æœˆ27æ—¥
 *************************************************************/
 void I2C_Init(void) {
-			SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C1); // Ê¹ÄÜ I2C1 ÍâÉè
-			SysCtlDelay(2); // ÔÚÊ¹ÄÜÍâÉèºó²åÈëÒ»Ğ©ÖÜÆÚ£¬ÒÔÔÊĞíÊ±ÖÓÍêÈ«Æô¶¯
-			SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA); // Ê¹ÄÜ GPIOA ÍâÉè
-			SysCtlDelay(2); // ÔÚÊ¹ÄÜÍâÉèºó²åÈëÒ»Ğ©ÖÜÆÚ£¬ÒÔÔÊĞíÊ±ÖÓÍêÈ«Æô¶¯
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C1);  // ä½¿èƒ½ I2C1 å¤–è®¾
+    SysCtlDelay(2);                              // åœ¨ä½¿èƒ½å¤–è®¾åæ’å…¥ä¸€äº›å‘¨æœŸï¼Œä»¥å…è®¸æ—¶é’Ÿå®Œå…¨å¯åŠ¨
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA); // ä½¿èƒ½ GPIOA å¤–è®¾
+    SysCtlDelay(2);                              // åœ¨ä½¿èƒ½å¤–è®¾åæ’å…¥ä¸€äº›å‘¨æœŸï¼Œä»¥å…è®¸æ—¶é’Ÿå®Œå…¨å¯åŠ¨
 
-			// Ê¹ÓÃÌæ´ú¹¦ÄÜ
-			GPIOPinConfigure(GPIO_PA6_I2C1SCL); // ÅäÖÃÒı½ÅPA6Îª I2C1 µÄ SCL Òı½Å
-			GPIOPinConfigure(GPIO_PA7_I2C1SDA); // ÅäÖÃÒı½ÅPA7Îª I2C1 µÄ SDA Òı½Å
+    // ä½¿ç”¨æ›¿ä»£åŠŸèƒ½
+    GPIOPinConfigure(GPIO_PA6_I2C1SCL); // é…ç½®å¼•è„šPA6ä¸º I2C1 çš„ SCL å¼•è„š
+    GPIOPinConfigure(GPIO_PA7_I2C1SDA); // é…ç½®å¼•è„šPA7ä¸º I2C1 çš„ SDA å¼•è„š
 
-			GPIOPinTypeI2CSCL(GPIO_PORTA_BASE, GPIO_PIN_6); // Ê¹ÓÃ¾ßÓĞ I2C SCL ÍâÉèµÄÒı½Å
-			GPIOPinTypeI2C(GPIO_PORTA_BASE, GPIO_PIN_7); // Ê¹ÓÃ¾ßÓĞ I2C ÍâÉèµÄÒı½Å
+    GPIOPinTypeI2CSCL(GPIO_PORTA_BASE, GPIO_PIN_6); // ä½¿ç”¨å…·æœ‰ I2C SCL å¤–è®¾çš„å¼•è„š
+    GPIOPinTypeI2C(GPIO_PORTA_BASE, GPIO_PIN_7);    // ä½¿ç”¨å…·æœ‰ I2C å¤–è®¾çš„å¼•è„š
 
-			I2CMasterInitExpClk(I2C1_BASE, SysCtlClockGet(),true); // ÆôÓÃ I2C£¬²¢½«ÆµÂÊÉèÖÃÎª 400 kHz
-			//I2CMasterInitExpClk(I2C1_BASE, SysCtlClockGet(),true);
-			SysCtlDelay(2); // ÔÚÊ¹ÄÜ I2C ºó²åÈëÒ»Ğ©ÖÜÆÚ£¬ÒÔÔÊĞíÊ±ÖÓÍêÈ«Æô¶¯
+    I2CMasterInitExpClk(I2C1_BASE, SysCtlClockGet(), true); // å¯ç”¨ I2Cï¼Œå¹¶å°†é¢‘ç‡è®¾ç½®ä¸º 400 kHz
+    // I2CMasterInitExpClk(I2C1_BASE, SysCtlClockGet(),true);
+    SysCtlDelay(2); // åœ¨ä½¿èƒ½ I2C åæ’å…¥ä¸€äº›å‘¨æœŸï¼Œä»¥å…è®¸æ—¶é’Ÿå®Œå…¨å¯åŠ¨
 }
 
 /***********************************************************
-@º¯ÊıÃû£ºi2cWriteData
-@Èë¿Ú²ÎÊı£ºuint8_t addr, uint8_t regAddr, uint8_t *data, uint8_t length
-@³ö¿Ú²ÎÊı£ºÎŞ
-¹¦ÄÜÃèÊö£ºI2CĞ´Êı¾İ
-@×÷Õß£ºÎŞÃûĞ¡¸ç
-@ÈÕÆÚ£º2019Äê01ÔÂ27ÈÕ
+@å‡½æ•°åï¼ši2cWriteData
+@å…¥å£å‚æ•°ï¼šuint8_t addr, uint8_t regAddr, uint8_t *data, uint8_t length
+@å‡ºå£å‚æ•°ï¼šæ— 
+åŠŸèƒ½æè¿°ï¼šI2Cå†™æ•°æ®
+@ä½œè€…ï¼šæ— åå°å“¥
+@æ—¥æœŸï¼š2019å¹´01æœˆ27æ—¥
 *************************************************************/
 void i2cWriteData(uint8_t addr, uint8_t regAddr, uint8_t *data, uint8_t length) {
-  if(!data || length==0)return;
+    if (!data || length == 0)
+        return;
 
-  u16 i;
-	I2CMasterSlaveAddrSet(I2C1_BASE, addr, false); // Set to write mode
-  
-  I2CMasterDataPut(I2C1_BASE, regAddr); // Place address into data register
-  I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_SEND_START); // Send start condition
-  tm4c_i2c_wait(); // Wait until transfer is done
-  
-  for (i = 0; i < length - 1; i++) 
-	{
-    I2CMasterDataPut(I2C1_BASE, data[i]); // Place data into data register
-    I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_SEND_CONT); // Send continues condition
-    tm4c_i2c_wait(); // Wait until transfer is done
-  }
-  
-  I2CMasterDataPut(I2C1_BASE, data[length - 1]); // Place data into data register
-  I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH); // Send finish condition
-  tm4c_i2c_wait(); // Wait until transfer is done
+    u16 i;
+    I2CMasterSlaveAddrSet(I2C1_BASE, addr, false); // Set to write mode
+
+    I2CMasterDataPut(I2C1_BASE, regAddr); // Place address into data register
+    I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_SEND_START); // Send start condition
+    tm4c_i2c_wait();                                              // Wait until transfer is done
+
+    for (i = 0; i < length - 1; i++) {
+        I2CMasterDataPut(I2C1_BASE, data[i]); // Place data into data register
+        I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_SEND_CONT); // Send continues condition
+        tm4c_i2c_wait();                                             // Wait until transfer is done
+    }
+
+    I2CMasterDataPut(I2C1_BASE, data[length - 1]);                 // Place data into data register
+    I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH); // Send finish condition
+    tm4c_i2c_wait();                                               // Wait until transfer is done
 }
 
 /***********************************************************
-@º¯ÊıÃû£ºi2cRead
-@Èë¿Ú²ÎÊı£ºuint8_t addr, uint8_t regAddr
-@³ö¿Ú²ÎÊı£ºÎŞ
-¹¦ÄÜÃèÊö£ºI2C¶ÁÊı¾İ
-@×÷Õß£ºÎŞÃûĞ¡¸ç
-@ÈÕÆÚ£º2019Äê01ÔÂ27ÈÕ
+@å‡½æ•°åï¼ši2cRead
+@å…¥å£å‚æ•°ï¼šuint8_t addr, uint8_t regAddr
+@å‡ºå£å‚æ•°ï¼šæ— 
+åŠŸèƒ½æè¿°ï¼šI2Cè¯»æ•°æ®
+@ä½œè€…ï¼šæ— åå°å“¥
+@æ—¥æœŸï¼š2019å¹´01æœˆ27æ—¥
 *************************************************************/
 uint8_t i2cRead(uint8_t addr, uint8_t regAddr) {
-  I2CMasterSlaveAddrSet(I2C1_BASE, addr, false); // Set to write mode
-  
-  I2CMasterDataPut(I2C1_BASE, regAddr); // Place address into data register
-  I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_SINGLE_SEND); // Send data
-  tm4c_i2c_wait(); // Wait until transfer is done
-  
-  I2CMasterSlaveAddrSet(I2C1_BASE, addr, true); // Set to read mode
-  
-  I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_SINGLE_RECEIVE); // Tell master to read data
-  tm4c_i2c_wait(); // Wait until transfer is done
-  return I2CMasterDataGet(I2C1_BASE); // Read data
+    I2CMasterSlaveAddrSet(I2C1_BASE, addr, false); // Set to write mode
+
+    I2CMasterDataPut(I2C1_BASE, regAddr);                    // Place address into data register
+    I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_SINGLE_SEND); // Send data
+    tm4c_i2c_wait();                                         // Wait until transfer is done
+
+    I2CMasterSlaveAddrSet(I2C1_BASE, addr, true); // Set to read mode
+
+    I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_SINGLE_RECEIVE); // Tell master to read data
+    tm4c_i2c_wait();                                            // Wait until transfer is done
+    return I2CMasterDataGet(I2C1_BASE);                         // Read data
 }
 
 /***********************************************************
-@º¯ÊıÃû£ºi2cWrite
-@Èë¿Ú²ÎÊı£ºuint8_t addr, uint8_t regAddr, uint8_t data
-@³ö¿Ú²ÎÊı£ºÎŞ
-¹¦ÄÜÃèÊö£ºI2CĞ´Êı¾İ
-@×÷Õß£ºÎŞÃûĞ¡¸ç
-@ÈÕÆÚ£º2019Äê01ÔÂ27ÈÕ
+@å‡½æ•°åï¼ši2cWrite
+@å…¥å£å‚æ•°ï¼šuint8_t addr, uint8_t regAddr, uint8_t data
+@å‡ºå£å‚æ•°ï¼šæ— 
+åŠŸèƒ½æè¿°ï¼šI2Cå†™æ•°æ®
+@ä½œè€…ï¼šæ— åå°å“¥
+@æ—¥æœŸï¼š2019å¹´01æœˆ27æ—¥
 *************************************************************/
 void i2cWrite(uint8_t addr, uint8_t regAddr, uint8_t data) {
-  i2cWriteData(addr, regAddr, &data, 1);
+    i2cWriteData(addr, regAddr, &data, 1);
 }
-
 
 /***********************************************************
-@º¯ÊıÃû£ºi2cReadData
-@Èë¿Ú²ÎÊı£ºuint8_t addr, uint8_t regAddr, uint8_t *data,
+@å‡½æ•°åï¼ši2cReadData
+@å…¥å£å‚æ•°ï¼šuint8_t addr, uint8_t regAddr, uint8_t *data,
 uint8_t length
-@³ö¿Ú²ÎÊı£ºÎŞ
-¹¦ÄÜÃèÊö£ºI2C¶ÁÊı¾İ
-@×÷Õß£ºÎŞÃûĞ¡¸ç
-@ÈÕÆÚ£º2019Äê01ÔÂ27ÈÕ
+@å‡ºå£å‚æ•°ï¼šæ— 
+åŠŸèƒ½æè¿°ï¼šI2Cè¯»æ•°æ®
+@ä½œè€…ï¼šæ— åå°å“¥
+@æ—¥æœŸï¼š2019å¹´01æœˆ27æ—¥
 *************************************************************/
 void i2cReadData(uint8_t addr, uint8_t regAddr, uint8_t *data, uint8_t length) {
-  if(!data || length==0)return;
+    if (!data || length == 0)
+        return;
 
-  u16 i;
-	I2CMasterSlaveAddrSet(I2C1_BASE, addr, false); // Set to write mode
-  I2CMasterDataPut(I2C1_BASE, regAddr); // Place address into data register
-  I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_SINGLE_SEND); // Send data
-  tm4c_i2c_wait(); // Wait until transfer is done 
-  I2CMasterSlaveAddrSet(I2C1_BASE, addr, true); // Set to read mode
-  I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_RECEIVE_START); // Send start condition
-  tm4c_i2c_wait(); // Wait until transfer is done
-  data[0] = I2CMasterDataGet(I2C1_BASE); // Place data into data register 
-	for ( i = 1; i < length - 1; i++) 
-	{
-    I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_RECEIVE_CONT); // Send continues condition
-    tm4c_i2c_wait(); // Wait until transfer is done
-    data[i] = I2CMasterDataGet(I2C1_BASE); // Place data into data register
-  }
-  I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_RECEIVE_FINISH); // Send finish condition
-  tm4c_i2c_wait(); // Wait until transfer is done
-  data[length - 1] = I2CMasterDataGet(I2C1_BASE); // Place data into data register
+    u16 i;
+    I2CMasterSlaveAddrSet(I2C1_BASE, addr, false);           // Set to write mode
+    I2CMasterDataPut(I2C1_BASE, regAddr);                    // Place address into data register
+    I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_SINGLE_SEND); // Send data
+    tm4c_i2c_wait();                                         // Wait until transfer is done
+    I2CMasterSlaveAddrSet(I2C1_BASE, addr, true);            // Set to read mode
+    I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_RECEIVE_START); // Send start condition
+    tm4c_i2c_wait();                                                 // Wait until transfer is done
+    data[0] = I2CMasterDataGet(I2C1_BASE); // Place data into data register
+    for (i = 1; i < length - 1; i++) {
+        I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_RECEIVE_CONT); // Send continues condition
+        tm4c_i2c_wait();                       // Wait until transfer is done
+        data[i] = I2CMasterDataGet(I2C1_BASE); // Place data into data register
+    }
+    I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_RECEIVE_FINISH); // Send finish condition
+    tm4c_i2c_wait();                                                  // Wait until transfer is done
+    data[length - 1] = I2CMasterDataGet(I2C1_BASE); // Place data into data register
 }
 
-
-void Single_WriteI2C(unsigned char SlaveAddress,unsigned char REG_Address,unsigned char REG_data)
-{
-  i2cWrite(SlaveAddress,REG_Address,REG_data);
-}	
-
-unsigned char Single_ReadI2C(unsigned char SlaveAddress,unsigned char REG_Address)
-{
-  return i2cRead(SlaveAddress,REG_Address);
+void Single_WriteI2C(unsigned char SlaveAddress, unsigned char REG_Address,
+                     unsigned char REG_data) {
+    i2cWrite(SlaveAddress, REG_Address, REG_data);
 }
 
-short int Double_ReadI2C(unsigned char SlaveAddress,unsigned char REG_Address)
-{
-  unsigned char msb , lsb ;
-  msb = i2cRead(SlaveAddress,REG_Address);
-  lsb = i2cRead(SlaveAddress,REG_Address+1);
-  return ( ((short int)msb) << 8 | lsb) ;
+unsigned char Single_ReadI2C(unsigned char SlaveAddress, unsigned char REG_Address) {
+    return i2cRead(SlaveAddress, REG_Address);
 }
 
-
-
-
-
+short int Double_ReadI2C(unsigned char SlaveAddress, unsigned char REG_Address) {
+    unsigned char msb, lsb;
+    msb = i2cRead(SlaveAddress, REG_Address);
+    lsb = i2cRead(SlaveAddress, REG_Address + 1);
+    return (((short int)msb) << 8 | lsb);
+}

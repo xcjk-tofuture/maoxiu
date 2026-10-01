@@ -1,16 +1,15 @@
 #ifndef __LCD_INIT_H
 #define __LCD_INIT_H
 
-//#include "sys.h"
+// #include "sys.h"
 
 #include "FreeRTOS.h"
 #include "task.h"
 #include "main.h"
 #include "include.h"
-#define USE_HORIZONTAL 1  //…Ë÷√∫·∆¡ªÚ’ﬂ ˙∆¡œ‘ æ 0ªÚ1Œ™ ˙∆¡ 2ªÚ3Œ™∫·∆¡
+#define USE_HORIZONTAL 1 // ËÆæÁΩÆÊ®™Â±èÊàñËÄÖÁ´ñÂ±èÊòæÁ§∫ 0Êàñ1‰∏∫Á´ñÂ±è 2Êàñ3‰∏∫Ê®™Â±è
 
-
-#if USE_HORIZONTAL==0||USE_HORIZONTAL==1
+#if USE_HORIZONTAL == 0 || USE_HORIZONTAL == 1
 #define LCD_W 128
 #define LCD_H 160
 
@@ -19,43 +18,42 @@
 #define LCD_H 128
 #endif
 
-
 #define TFT_RES_Pin GPIO_PIN_0
 #define TFT_DC_Pin GPIO_PIN_1
 #define TFT_BL_Pin GPIO_PIN_2
 #define SPI1_TFT_Pin GPIO_PIN_5
-//-----------------LCD∂Àø⁄∂®“Â---------------- 
+//-----------------LCDÁ´ØÂè£ÂÆö‰πâ----------------
 
-//#define LCD_SCLK_Clr() HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5, GPIO_PIN_RESET)//SCL=SCLK
-//#define LCD_SCLK_Set() HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5, GPIO_PIN_SET)
+// #define LCD_SCLK_Clr() HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5, GPIO_PIN_RESET)//SCL=SCLK
+// #define LCD_SCLK_Set() HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5, GPIO_PIN_SET)
 
-//#define LCD_MOSI_Clr() HAL_GPIO_WritePin(GPIOB,GPIO_PIN_5, GPIO_PIN_RESET)//SDA=MOSI
-//#define LCD_MOSI_Set() HAL_GPIO_WritePin(GPIOB,GPIO_PIN_5, GPIO_PIN_SET)
+// #define LCD_MOSI_Clr() HAL_GPIO_WritePin(GPIOB,GPIO_PIN_5, GPIO_PIN_RESET)//SDA=MOSI
+// #define LCD_MOSI_Set() HAL_GPIO_WritePin(GPIOB,GPIO_PIN_5, GPIO_PIN_SET)
 
-#define LCD_RES_Clr()  GPIOPinWrite(LCD_RES_GPIO_Port, LCD_RES_Pin, 0)//GPIO_ResetBits(GPIOE,GPIO_Pin_0)//RES
-#define LCD_RES_Set()  GPIOPinWrite(LCD_RES_GPIO_Port, LCD_RES_Pin, LCD_RES_Pin)
+#define LCD_RES_Clr()                                                                              \
+    GPIOPinWrite(LCD_RES_GPIO_Port, LCD_RES_Pin, 0) // GPIO_ResetBits(GPIOE,GPIO_Pin_0)//RES
+#define LCD_RES_Set() GPIOPinWrite(LCD_RES_GPIO_Port, LCD_RES_Pin, LCD_RES_Pin)
 
-#define LCD_DC_Clr()   GPIOPinWrite(LCD_DC_GPIO_Port, LCD_DC_Pin, 0)//GPIO_ResetBits(GPIOE,GPIO_Pin_1)//DC
-#define LCD_DC_Set()   GPIOPinWrite(LCD_DC_GPIO_Port, LCD_DC_Pin, LCD_DC_Pin)//GPIO_SetBits(GPIOE,GPIO_Pin_1)
- 		     
-#define LCD_CS_Clr()   GPIOPinWrite(LCD_CS_GPIO_Port, LCD_CS_Pin, 0)//GPIO_ResetBits(GPIOE,GPIO_Pin_2)//CS
-#define LCD_CS_Set()   GPIOPinWrite(LCD_CS_GPIO_Port, LCD_CS_Pin, LCD_CS_Pin)//GPIO_SetBits(GPIOE,GPIO_Pin_2)
+#define LCD_DC_Clr()                                                                               \
+    GPIOPinWrite(LCD_DC_GPIO_Port, LCD_DC_Pin, 0) // GPIO_ResetBits(GPIOE,GPIO_Pin_1)//DC
+#define LCD_DC_Set()                                                                               \
+    GPIOPinWrite(LCD_DC_GPIO_Port, LCD_DC_Pin, LCD_DC_Pin) // GPIO_SetBits(GPIOE,GPIO_Pin_1)
 
-//#define LCD_BLK_Clr()  GPIOPinWrite(GPIO_PORTB_BASE, TFT_BL_Pin, 0)//PIO_ResetBits(GPIOE,GPIO_Pin_3)//BLK
-//#define LCD_BLK_Set()  GPIOPinWrite(GPIO_PORTB_BASE, TFT_BL_Pin, TFT_BL_Pin)//GPIO_SetBits(GPIOE,GPIO_Pin_3)
+#define LCD_CS_Clr()                                                                               \
+    GPIOPinWrite(LCD_CS_GPIO_Port, LCD_CS_Pin, 0) // GPIO_ResetBits(GPIOE,GPIO_Pin_2)//CS
+#define LCD_CS_Set()                                                                               \
+    GPIOPinWrite(LCD_CS_GPIO_Port, LCD_CS_Pin, LCD_CS_Pin) // GPIO_SetBits(GPIOE,GPIO_Pin_2)
 
+// #define LCD_BLK_Clr()  GPIOPinWrite(GPIO_PORTB_BASE, TFT_BL_Pin,
+// 0)//PIO_ResetBits(GPIOE,GPIO_Pin_3)//BLK #define LCD_BLK_Set()  GPIOPinWrite(GPIO_PORTB_BASE,
+// TFT_BL_Pin, TFT_BL_Pin)//GPIO_SetBits(GPIOE,GPIO_Pin_3)
 
-
-void LCD_WriteData(uint8_t *buff, size_t buff_size); //–¥»Î“ª¥Æ ˝æ›
-void LCD_GPIO_Init(void);//≥ı ºªØGPIO
-void LCD_Writ_Bus(u8 dat);//ƒ£ƒ‚SPI ±–Ú
-void LCD_WR_DATA8(u8 dat);//–¥»Î“ª∏ˆ◊÷Ω⁄
-void LCD_WR_DATA(u16 dat);//–¥»Î¡Ω∏ˆ◊÷Ω⁄
-void LCD_WR_REG(u8 dat);//–¥»Î“ª∏ˆ÷∏¡Ó
-void LCD_Address_Set(u16 x1,u16 y1,u16 x2,u16 y2);//…Ë÷√◊¯±Í∫Ø ˝
-void LCD_Init(void);//LCD≥ı ºªØ
+void LCD_WriteData(uint8_t *buff, size_t buff_size);  // ÂÜôÂÖ•‰∏Ä‰∏≤Êï∞ÊçÆ
+void LCD_GPIO_Init(void);                             // ÂàùÂßãÂåñGPIO
+void LCD_Writ_Bus(u8 dat);                            // Ê®°ÊãüSPIÊó∂Â∫è
+void LCD_WR_DATA8(u8 dat);                            // ÂÜôÂÖ•‰∏Ä‰∏™Â≠óËäÇ
+void LCD_WR_DATA(u16 dat);                            // ÂÜôÂÖ•‰∏§‰∏™Â≠óËäÇ
+void LCD_WR_REG(u8 dat);                              // ÂÜôÂÖ•‰∏Ä‰∏™Êåá‰ª§
+void LCD_Address_Set(u16 x1, u16 y1, u16 x2, u16 y2); // ËÆæÁΩÆÂùêÊ†áÂáΩÊï∞
+void LCD_Init(void);                                  // LCDÂàùÂßãÂåñ
 #endif
-
-
-
-

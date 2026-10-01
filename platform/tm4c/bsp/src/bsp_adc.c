@@ -1,29 +1,27 @@
 #include "include.h"
 #include "bsp_adc.h"
 
+// TM4æœ‰ä¸¤ä¸ªADCï¼Œåˆ†åˆ«ä¸ºADC0å’ŒADC1ã€‚æ¯ä¸ªADCä½æ•°ä¸º12ä½ï¼Œä¸‹è®¾12ä¸ªé€šé“ï¼Œæ‰€ä»¥æ€»å…±å¯ä»¥é‡‡24è·¯æ•°æ®ã€‚
 
-//TM4ÓÐÁ½¸öADC£¬·Ö±ðÎªADC0ºÍADC1¡£Ã¿¸öADCÎ»ÊýÎª12Î»£¬ÏÂÉè12¸öÍ¨µÀ£¬ËùÒÔ×Ü¹²¿ÉÒÔ²É24Â·Êý¾Ý¡£
+// 1. ä½¿ç”¨ RCGCADC å¯„å­˜å™¨å¯ç”¨ ADC æ—¶é’Ÿ
+// 2. é€šè¿‡ RCGCGPIOå¯„å­˜å™¨å¯ç”¨ç›¸åº” GPIOæ¨¡å—çš„æ—¶é’Ÿã€‚
+// 3. å°† ADC è¾“å…¥ç®¡è„šçš„ AFSEL ä½ç½®ä½ã€‚
+// 4. é€šè¿‡å°† GPIO æ•°å­—ä½¿èƒ½ (GPIODEN) å¯„å­˜å™¨ä¸­ç›¸åº” DEN ä½æ¸…é›¶ï¼Œå°† AINx ç®¡è„šé…ç½®ä¸ºæ¨¡æ‹Ÿè¾“å‡ºã€‚
+// 5. é€šè¿‡ä¸º GPIOAMSEL å¯„å­˜å™¨çš„ç›¸åº”ä½å†™ 1ï¼Œç¦ç”¨å¾…ç”¨æ¨¡æ‹Ÿè¾“å…¥è„šçš„æ¨¡æ‹Ÿéš”ç¦»ç”µè·¯ã€‚
+// 6. å‡å¦‚åº”ç”¨æœ‰ç›¸å…³éœ€æ±‚ï¼Œåˆ™åº”é€šè¿‡ ADCSSPRIå¯„å­˜å™¨é‡æ–°é…ç½®é‡‡æ ·åºåˆ—å‘ç”Ÿå™¨çš„ä¼˜å…ˆçº§ï¼ˆ0-æœ€é«˜ï¼Œ3-æœ€ä½Žï¼‰ã€‚
 
-
-//1. Ê¹ÓÃ RCGCADC ¼Ä´æÆ÷ÆôÓÃ ADC Ê±ÖÓ
-//2. Í¨¹ý RCGCGPIO¼Ä´æÆ÷ÆôÓÃÏàÓ¦ GPIOÄ£¿éµÄÊ±ÖÓ¡£
-//3. ½« ADC ÊäÈë¹Ü½ÅµÄ AFSEL Î»ÖÃÎ»¡£
-//4. Í¨¹ý½« GPIO Êý×ÖÊ¹ÄÜ (GPIODEN) ¼Ä´æÆ÷ÖÐÏàÓ¦ DEN Î»ÇåÁã£¬½« AINx ¹Ü½ÅÅäÖÃÎªÄ£ÄâÊä³ö¡£
-//5. Í¨¹ýÎª GPIOAMSEL ¼Ä´æÆ÷µÄÏàÓ¦Î»Ð´ 1£¬½ûÓÃ´ýÓÃÄ£ÄâÊäÈë½ÅµÄÄ£Äâ¸ôÀëµçÂ·¡£
-//6. ¼ÙÈçÓ¦ÓÃÓÐÏà¹ØÐèÇó£¬ÔòÓ¦Í¨¹ý ADCSSPRI¼Ä´æÆ÷ÖØÐÂÅäÖÃ²ÉÑùÐòÁÐ·¢ÉúÆ÷µÄÓÅÏÈ¼¶£¨0-×î¸ß£¬3-×îµÍ£©¡£
-
-//void ADC_Init()
+// void ADC_Init()
 //{
 
-//	
+//
 
-//    SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0);   // Ê¹ÄÜADC0
+//    SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0);   // ä½¿èƒ½ADC0
 
-//    // ÉèÖÃGPIOÒý½ÅE3ºÍE2×÷ÎªADCÊäÈëÒý½Å
+//    // è®¾ç½®GPIOå¼•è„šE3å’ŒE2ä½œä¸ºADCè¾“å…¥å¼•è„š
 //    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
 //    GPIOPinTypeADC(GPIO_PORTE_BASE, GPIO_PIN_3 | GPIO_PIN_2 | GPIO_PIN_1);
 
-//    // ÅäÖÃADCÊ±ÖÓºÍ²ÉÑùÐòÁÐ ²»Ð´¾ÍÊÇ1/64 Ö÷Æµ
+//    // é…ç½®ADCæ—¶é’Ÿå’Œé‡‡æ ·åºåˆ— ä¸å†™å°±æ˜¯1/64 ä¸»é¢‘
 //    //ADCClockConfigSet(ADC0_BASE, ADC_CLOCK_SRC_PLL | ADC_CLOCK_RATE_FULL, 1);
 //    ADCSequenceConfigure(ADC0_BASE, 0, ADC_TRIGGER_PROCESSOR, 0);
 
@@ -31,28 +29,24 @@
 //    ADCSequenceStepConfigure(ADC0_BASE, 0, 1, ADC_CTL_CH1  );
 //		ADCSequenceStepConfigure(ADC0_BASE, 0, 2, ADC_CTL_CH2 | ADC_CTL_IE | ADC_CTL_END);
 
-//	
+//
 
 //		  ADCSequenceEnable(ADC0_BASE, 0);
 
 //}
 
+void BAT_ADC_Init() {
 
-void BAT_ADC_Init()
-{
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0); // ä½¿èƒ½ADC0
 
-	  SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0);   // Ê¹ÄÜADC0
-
-    // ÉèÖÃGPIOÒý½ÅPE3×÷ÎªADCÊäÈëÒý½Å
+    // è®¾ç½®GPIOå¼•è„šPE3ä½œä¸ºADCè¾“å…¥å¼•è„š
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
     GPIOPinTypeADC(GPIO_PORTE_BASE, GPIO_PIN_3);
 
-    // ÅäÖÃADCÊ±ÖÓºÍ²ÉÑùÐòÁÐ ²»Ð´¾ÍÊÇ1/64 Ö÷Æµ
-    //ADCClockConfigSet(ADC0_BASE, ADC_CLOCK_SRC_PLL | ADC_CLOCK_RATE_FULL, 1);
+    // é…ç½®ADCæ—¶é’Ÿå’Œé‡‡æ ·åºåˆ— ä¸å†™å°±æ˜¯1/64 ä¸»é¢‘
+    // ADCClockConfigSet(ADC0_BASE, ADC_CLOCK_SRC_PLL | ADC_CLOCK_RATE_FULL, 1);
     ADCSequenceConfigure(ADC0_BASE, 0, ADC_TRIGGER_PROCESSOR, 0);
 
-    ADCSequenceStepConfigure(ADC0_BASE, 0, 0, ADC_CTL_CH0 | ADC_CTL_IE | ADC_CTL_END );
-		ADCSequenceEnable(ADC0_BASE, 0);
-
-
+    ADCSequenceStepConfigure(ADC0_BASE, 0, 0, ADC_CTL_CH0 | ADC_CTL_IE | ADC_CTL_END);
+    ADCSequenceEnable(ADC0_BASE, 0);
 }

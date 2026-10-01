@@ -2,18 +2,12 @@
 
 #define __RGB_PROC_H
 
-
-
 #include "FreeRTOS.h"
 #include "task.h"
 #include "main.h"
 
 #include "bsp_uart.h"
 
-
-
-
-
-void RGB_Task_Proc(void const * argument);		//RGB½ø³ÌÖ÷³ÌĞò
-void RGB_Show_Proc(u8 ucled);                 //RGB´¦Àíº¯Êı
+void RGB_Task_Proc(void const *argument); // RGBè¿›ç¨‹ä¸»ç¨‹åº
+void RGB_Show_Proc(u8 ucled);             // RGBå¤„ç†å‡½æ•°
 #endif

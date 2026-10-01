@@ -5,12 +5,6 @@
 #include "task.h"
 #include "main.h"
 
-
-
-
-void ANODT_SendF1(s16 a, s16 b, s16 c);      //ÏòÄäÃûÉÏÎ»»ú·¢ËÍÊı¾İ
-
-
-
+void ANODT_SendF1(s16 a, s16 b, s16 c); // å‘åŒ¿åä¸Šä½æœºå‘é€æ•°æ®
 
 #endif

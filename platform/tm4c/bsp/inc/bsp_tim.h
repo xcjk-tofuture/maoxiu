@@ -1,35 +1,26 @@
 #ifndef __BSP_TIM_H
 #define __BSP_TIM_H
 
-
-
-
-
-
-
 #include <stdint.h>
 #include "main.h"
 
+void TIM0_Init(u16 fre);    // å®šæ—¶å™¨0çº§è”å®šæ—¶å™¨åˆå§‹åŒ–
+void TIM0_Period_Handler(); // å®šæ—¶å™¨0  32ä½çº§è”å®šæ—¶å™¨ä¸­æ–­å¤„ç†å‡½æ•°
 
-void TIM0_Init(u16  fre); //¶¨Ê±Æ÷0¼¶Áª¶¨Ê±Æ÷³õÊ¼»¯
-void TIM0_Period_Handler();  //¶¨Ê±Æ÷0  32Î»¼¶Áª¶¨Ê±Æ÷ÖĞ¶Ï´¦Àíº¯Êı
+void WTIM1_Init(u16 fre);    // å®šæ—¶å™¨1çº§è”å®šæ—¶å™¨åˆå§‹åŒ–
+void WTIM1_Period_Handler(); // å®šæ—¶å™¨1  32ä½æ‹†åˆ†å®šæ—¶å™¨ä¸­æ–­å¤„ç†å‡½æ•°
 
+// void PWM1_Init(); //PWM1åˆå§‹åŒ–
 
-void WTIM1_Init(u16  fre); //¶¨Ê±Æ÷1¼¶Áª¶¨Ê±Æ÷³õÊ¼»¯
-void WTIM1_Period_Handler();  //¶¨Ê±Æ÷1  32Î»²ğ·Ö¶¨Ê±Æ÷ÖĞ¶Ï´¦Àíº¯Êı
+void Motor_Init();  // ç”µæœºpwmä¿¡å·åˆå§‹åŒ–
+void Buzzer_Init(); // æ— æºèœ‚é¸£å™¨åˆå§‹åŒ–
+void Servo_Init();  // èˆµæœºåˆå§‹åŒ–
 
-//void PWM1_Init(); //PWM1³õÊ¼»¯
+void TIM_Capture_Init(); // è¾“å…¥æ•è·
 
+void PWM_IN_IRQHandler(); // è¾“å…¥æ•è·å¤„ç†å‡½æ•°
 
-void Motor_Init();   //µç»úpwmĞÅºÅ³õÊ¼»¯
-void Buzzer_Init();  //ÎŞÔ´·äÃùÆ÷³õÊ¼»¯
-void Servo_Init();   //¶æ»ú³õÊ¼»¯
-
-void TIM_Capture_Init(); //ÊäÈë²¶»ñ
-
-void PWM_IN_IRQHandler();//ÊäÈë²¶»ñ´¦Àíº¯Êı
-
-void Motor_Encoder_Init();  //±àÂëÆ÷³õÊ¼»¯
+void Motor_Encoder_Init(); // ç¼–ç å™¨åˆå§‹åŒ–
 
 void TimerQEIinit();
 void QQ_Handler(void);

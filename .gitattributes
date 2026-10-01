@@ -1,0 +1,15 @@
+app/** text eol=lf
+services/** text eol=lf
+algorithms/** text eol=lf
+drivers/** text eol=lf
+platform/** text eol=lf
+boards/** text eol=lf
+os/** text eol=lf
+os/vendor/** -text
+firmware/os/ports/** -text
+.vscode/** text eol=lf
+cmake/** text eol=lf
+tests/** text eol=lf
+docs/** text eol=lf
+CMakeLists.txt text eol=lf
+CMakePresets.json text eol=lf

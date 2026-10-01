@@ -3,340 +3,297 @@
 
 u32 uwTick;
 
-
-//TI¼ÒµÄ¶¨Ê±Æ÷·ÖÎª16/32 ¶¨Ê±Æ÷ ºÍ 32/64¿í¶¨Ê±Æ÷Á½ÖÖ  ¿É·Ö±ğ²ğ·Ö/¼¶ÁªÊ¹ÓÃ
-/************»ù±¾¶¨Ê±Æ÷Ê¹ÓÃ***************/
-/************ÅäÖÃTIM0¼¶ÁªÊ¹ÓÃ 32Î»¶¨Ê±Æ÷Ê¾Àı***************/	
-void TIM0_Init(u16  fre)  //¶¨Ê±Æ÷3¼¶ÁªÊ¹ÓÃ³õÊ¼»¯
+// TIå®¶çš„å®šæ—¶å™¨åˆ†ä¸º16/32 å®šæ—¶å™¨ å’Œ 32/64å®½å®šæ—¶å™¨ä¸¤ç§  å¯åˆ†åˆ«æ‹†åˆ†/çº§è”ä½¿ç”¨
+/************åŸºæœ¬å®šæ—¶å™¨ä½¿ç”¨***************/
+/************é…ç½®TIM0çº§è”ä½¿ç”¨ 32ä½å®šæ—¶å™¨ç¤ºä¾‹***************/
+void TIM0_Init(u16 fre) // å®šæ—¶å™¨3çº§è”ä½¿ç”¨åˆå§‹åŒ–
 {
-	
 
-    //Ê¹ÄÜTIMER3ÍâÉè
+    // ä½¿èƒ½TIMER3å¤–è®¾
     SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER3);
-    //TimerConfigure(TIMER0_BASE, TIMER_CFG_ONE_SHOT);  //µ¥´Î¼ÆÊıÄ£Ê½
-    //TimerConfigure(TIMER0_BASE, TIMER_CFG_A_PERIODIC);//µ¥ÖÜÆÚ¼ÆÊıÄ£Ê½
-    TimerConfigure(TIMER3_BASE, TIMER_CFG_PERIODIC);  //ÖÜÆÚĞÔ¼ÆÊıÄ£Ê½
- 
-     //Ò»°ãÀ´Ëµ¶¨Ê±Æ÷¼ÓÔØÖµÎªSysCtlClockGet()/N-1£¬¶¨Ê±Ê±¼äÎª1/NÃë¡£
-    TimerLoadSet(TIMER3_BASE, TIMER_A,(SysCtlClockGet() / fre) - 1);
- 
-    //Ê¹ÄÜTimer3AµÄÖĞ¶Ï
+    // TimerConfigure(TIMER0_BASE, TIMER_CFG_ONE_SHOT);  //å•æ¬¡è®¡æ•°æ¨¡å¼
+    // TimerConfigure(TIMER0_BASE, TIMER_CFG_A_PERIODIC);//å•å‘¨æœŸè®¡æ•°æ¨¡å¼
+    TimerConfigure(TIMER3_BASE, TIMER_CFG_PERIODIC); // å‘¨æœŸæ€§è®¡æ•°æ¨¡å¼
+
+    // ä¸€èˆ¬æ¥è¯´å®šæ—¶å™¨åŠ è½½å€¼ä¸ºSysCtlClockGet()/N-1ï¼Œå®šæ—¶æ—¶é—´ä¸º1/Nç§’ã€‚
+    TimerLoadSet(TIMER3_BASE, TIMER_A, (SysCtlClockGet() / fre) - 1);
+
+    // ä½¿èƒ½Timer3Açš„ä¸­æ–­
     IntEnable(INT_TIMER3A);
- 
-    //ÅäÖÃÖĞ¶ÏÔ´£¬ÅäÖÃÎª³¬Ê±Ê±²úÉúÖĞ¶Ï
+
+    // é…ç½®ä¸­æ–­æºï¼Œé…ç½®ä¸ºè¶…æ—¶æ—¶äº§ç”Ÿä¸­æ–­
     TimerIntEnable(TIMER3_BASE, TIMER_TIMA_TIMEOUT);
- 
-    //Ê¹ÄÜ¶Ô´¦ÀíÆ÷µÄÖĞ¶Ï
+
+    // ä½¿èƒ½å¯¹å¤„ç†å™¨çš„ä¸­æ–­
     IntMasterEnable();
- 
-   //ÎªTimer3A×¢²áÖĞ¶Ï´¦Àíº¯Êı   ¼¶ÁªµÄÇé¿öÏÂÄ¬ÈÏ¶¼ÊÇÉèÖÃ¶¨Ê±Æ÷A
-    TimerIntRegister(TIMER3_BASE,TIMER_A,TIM0_Period_Handler);
- 
-    //Ê¹ÄÜTIMER3A
-		TimerEnable( TIMER3_BASE,  TIMER_A);
-		
-}	
 
+    // ä¸ºTimer3Aæ³¨å†Œä¸­æ–­å¤„ç†å‡½æ•°   çº§è”çš„æƒ…å†µä¸‹é»˜è®¤éƒ½æ˜¯è®¾ç½®å®šæ—¶å™¨A
+    TimerIntRegister(TIMER3_BASE, TIMER_A, TIM0_Period_Handler);
 
-
-void TIM0_Period_Handler()  //¶¨Ê±Æ÷3  32Î»¼¶Áª¶¨Ê±Æ÷
-{
-	 static uint32_t time_count=0;  //¼ÆÊ±Êı
-	// static uint8_t trigger=0;      //led·­×ª±êÖ¾Î»ÖÃ
-	
-
-	
-	
-  uint32_t status=TimerIntStatus( TIMER3_BASE,  true); //»ñÈ¡×´Ì¬  ºóÃæÄÇ¸ötureÊÇÊÇ·ñÆÁ±Î»òÔ­Ê¼ÖĞ¶Ï×´Ì¬·µ»Ø
-	TimerIntClear( TIMER3_BASE,  status);  //Çå³ıÖĞ¶Ï±êÖ¾Î»
-
-	//GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2,trigger ^= GPIO_PIN_2);
+    // ä½¿èƒ½TIMER3A
+    TimerEnable(TIMER3_BASE, TIMER_A);
 }
-/********************************************************/	
 
-
-/************ÅäÖÃWTIM1²ğ·ÖÊ¹ÓÃ 64/2 = 32Î»¶¨Ê±Æ÷Ê¾Àı***************/	
-void WTIM1_Init(u16  fre) //¶¨Ê±Æ÷1¼¶Áª¶¨Ê±Æ÷³õÊ¼»¯
+void TIM0_Period_Handler() // å®šæ—¶å™¨3  32ä½çº§è”å®šæ—¶å™¨
 {
-	   //Ê¹ÄÜTIMER1ÍâÉè
+    static uint32_t time_count = 0; // è®¡æ—¶æ•°
+    // static uint8_t trigger=0;      //ledç¿»è½¬æ ‡å¿—ä½ç½®
+
+    uint32_t status =
+        TimerIntStatus(TIMER3_BASE, true); // è·å–çŠ¶æ€  åé¢é‚£ä¸ªtureæ˜¯æ˜¯å¦å±è”½æˆ–åŸå§‹ä¸­æ–­çŠ¶æ€è¿”å›
+    TimerIntClear(TIMER3_BASE, status); // æ¸…é™¤ä¸­æ–­æ ‡å¿—ä½
+
+    // GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2,trigger ^= GPIO_PIN_2);
+}
+/********************************************************/
+
+/************é…ç½®WTIM1æ‹†åˆ†ä½¿ç”¨ 64/2 = 32ä½å®šæ—¶å™¨ç¤ºä¾‹***************/
+void WTIM1_Init(u16 fre) // å®šæ—¶å™¨1çº§è”å®šæ—¶å™¨åˆå§‹åŒ–
+{
+    // ä½¿èƒ½TIMER1å¤–è®¾
     SysCtlPeripheralEnable(SYSCTL_PERIPH_WTIMER1);
-    //TimerConfigure(TIMER1_BASE, TIMER_CFG_ONE_SHOT);  //µ¥´Î¼ÆÊıÄ£Ê½
-    //TimerConfigure(TIMER1_BASE, TIMER_CFG_A_PERIODIC);//µ¥ÖÜÆÚ¼ÆÊıÄ£Ê½
-    TimerConfigure(WTIMER1_BASE, TIMER_CFG_SPLIT_PAIR|TIMER_CFG_A_PERIODIC);  //ÖÜÆÚĞÔ¼ÆÊıÄ£Ê½ ÅäÖÃ¶¨Ê±Æ÷²ğ·ÖºÍĞèÒªÊ¹ÓÃµÄ¶¨Ê±Æ÷Ä£Ê½
+    // TimerConfigure(TIMER1_BASE, TIMER_CFG_ONE_SHOT);  //å•æ¬¡è®¡æ•°æ¨¡å¼
+    // TimerConfigure(TIMER1_BASE, TIMER_CFG_A_PERIODIC);//å•å‘¨æœŸè®¡æ•°æ¨¡å¼
+    TimerConfigure(WTIMER1_BASE,
+                   TIMER_CFG_SPLIT_PAIR |
+                       TIMER_CFG_A_PERIODIC); // å‘¨æœŸæ€§è®¡æ•°æ¨¡å¼ é…ç½®å®šæ—¶å™¨æ‹†åˆ†å’Œéœ€è¦ä½¿ç”¨çš„å®šæ—¶å™¨æ¨¡å¼
 
-		//Ò»°ãÀ´Ëµ¶¨Ê±Æ÷¼ÓÔØÖµÎªSysCtlClockGet()/N-1£¬¶¨Ê±Ê±¼äÎª1/ºÁÃë¡£
-		TimerLoadSet( WTIMER1_BASE,  TIMER_A,
-                          SysCtlClockGet()/(1000 * fre)-1);
+    // ä¸€èˆ¬æ¥è¯´å®šæ—¶å™¨åŠ è½½å€¼ä¸ºSysCtlClockGet()/N-1ï¼Œå®šæ—¶æ—¶é—´ä¸º1/æ¯«ç§’ã€‚
+    TimerLoadSet(WTIMER1_BASE, TIMER_A, SysCtlClockGet() / (1000 * fre) - 1);
 
-			//Îª¶¨Ê±Æ÷A×¢²áÖĞ¶Ïº¯Êı
-		TimerIntRegister( WTIMER1_BASE,  TIMER_A,
-															 WTIM1_Period_Handler);
-			//Ê¹ÄÜtime0µÄ¶¨Ê±Æ÷AÎª³¬Ê±ÖĞ¶Ï
-		TimerIntEnable( WTIMER1_BASE,  TIMER_TIMA_TIMEOUT);
-			//ÉèÖÃÖĞ¶ÏÓÅÏÈ¼¶
-		IntPrioritySet(INT_WTIMER1A,  0);
-			//Ê¹ÄÜÖĞ¶Ï
-		IntEnable( INT_WTIMER1A);
-		IntMasterEnable();
-			//Ê¹ÄÜ¶¨Ê±Æ÷
-		TimerEnable( WTIMER1_BASE,  TIMER_A);
-
-
-			
+    // ä¸ºå®šæ—¶å™¨Aæ³¨å†Œä¸­æ–­å‡½æ•°
+    TimerIntRegister(WTIMER1_BASE, TIMER_A, WTIM1_Period_Handler);
+    // ä½¿èƒ½time0çš„å®šæ—¶å™¨Aä¸ºè¶…æ—¶ä¸­æ–­
+    TimerIntEnable(WTIMER1_BASE, TIMER_TIMA_TIMEOUT);
+    // è®¾ç½®ä¸­æ–­ä¼˜å…ˆçº§
+    IntPrioritySet(INT_WTIMER1A, 0);
+    // ä½¿èƒ½ä¸­æ–­
+    IntEnable(INT_WTIMER1A);
+    IntMasterEnable();
+    // ä½¿èƒ½å®šæ—¶å™¨
+    TimerEnable(WTIMER1_BASE, TIMER_A);
 }
-void WTIM1_Period_Handler() //¶¨Ê±Æ÷1  32Î»²ğ·Ö¶¨Ê±Æ÷ASÖĞ¶Ï´¦Àíº¯Êı
+void WTIM1_Period_Handler() // å®šæ—¶å™¨1  32ä½æ‹†åˆ†å®šæ—¶å™¨ASä¸­æ–­å¤„ç†å‡½æ•°
 {
 
-	static uint32_t time_count=0;  //¼ÆÊ±Êı
-	static uint8_t trigger=0;      //led·­×ª±êÖ¾Î»ÖÃ
-	
-	
-  
-	uint32_t status=TimerIntStatus( WTIMER1_BASE,  true); //»ñÈ¡×´Ì¬  ºóÃæÄÇ¸ötureÊÇÊÇ·ñÆÁ±Î»òÔ­Ê¼ÖĞ¶Ï×´Ì¬·µ»Ø
-	TimerIntClear( WTIMER1_BASE,  status);  //Çå³ıÖĞ¶Ï±êÖ¾Î»
+    static uint32_t time_count = 0; // è®¡æ—¶æ•°
+    static uint8_t trigger = 0;     // ledç¿»è½¬æ ‡å¿—ä½ç½®
 
-	uwTick++;
-	//GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2,trigger ^= GPIO_PIN_2);
+    uint32_t status =
+        TimerIntStatus(WTIMER1_BASE, true); // è·å–çŠ¶æ€  åé¢é‚£ä¸ªtureæ˜¯æ˜¯å¦å±è”½æˆ–åŸå§‹ä¸­æ–­çŠ¶æ€è¿”å›
+    TimerIntClear(WTIMER1_BASE, status); // æ¸…é™¤ä¸­æ–­æ ‡å¿—ä½
 
+    uwTick++;
+    // GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2,trigger ^= GPIO_PIN_2);
 }
-/********************************************************/	
+/********************************************************/
 
-
-
-///************PWMÉú³ÉÊ¹ÓÃ Ê¾Àı PD1 PE4***************/
-//void PWM1_Init()
+///************PWMç”Ÿæˆä½¿ç”¨ ç¤ºä¾‹ PD1 PE4***************/
+// void PWM1_Init()
 //{
-//	    //ÒòÎªÉèÖÃÁËÊ±ÖÓ×ÜÏßÊÇ80MHz£¬ËùÒÔÔÚÕâÀï·ÖÒ»ÏÂÆµÉèÖÃÎª80·ÖÆµ£¬ÄÇÃ´PWMÊ±ÖÓ¾ÍÊÇ10MHz
+//	    //å› ä¸ºè®¾ç½®äº†æ—¶é’Ÿæ€»çº¿æ˜¯80MHzï¼Œæ‰€ä»¥åœ¨è¿™é‡Œåˆ†ä¸€ä¸‹é¢‘è®¾ç½®ä¸º80åˆ†é¢‘ï¼Œé‚£ä¹ˆPWMæ—¶é’Ÿå°±æ˜¯10MHz
 //	SysCtlPWMClockSet( SYSCTL_PWMDIV_8);
-//    //Ê¹ÄÜGPIOFÓëPWM1
-//  SysCtlPeripheralEnable( SYSCTL_PERIPH_GPIOD);
+//     //ä½¿èƒ½GPIOFä¸PWM1
+//   SysCtlPeripheralEnable( SYSCTL_PERIPH_GPIOD);
 //	SysCtlPeripheralEnable( SYSCTL_PERIPH_GPIOE);
 //	SysCtlPeripheralEnable( SYSCTL_PERIPH_PWM1);
-//    //ÎªGPIOA_PIN_1ÓëGPIOA_PIN_6·ÖÅäPWMĞÅºÅ
+//     //ä¸ºGPIOA_PIN_1ä¸GPIOA_PIN_6åˆ†é…PWMä¿¡å·
 //	GPIOPinTypePWM( GPIO_PORTD_BASE,  GPIO_PIN_1);
 //	GPIOPinTypePWM( GPIO_PORTE_BASE,  GPIO_PIN_4);
-//    //¶ÔGPIOF_PIN_2ÓëGPIOF_PIN_3Ê¹ÄÜÒı½Å¸´ÓÃ
+//     //å¯¹GPIOF_PIN_2ä¸GPIOF_PIN_3ä½¿èƒ½å¼•è„šå¤ç”¨
 //	GPIOPinConfigure( GPIO_PD1_M1PWM1);
 //	GPIOPinConfigure( GPIO_PE4_M1PWM2);
-//    //ÉèÖÃPWM1Ä£¿éµÄµÚËÄ¸ö·¢ÉúÆ÷ÎªÏòÏÂ¼ÆÊıÓë²»Í¬²½¼ÆÊı  Í¬²½¼ÆÊı¾ÍÊÇ²úÉúÒ»Ä£Ò»ÑùµÄPWM²¨ĞÎ
+//     //è®¾ç½®PWM1æ¨¡å—çš„ç¬¬å››ä¸ªå‘ç”Ÿå™¨ä¸ºå‘ä¸‹è®¡æ•°ä¸ä¸åŒæ­¥è®¡æ•°  åŒæ­¥è®¡æ•°å°±æ˜¯äº§ç”Ÿä¸€æ¨¡ä¸€æ ·çš„PWMæ³¢å½¢
 //	PWMGenConfigure( PWM1_BASE,  PWM_GEN_0,
-//                             PWM_GEN_MODE_DOWN|PWM_GEN_MODE_NO_SYNC);
+//                              PWM_GEN_MODE_DOWN|PWM_GEN_MODE_NO_SYNC);
 //	PWMGenConfigure( PWM1_BASE,  PWM_GEN_1,
-//                             PWM_GEN_MODE_DOWN|PWM_GEN_MODE_NO_SYNC);
-//    //ÉèÖÃPWM1Ä£¿éµÄµÚ1¸ö·¢ÉúÆ÷Ã¿¸ö¼ÆÊıÖÜÆÚÎª10000¸öÊı£¬¶øPWMÊ±ÖÓÎª10MHz£¬
-//    // ÄÇÃ´PWMÊä³öÆµÂÊ¾ÍÊÇ10^7/10000Îª1KHz£¬µ«ÊÇÕâ¸öÊıÎª16Î»¼Ä´æÆ÷£¬²»ÄÜ³¬¹ı65535  Àà±ÈÓÚ32µÄARR
+//                              PWM_GEN_MODE_DOWN|PWM_GEN_MODE_NO_SYNC);
+//     //è®¾ç½®PWM1æ¨¡å—çš„ç¬¬1ä¸ªå‘ç”Ÿå™¨æ¯ä¸ªè®¡æ•°å‘¨æœŸä¸º10000ä¸ªæ•°ï¼Œè€ŒPWMæ—¶é’Ÿä¸º10MHzï¼Œ
+//     // é‚£ä¹ˆPWMè¾“å‡ºé¢‘ç‡å°±æ˜¯10^7/10000ä¸º1KHzï¼Œä½†æ˜¯è¿™ä¸ªæ•°ä¸º16ä½å¯„å­˜å™¨ï¼Œä¸èƒ½è¶…è¿‡65535  ç±»æ¯”äº32çš„ARR
 //	PWMGenPeriodSet( PWM1_BASE,  PWM_GEN_0,
-//                             10000);
-//		//ÉèÖÃPWM1Ä£¿éµÄµÚ1¸ö·¢ÉúÆ÷Ã¿¸ö¼ÆÊıÖÜÆÚÎª20000¸öÊı£¬¶øPWMÊ±ÖÓÎª10MHz£¬
-//    // ÄÇÃ´PWMÊä³öÆµÂÊ¾ÍÊÇ10^7/20000Îª500Hz£¬µ«ÊÇÕâ¸öÊıÎª16Î»¼Ä´æÆ÷£¬²»ÄÜ³¬¹ı65535  Àà±ÈÓÚ32µÄTIM ARR
+//                              10000);
+//		//è®¾ç½®PWM1æ¨¡å—çš„ç¬¬1ä¸ªå‘ç”Ÿå™¨æ¯ä¸ªè®¡æ•°å‘¨æœŸä¸º20000ä¸ªæ•°ï¼Œè€ŒPWMæ—¶é’Ÿä¸º10MHzï¼Œ
+//     // é‚£ä¹ˆPWMè¾“å‡ºé¢‘ç‡å°±æ˜¯10^7/20000ä¸º500Hzï¼Œä½†æ˜¯è¿™ä¸ªæ•°ä¸º16ä½å¯„å­˜å™¨ï¼Œä¸èƒ½è¶…è¿‡65535  ç±»æ¯”äº32çš„TIM
+//     ARR
 //	PWMGenPeriodSet( PWM1_BASE,  PWM_GEN_1,
-//                             20000);
-//    //ÉèÖÃPWM1Ä£¿éµÄµÚ¶ş¸öÍ¨µÀµÄÕ¼¿Õ±ÈÎª10%£¬Õâ¸öº¯ÊıµÄµÚÈı¸ö²ÎÊıÎªÖÜÆÚÄÚµÄ¸ßµçÆ½Êı£¬ Àà±ÈÓë32µÄTIMµÄCRR
-//   // ËùÒÔ¿ÉÒÔÍ¨¹ıPWMGenPeriodGetµÃ³öÒ»¸öÖÜÆÚÄÚµÄ¼ÆÊı×ÜÊıÔÙ³Ë0.1È»ºó¼õ1¾ÍĞĞ
+//                              20000);
+//     //è®¾ç½®PWM1æ¨¡å—çš„ç¬¬äºŒä¸ªé€šé“çš„å ç©ºæ¯”ä¸º10%ï¼Œè¿™ä¸ªå‡½æ•°çš„ç¬¬ä¸‰ä¸ªå‚æ•°ä¸ºå‘¨æœŸå†…çš„é«˜ç”µå¹³æ•°ï¼Œ
+//     ç±»æ¯”ä¸32çš„TIMçš„CRR
+//    // æ‰€ä»¥å¯ä»¥é€šè¿‡PWMGenPeriodGetå¾—å‡ºä¸€ä¸ªå‘¨æœŸå†…çš„è®¡æ•°æ€»æ•°å†ä¹˜0.1ç„¶åå‡1å°±è¡Œ
 //	PWMPulseWidthSet( PWM1_BASE,  PWM_OUT_1,
-//                              PWMGenPeriodGet(PWM1_BASE, PWM_GEN_0)*0.1 - 1);
-//    //Í¬Àí£¬Ö»²»¹ıÊÇÉèÖÃµÚÈı¸öÍ¨µÀ Õ¼¿Õ±ÈÎª90%
+//                               PWMGenPeriodGet(PWM1_BASE, PWM_GEN_0)*0.1 - 1);
+//     //åŒç†ï¼Œåªä¸è¿‡æ˜¯è®¾ç½®ç¬¬ä¸‰ä¸ªé€šé“ å ç©ºæ¯”ä¸º90%
 //	PWMPulseWidthSet( PWM1_BASE,  PWM_OUT_2,
-//                              PWMGenPeriodGet(PWM1_BASE, PWM_GEN_1)*0.9 - 1);
-//    //Ê¹ÄÜµÚ¶ş¸öÍ¨µÀ
+//                               PWMGenPeriodGet(PWM1_BASE, PWM_GEN_1)*0.9 - 1);
+//     //ä½¿èƒ½ç¬¬äºŒä¸ªé€šé“
 //	PWMOutputState( PWM1_BASE,  PWM_OUT_1_BIT,
-//                            true);         //ÈôÎªfalse Ôò·´Ïò
-//		//Ê¹ÄÜµÚÈı¸öÍ¨µÀ
+//                             true);         //è‹¥ä¸ºfalse åˆ™åå‘
+//		//ä½¿èƒ½ç¬¬ä¸‰ä¸ªé€šé“
 //	PWMOutputState( PWM1_BASE,  PWM_OUT_2_BIT,
-//                            true);
-//    //Ê¹ÄÜµÚÈı¸ö·¢ÉúÆ÷
+//                             true);
+//     //ä½¿èƒ½ç¬¬ä¸‰ä¸ªå‘ç”Ÿå™¨
 //	PWMGenEnable( PWM1_BASE,  PWM_GEN_0);
 //	PWMGenEnable( PWM1_BASE,  PWM_GEN_1);
-//}
+// }
 
+/********************************************************/
 
-/********************************************************/	
+void Motor_Init() {
+    // å› ä¸ºè®¾ç½®äº†æ—¶é’Ÿæ€»çº¿æ˜¯80MHzï¼Œæ‰€ä»¥åœ¨è¿™é‡Œåˆ†ä¸€ä¸‹é¢‘è®¾ç½®ä¸º80åˆ†é¢‘ï¼Œé‚£ä¹ˆPWMæ—¶é’Ÿå°±æ˜¯10MHz
+    // SysCtlPWMClockSet( SYSCTL_PWMDIV_8);
+    // ä½¿èƒ½GPIOBä¸PWM0
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_PWM0);
+    GPIOPinConfigure(GPIO_PB4_M0PWM2);
+    GPIOPinConfigure(GPIO_PB5_M0PWM3);
+    GPIOPinConfigure(GPIO_PB6_M0PWM0);
+    GPIOPinConfigure(GPIO_PB7_M0PWM1);
+    // ä¸ºGPIOB_PIN_4ä¸GPIOB_PIN_5åˆ†é…PWMä¿¡å·
+    GPIOPinTypePWM(GPIO_PORTB_BASE, GPIO_PIN_5);
+    GPIOPinTypePWM(GPIO_PORTB_BASE, GPIO_PIN_4);
+    GPIOPinTypePWM(GPIO_PORTB_BASE, GPIO_PIN_6);
+    GPIOPinTypePWM(GPIO_PORTB_BASE, GPIO_PIN_7);
 
+    PWMGenConfigure(PWM0_BASE, PWM_GEN_0, PWM_GEN_MODE_DOWN | PWM_GEN_MODE_NO_SYNC);
+    PWMGenConfigure(PWM0_BASE, PWM_GEN_1, PWM_GEN_MODE_DOWN | PWM_GEN_MODE_NO_SYNC);
 
+    // é‚£ä¹ˆPWMè¾“å‡ºé¢‘ç‡å°±æ˜¯10^7/10000ä¸º1KHzï¼Œä½†æ˜¯è¿™ä¸ªæ•°ä¸º16ä½å¯„å­˜å™¨ï¼Œä¸èƒ½è¶…è¿‡65535  ç±»æ¯”äº32çš„ARR
+    PWMGenPeriodSet(PWM0_BASE, PWM_GEN_0, SysCtlClockGet() / 64 / 1000 - 1);
 
-void Motor_Init()
-{
-	    //ÒòÎªÉèÖÃÁËÊ±ÖÓ×ÜÏßÊÇ80MHz£¬ËùÒÔÔÚÕâÀï·ÖÒ»ÏÂÆµÉèÖÃÎª80·ÖÆµ£¬ÄÇÃ´PWMÊ±ÖÓ¾ÍÊÇ10MHz
-	//SysCtlPWMClockSet( SYSCTL_PWMDIV_8);
-    //Ê¹ÄÜGPIOBÓëPWM0
-  SysCtlPeripheralEnable( SYSCTL_PERIPH_GPIOB);
-	SysCtlPeripheralEnable( SYSCTL_PERIPH_PWM0);
-	GPIOPinConfigure(GPIO_PB4_M0PWM2);
-	GPIOPinConfigure(GPIO_PB5_M0PWM3);
-	GPIOPinConfigure(GPIO_PB6_M0PWM0);
-	GPIOPinConfigure(GPIO_PB7_M0PWM1);
-    //ÎªGPIOB_PIN_4ÓëGPIOB_PIN_5·ÖÅäPWMĞÅºÅ
-	GPIOPinTypePWM( GPIO_PORTB_BASE,  GPIO_PIN_5);
-	GPIOPinTypePWM( GPIO_PORTB_BASE,  GPIO_PIN_4);
-	GPIOPinTypePWM( GPIO_PORTB_BASE,  GPIO_PIN_6);
-	GPIOPinTypePWM( GPIO_PORTB_BASE,  GPIO_PIN_7);
+    PWMGenPeriodSet(PWM0_BASE, PWM_GEN_1, SysCtlClockGet() / 64 / 1000 - 1);
 
+    // è®¾ç½®CCR
+    PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0, 1);
 
-	PWMGenConfigure( PWM0_BASE,  PWM_GEN_0,
-                             PWM_GEN_MODE_DOWN|PWM_GEN_MODE_NO_SYNC);
-	PWMGenConfigure( PWM0_BASE,  PWM_GEN_1,
-                             PWM_GEN_MODE_DOWN|PWM_GEN_MODE_NO_SYNC);
+    PWMPulseWidthSet(PWM0_BASE, PWM_OUT_1, 1);
 
+    PWMPulseWidthSet(PWM0_BASE, PWM_OUT_2, 1);
 
-   // ÄÇÃ´PWMÊä³öÆµÂÊ¾ÍÊÇ10^7/10000Îª1KHz£¬µ«ÊÇÕâ¸öÊıÎª16Î»¼Ä´æÆ÷£¬²»ÄÜ³¬¹ı65535  Àà±ÈÓÚ32µÄARR
-	PWMGenPeriodSet( PWM0_BASE,  PWM_GEN_0,
-                             SysCtlClockGet() / 64 / 1000 - 1);
-	
-	PWMGenPeriodSet( PWM0_BASE,  PWM_GEN_1,
-                             SysCtlClockGet() / 64 / 1000 - 1);
-	
-	//ÉèÖÃCCR
-		PWMPulseWidthSet( PWM0_BASE,  PWM_OUT_0,                             
-														1);
+    PWMPulseWidthSet(PWM0_BASE, PWM_OUT_3, 1);
 
-		PWMPulseWidthSet( PWM0_BASE,  PWM_OUT_1,                             
-														1);
-	
-		PWMPulseWidthSet( PWM0_BASE,  PWM_OUT_2,                             
-														1);
+    // ä½¿èƒ½ç¬¬ä¸€ä¸ªé€šé“
+    PWMOutputState(PWM0_BASE, PWM_OUT_0_BIT,
+                   true); // è‹¥ä¸ºfalse åˆ™åå‘
 
-		PWMPulseWidthSet( PWM0_BASE,  PWM_OUT_3,
-                            1);
-	
-		 //Ê¹ÄÜµÚÒ»¸öÍ¨µÀ
-	PWMOutputState( PWM0_BASE,  PWM_OUT_0_BIT,
-                           true);         //ÈôÎªfalse Ôò·´Ïò
+    // ä½¿èƒ½ç¬¬äºŒä¸ªé€šé“
+    PWMOutputState(PWM0_BASE, PWM_OUT_1_BIT,
+                   true); // è‹¥ä¸ºfalse åˆ™åå‘
+    // ä½¿èƒ½ç¬¬ä¸‰ä¸ªé€šé“
+    PWMOutputState(PWM0_BASE, PWM_OUT_2_BIT, true);
+    // ä½¿èƒ½ç¬¬å››ä¸ªé€šé“
+    PWMOutputState(PWM0_BASE, PWM_OUT_3_BIT, true);
 
-	    //Ê¹ÄÜµÚ¶ş¸öÍ¨µÀ
-	PWMOutputState( PWM0_BASE,  PWM_OUT_1_BIT,
-                           true);         //ÈôÎªfalse Ôò·´Ïò
-		//Ê¹ÄÜµÚÈı¸öÍ¨µÀ
-	PWMOutputState( PWM0_BASE,  PWM_OUT_2_BIT,
-                            true);
-		//Ê¹ÄÜµÚËÄ¸öÍ¨µÀ
-	PWMOutputState( PWM0_BASE,  PWM_OUT_3_BIT,
-                            true);
-														
-	PWMGenEnable( PWM0_BASE,  PWM_GEN_0);
-	PWMGenEnable( PWM0_BASE,  PWM_GEN_1);
-
-}	
-
-void Servo_Init()  //PE4 PE5
-{
-	//ÒòÎªÉèÖÃÁËÊ±ÖÓ×ÜÏßÊÇ80MHz£¬ËùÒÔÔÚÕâÀï·ÖÒ»ÏÂÆµÉèÖÃÎª8·ÖÆµ£¬ÄÇÃ´PWMÊ±ÖÓ¾ÍÊÇ10MHz
-  
-    //Ê¹ÄÜGPIOBÓëPWM0
-  SysCtlPeripheralEnable( SYSCTL_PERIPH_GPIOE);
-	SysCtlPeripheralEnable( SYSCTL_PERIPH_PWM0);
-
-
-	
-	GPIOPinConfigure(GPIO_PE4_M0PWM4);
-	GPIOPinConfigure(GPIO_PE5_M0PWM5);
-	
-	GPIOPinTypePWM( GPIO_PORTE_BASE,  GPIO_PIN_4);
-	GPIOPinTypePWM( GPIO_PORTE_BASE,  GPIO_PIN_5);
-	
-		PWMGenConfigure(PWM0_BASE,  PWM_GEN_2,
-                             PWM_GEN_MODE_DOWN|PWM_GEN_MODE_NO_SYNC);
-	 //Éú³É50HZ²¨ĞÎ
-		PWMGenPeriodSet( PWM0_BASE,  PWM_GEN_2,
-                             SysCtlClockGet() / 64 / 50 - 1);
-	
-		//ÉèÖÃCCR
-	  PWMPulseWidthSet( PWM0_BASE,  PWM_OUT_4,(PWMGenPeriodGet(PWM0_BASE, PWM_GEN_2)*0.5 - 1));                             
-		PWMPulseWidthSet( PWM0_BASE,  PWM_OUT_5,(PWMGenPeriodGet(PWM0_BASE, PWM_GEN_2)*0.5 - 1));				
-
-		PWMOutputState( PWM0_BASE,  PWM_OUT_4_BIT,
-													true);
-													
-		PWMOutputState( PWM0_BASE,  PWM_OUT_5_BIT,
-													true);
-													
-		PWMGenEnable( PWM0_BASE,  PWM_GEN_2);
-
+    PWMGenEnable(PWM0_BASE, PWM_GEN_0);
+    PWMGenEnable(PWM0_BASE, PWM_GEN_1);
 }
 
-void Buzzer_Init() //PC4
+void Servo_Init() // PE4 PE5
 {
-		//ÒòÎªÉèÖÃÁËÊ±ÖÓ×ÜÏßÊÇ80MHz£¬ËùÒÔÔÚÕâÀï·ÖÒ»ÏÂÆµÉèÖÃÎª80·ÖÆµ£¬ÄÇÃ´PWMÊ±ÖÓ¾ÍÊÇ10MHz
-	//SysCtlPWMClockSet( SYSCTL_PWMDIV_8);
-    //Ê¹ÄÜGPIOBÓëPWM0
-  SysCtlPeripheralEnable( SYSCTL_PERIPH_GPIOC);
-	SysCtlPeripheralEnable( SYSCTL_PERIPH_PWM0);
+    // å› ä¸ºè®¾ç½®äº†æ—¶é’Ÿæ€»çº¿æ˜¯80MHzï¼Œæ‰€ä»¥åœ¨è¿™é‡Œåˆ†ä¸€ä¸‹é¢‘è®¾ç½®ä¸º8åˆ†é¢‘ï¼Œé‚£ä¹ˆPWMæ—¶é’Ÿå°±æ˜¯10MHz
 
-	GPIOPinConfigure(GPIO_PC4_M0PWM6);
-	GPIOPinTypePWM( GPIO_PORTC_BASE,  GPIO_PIN_4);
-	
-		PWMGenConfigure(PWM0_BASE,  PWM_GEN_3,
-                             PWM_GEN_MODE_DOWN|PWM_GEN_MODE_NO_SYNC);
-	 //Éú³É50HZ²¨ĞÎ
-		PWMGenPeriodSet( PWM0_BASE,  PWM_GEN_3,
-                             (10000 * 20));
-	
-		//ÉèÖÃCCR
-	  PWMPulseWidthSet( PWM0_BASE,  PWM_OUT_6,(PWMGenPeriodGet(PWM0_BASE, PWM_GEN_3)*0.5 - 1));                             
-			
+    // ä½¿èƒ½GPIOBä¸PWM0
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_PWM0);
 
-		PWMOutputState( PWM0_BASE,  PWM_OUT_6_BIT,
-													true);
-													
-													
-		PWMGenEnable( PWM0_BASE,  PWM_GEN_3);
+    GPIOPinConfigure(GPIO_PE4_M0PWM4);
+    GPIOPinConfigure(GPIO_PE5_M0PWM5);
 
+    GPIOPinTypePWM(GPIO_PORTE_BASE, GPIO_PIN_4);
+    GPIOPinTypePWM(GPIO_PORTE_BASE, GPIO_PIN_5);
+
+    PWMGenConfigure(PWM0_BASE, PWM_GEN_2, PWM_GEN_MODE_DOWN | PWM_GEN_MODE_NO_SYNC);
+    // ç”Ÿæˆ50HZæ³¢å½¢
+    PWMGenPeriodSet(PWM0_BASE, PWM_GEN_2, SysCtlClockGet() / 64 / 50 - 1);
+
+    // è®¾ç½®CCR
+    PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4, (PWMGenPeriodGet(PWM0_BASE, PWM_GEN_2) * 0.5 - 1));
+    PWMPulseWidthSet(PWM0_BASE, PWM_OUT_5, (PWMGenPeriodGet(PWM0_BASE, PWM_GEN_2) * 0.5 - 1));
+
+    PWMOutputState(PWM0_BASE, PWM_OUT_4_BIT, true);
+
+    PWMOutputState(PWM0_BASE, PWM_OUT_5_BIT, true);
+
+    PWMGenEnable(PWM0_BASE, PWM_GEN_2);
 }
 
-/************¶¨Ê±Æ÷PWMÊäÈë²¶»ñÊ¹ÓÃ Ê¾Àı***************/
+void Buzzer_Init() // PC4
+{
+    // å› ä¸ºè®¾ç½®äº†æ—¶é’Ÿæ€»çº¿æ˜¯80MHzï¼Œæ‰€ä»¥åœ¨è¿™é‡Œåˆ†ä¸€ä¸‹é¢‘è®¾ç½®ä¸º80åˆ†é¢‘ï¼Œé‚£ä¹ˆPWMæ—¶é’Ÿå°±æ˜¯10MHz
+    // SysCtlPWMClockSet( SYSCTL_PWMDIV_8);
+    // ä½¿èƒ½GPIOBä¸PWM0
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOC);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_PWM0);
 
-//void TIM_Capture_Init()
+    GPIOPinConfigure(GPIO_PC4_M0PWM6);
+    GPIOPinTypePWM(GPIO_PORTC_BASE, GPIO_PIN_4);
+
+    PWMGenConfigure(PWM0_BASE, PWM_GEN_3, PWM_GEN_MODE_DOWN | PWM_GEN_MODE_NO_SYNC);
+    // ç”Ÿæˆ50HZæ³¢å½¢
+    PWMGenPeriodSet(PWM0_BASE, PWM_GEN_3, (10000 * 20));
+
+    // è®¾ç½®CCR
+    PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, (PWMGenPeriodGet(PWM0_BASE, PWM_GEN_3) * 0.5 - 1));
+
+    PWMOutputState(PWM0_BASE, PWM_OUT_6_BIT, true);
+
+    PWMGenEnable(PWM0_BASE, PWM_GEN_3);
+}
+
+/************å®šæ—¶å™¨PWMè¾“å…¥æ•è·ä½¿ç”¨ ç¤ºä¾‹***************/
+
+// void TIM_Capture_Init()
 //{
-//	
-//	
-//	//Ê¹ÄÜ¶¨Ê±Æ÷ÓëGPIO
-//   SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
+//
+//
+//	//ä½¿èƒ½å®šæ—¶å™¨ä¸GPIO
+//    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
 //	SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
-//    //Ê¹ÄÜÒı½Å¸´ÓÃ
+//     //ä½¿èƒ½å¼•è„šå¤ç”¨
 //	GPIOPinConfigure(GPIO_PB7_T0CCP1);
-//    //·ÖÅäÒı½ÅĞÅºÅ
+//     //åˆ†é…å¼•è„šä¿¡å·
 //	GPIOPinTypeTimer(GPIO_PORTB_BASE, GPIO_PIN_7);
-//    //ÉèÖÃÒı½Å·½Ïò£¬×¢ÒâËäÈ»ÕâÊÇÊäÈë²¶»ñ£¬µ«ÊÇÕâÊÇÓÉÍâ½çµÄPWMĞÅºÅ¿ØÖÆ£¬ÊôÓÚÓ²¼ş¿ØÖÆ£¬ÒªÉèÖÃÎªGPIO_DIR_MODE_HW
+//     //è®¾ç½®å¼•è„šæ–¹å‘ï¼Œæ³¨æ„è™½ç„¶è¿™æ˜¯è¾“å…¥æ•è·ï¼Œä½†æ˜¯è¿™æ˜¯ç”±å¤–ç•Œçš„PWMä¿¡å·æ§åˆ¶ï¼Œå±äºç¡¬ä»¶æ§åˆ¶ï¼Œè¦è®¾ç½®ä¸ºGPIO_DIR_MODE_HW
 ////	GPIODirModeSet( GPIO_PORTB_BASE,  GPIO_PIN_7,
 ////                            GPIO_DIR_MODE_HW);
-//    //ÉèÖÃÎªÍÆÍìÉÏÀ­ÊäÈë
+//    //è®¾ç½®ä¸ºæ¨æŒ½ä¸Šæ‹‰è¾“å…¥
 //	GPIOPadConfigSet( GPIO_PORTB_BASE,  GPIO_PIN_7,
 //                              GPIO_STRENGTH_2MA,  GPIO_PIN_TYPE_STD_WPU);
-//    //ÒòÎªÊÇÊäÈë²¶»ñ£¬Ö»ÓĞÔÚ²ğ·ÖÄ£Ê½ÏÂ¿ÉÒÔÓÃÊäÈë²¶»ñ£¬ËùÒÔ½«TIMER_CFG_SPLIT_PAIRÓëAÖÜÆÚ¼ÆÊı½øĞĞ»òÔËËã
+//    //å› ä¸ºæ˜¯è¾“å…¥æ•è·ï¼Œåªæœ‰åœ¨æ‹†åˆ†æ¨¡å¼ä¸‹å¯ä»¥ç”¨è¾“å…¥æ•è·ï¼Œæ‰€ä»¥å°†TIMER_CFG_SPLIT_PAIRä¸Aå‘¨æœŸè®¡æ•°è¿›è¡Œæˆ–è¿ç®—
 //	TimerConfigure( TIMER0_BASE,  TIMER_CFG_SPLIT_PAIR|TIMER_CFG_B_CAP_TIME_UP);
-//	//ÉèÖÃÎªÉÏÉıÑØ´¥·¢
+//	//è®¾ç½®ä¸ºä¸Šå‡æ²¿è§¦å‘
 //	TimerControlEvent( TIMER0_BASE,  TIMER_B,
 //                               TIMER_EVENT_POS_EDGE);
-//    //×¢²áÖĞ¶Ïº¯Êı
+//    //æ³¨å†Œä¸­æ–­å‡½æ•°
 //	TimerIntRegister( TIMER0_BASE,  TIMER_B,
 //                             PWM_IN_IRQHandler);
-//    //ÉèÖÃÖĞ¶ÏÓÅÏÈ¼¶
+//    //è®¾ç½®ä¸­æ–­ä¼˜å…ˆçº§
 //	IntPrioritySet( INT_TIMER0B,
 //                            0);
-//    //Ê¹ÄÜ¶¨Ê±Æ÷ÖĞ¶ÏµÄ¼ÆÊ±ÖĞ¶Ï
+//    //ä½¿èƒ½å®šæ—¶å™¨ä¸­æ–­çš„è®¡æ—¶ä¸­æ–­
 //	TimerIntEnable( TIMER0_BASE,  TIMER_CAPB_EVENT);
-//    //Ê¹ÄÜÖĞ¶Ï
+//    //ä½¿èƒ½ä¸­æ–­
 //	IntEnable( INT_TIMER0B);
 //	IntMasterEnable();
 //	TimerEnable( TIMER0_BASE,  TIMER_B);
-//    /*ÉèÖÃ×°ÔØÖµ£¬ÔÚ±ßÑØ¼ÆÊ±Ä£Ê½ÏÂ¿ÉÒÔÊ¡ÂÔ£¬»á×Ô¼ºÌîÈëÄ¬ÈÏÖµ¡£
-//    Èç¹ûÉèÖÃÁËÔ¤·ÖÆµÖµ£¬ÄÇÃ´Ä¬ÈÏ×°ÔØÖµ¾ÍÊÇ2^24,Èç¹ûÃ»ÓĞÔ¤·ÖÆµÖµ£¬ÄÇÃ´Ä¬ÈÏ×°ÔØÖµ¾ÍÊÇ2^16¡£
-//    Ïàµ±ÓÚSTM32ÖĞÊ¹ÓÃÁËoc¡ª¡ªtoggleÄ£Ê½£¬Ä¬ÈÏÔ¤×°ÔØÖµÌîĞ´65535*/
+//    /*è®¾ç½®è£…è½½å€¼ï¼Œåœ¨è¾¹æ²¿è®¡æ—¶æ¨¡å¼ä¸‹å¯ä»¥çœç•¥ï¼Œä¼šè‡ªå·±å¡«å…¥é»˜è®¤å€¼ã€‚
+//    å¦‚æœè®¾ç½®äº†é¢„åˆ†é¢‘å€¼ï¼Œé‚£ä¹ˆé»˜è®¤è£…è½½å€¼å°±æ˜¯2^24,å¦‚æœæ²¡æœ‰é¢„åˆ†é¢‘å€¼ï¼Œé‚£ä¹ˆé»˜è®¤è£…è½½å€¼å°±æ˜¯2^16ã€‚
+//    ç›¸å½“äºSTM32ä¸­ä½¿ç”¨äº†ocâ€”â€”toggleæ¨¡å¼ï¼Œé»˜è®¤é¢„è£…è½½å€¼å¡«å†™65535*/
 //    //TimerLoadSet(TIMER0_BASE, TIMER_A, Capture_LoadSet);
 
 //}
 
 // uint32_t capture_1=0,capture_2=0,capture_3=0;
-// uint32_t timer_flag=0;          //±êÖ¾Î»
-// uint32_t duty=0;              //Õ¼¿Õ±È
-// uint32_t freq=0;             //ÆµÂÊ
-// uint32_t up_count=0,down_count=0;  //¼ÆÊıÖµ
-//void PWM_IN_IRQHandler()
+// uint32_t timer_flag=0;          //æ ‡å¿—ä½
+// uint32_t duty=0;              //å ç©ºæ¯”
+// uint32_t freq=0;             //é¢‘ç‡
+// uint32_t up_count=0,down_count=0;  //è®¡æ•°å€¼
+// void PWM_IN_IRQHandler()
 //{
-//	//¶ÁÈ¡ÖĞ¶Ï×´Ì¬
+//	//è¯»å–ä¸­æ–­çŠ¶æ€
 //   uint32_t status=TimerIntStatus( TIMER0_BASE,  true);
-//    //Çå³ıÖĞ¶Ï±êÖ¾Î»
+//    //æ¸…é™¤ä¸­æ–­æ ‡å¿—ä½
 //	TimerIntClear( TIMER0_BASE,  status);
-//    //µÚÒ»´Î½øÖĞ¶ÏÊÇÓÉÓÚ¼ì²âµ½ÁËÉÏÉıÑØ£¬È»ºó½«¼ÆÊ±Öµ¶ÁÈ¡£¬²¢½«±ßÑØ¼ì²â±äÎªÏÂ½µÑØ
+//    //ç¬¬ä¸€æ¬¡è¿›ä¸­æ–­æ˜¯ç”±äºæ£€æµ‹åˆ°äº†ä¸Šå‡æ²¿ï¼Œç„¶åå°†è®¡æ—¶å€¼è¯»å–ï¼Œå¹¶å°†è¾¹æ²¿æ£€æµ‹å˜ä¸ºä¸‹é™æ²¿
 //	if(timer_flag==0)
 //	{
 //		TimerControlEvent( TIMER0_BASE,  TIMER_B,
@@ -344,8 +301,8 @@ void Buzzer_Init() //PC4
 //		capture_1=TimerValueGet( TIMER0_BASE,  TIMER_B);
 //		timer_flag=1;
 //	}
-//    //µÚ¶ş´Î½øÖĞ¶ÏÊÇÒòÎª¼ì²âµ½ÁËÏÂ½µÑØ£¬È»ºó½«¼ÆÊ±Öµ¶ÁÈ¡£¬ÕâÊ±¾ÍÒÑ¾­»ñµÃÁË¸ßµçÆ½Êı£¬
-//    //¿ÉÒÔ¼ÆËã³öÕ¼¿Õ±È£¬²¢½«±ßÑØ¼ì²â±äÎªÉÏÉıÑØ
+//    //ç¬¬äºŒæ¬¡è¿›ä¸­æ–­æ˜¯å› ä¸ºæ£€æµ‹åˆ°äº†ä¸‹é™æ²¿ï¼Œç„¶åå°†è®¡æ—¶å€¼è¯»å–ï¼Œè¿™æ—¶å°±å·²ç»è·å¾—äº†é«˜ç”µå¹³æ•°ï¼Œ
+//    //å¯ä»¥è®¡ç®—å‡ºå ç©ºæ¯”ï¼Œå¹¶å°†è¾¹æ²¿æ£€æµ‹å˜ä¸ºä¸Šå‡æ²¿
 //	else if(timer_flag==1)
 //	{
 //		TimerControlEvent( TIMER0_BASE,  TIMER_B,
@@ -353,21 +310,22 @@ void Buzzer_Init() //PC4
 //		capture_2=TimerValueGet( TIMER0_BASE,  TIMER_B);
 //		timer_flag=2;
 //	}
-//    //µÚÈı´Î½øÖĞ¶ÏÊ±ÒòÎª¼ì²âµ½ÁËÉÏÉıÑØ£¬ÖÁ´Ë£¬ÒÑ¾­¼ì²âµ½ÁËÁ½¸öÉÏÉıÑØ£¬Ò²¾Í¿ÉÒÔµÃµ½ÖÜÆÚÖµ
+//    //ç¬¬ä¸‰æ¬¡è¿›ä¸­æ–­æ—¶å› ä¸ºæ£€æµ‹åˆ°äº†ä¸Šå‡æ²¿ï¼Œè‡³æ­¤ï¼Œå·²ç»æ£€æµ‹åˆ°äº†ä¸¤ä¸ªä¸Šå‡æ²¿ï¼Œä¹Ÿå°±å¯ä»¥å¾—åˆ°å‘¨æœŸå€¼
 //	else if(timer_flag==2)
 //	{
 //	    timer_flag=0;
 //		capture_3=TimerValueGet( TIMER0_BASE,  TIMER_B);
-//        /* ____   ___ capture_1Ïàµ±ÓÚ¼ì²âµ½µÚÒ»¸öÉÏÉıÑØ¼ÇµÄÊı£¬
-//           |  |   |   capture_2Ïàµ±ÓÚ¼ì²âµ½µÚÒ»¸öÏÂ½µÑØ¼ÇµÄÊı
-//          _|  |___|   ËùÒÔcapture_2Óëcapture_1Ö®¼ä¼´Îª¸ßµçÆ½Êı
-//        capture_3Ïàµ±ÓÚ¼ì²âµ½µÚ¶ş¸öÉÏÉıÑØ¼ÇµÄÊı£¬ËùÒÔcapture_3Óëcapture_1Ö®¼äÎªÖÜÆÚÊı*/
-//        /*  /|   /| ÏÖÔÚÒªÇóÕ¼¿Õ±ÈºÍÆµÂÊ£¬ÒòÎªÉèÖÃµÄÊÇ¶¨Ê±Æ÷AÖÜÆÚĞÔ¼Ó¼ÆÊı£¬
-//           / |  / | ¶¨Ê±Æ÷A¼ÇµÄÊıÏÈµ½×î´óÈ»ºóÔÙ´Ó0¿ªÊ¼¼ÆÊı£¬ÏÖÔÚÍ¨¹ıÇó¸ßµçÆ½ºÍµÍµçÆ½Ê±¼äÀ´¼ÆËã
-//          /  | /  | Èç¹ûcapture_1Óëcapture_2¶¼ÔÚµÚÒ»¸ö¼ÆÊıÖÜÆÚµÄÉÏÉı½×¶Î£¬ÄÇ1Óë2µÄ²î¾ÍÊÇ¸ßµçÆ½
-//         /   |/   | Èç¹û1Óë2·Ö±ğÂäÔÚÁ½¸öÖÜÆÚµÄÉÏÉı½×¶Î£¬ÄÇ¸ßµçÆ½¾ÍÒªÍ¨¹ı0xffff-capture_1+capture_2»ñµÃ¡£
-//        Èç¹ûcapture_2Óëcapture_3¶¼ÔÚµÚÒ»¸ö¼ÆÊıÖÜÆÚµÄÉÏÉı½×¶Î£¬ÄÇ2Óë3µÄ²î¾ÍÊÇµÍµçÆ½£¬
-//        Èç¹û·Ö±ğÂäÔÚÁ½¸öÖÜÆÚÉÏÉı½×¶Î£¬µÍµçÆ½¾ÍÒªÍ¨¹ı0xffff-capture_2+capture_3À´»ñµÃ*/
+//        /* ____   ___ capture_1ç›¸å½“äºæ£€æµ‹åˆ°ç¬¬ä¸€ä¸ªä¸Šå‡æ²¿è®°çš„æ•°ï¼Œ
+//           |  |   |   capture_2ç›¸å½“äºæ£€æµ‹åˆ°ç¬¬ä¸€ä¸ªä¸‹é™æ²¿è®°çš„æ•°
+//          _|  |___|   æ‰€ä»¥capture_2ä¸capture_1ä¹‹é—´å³ä¸ºé«˜ç”µå¹³æ•°
+//        capture_3ç›¸å½“äºæ£€æµ‹åˆ°ç¬¬äºŒä¸ªä¸Šå‡æ²¿è®°çš„æ•°ï¼Œæ‰€ä»¥capture_3ä¸capture_1ä¹‹é—´ä¸ºå‘¨æœŸæ•°*/
+//        /*  /|   /| ç°åœ¨è¦æ±‚å ç©ºæ¯”å’Œé¢‘ç‡ï¼Œå› ä¸ºè®¾ç½®çš„æ˜¯å®šæ—¶å™¨Aå‘¨æœŸæ€§åŠ è®¡æ•°ï¼Œ
+//           / |  / | å®šæ—¶å™¨Aè®°çš„æ•°å…ˆåˆ°æœ€å¤§ç„¶åå†ä»0å¼€å§‹è®¡æ•°ï¼Œç°åœ¨é€šè¿‡æ±‚é«˜ç”µå¹³å’Œä½ç”µå¹³æ—¶é—´æ¥è®¡ç®—
+//          /  | /  | å¦‚æœcapture_1ä¸capture_2éƒ½åœ¨ç¬¬ä¸€ä¸ªè®¡æ•°å‘¨æœŸçš„ä¸Šå‡é˜¶æ®µï¼Œé‚£1ä¸2çš„å·®å°±æ˜¯é«˜ç”µå¹³
+//         /   |/   |
+//         å¦‚æœ1ä¸2åˆ†åˆ«è½åœ¨ä¸¤ä¸ªå‘¨æœŸçš„ä¸Šå‡é˜¶æ®µï¼Œé‚£é«˜ç”µå¹³å°±è¦é€šè¿‡0xffff-capture_1+capture_2è·å¾—ã€‚
+//        å¦‚æœcapture_2ä¸capture_3éƒ½åœ¨ç¬¬ä¸€ä¸ªè®¡æ•°å‘¨æœŸçš„ä¸Šå‡é˜¶æ®µï¼Œé‚£2ä¸3çš„å·®å°±æ˜¯ä½ç”µå¹³ï¼Œ
+//        å¦‚æœåˆ†åˆ«è½åœ¨ä¸¤ä¸ªå‘¨æœŸä¸Šå‡é˜¶æ®µï¼Œä½ç”µå¹³å°±è¦é€šè¿‡0xffff-capture_2+capture_3æ¥è·å¾—*/
 //		if(capture_2>capture_1)
 //		{
 //		    up_count=capture_2-capture_1;
@@ -381,92 +339,92 @@ void Buzzer_Init() //PC4
 //		{
 //		    down_count=capture_3-capture_2;
 //		}
-//		else 
+//		else
 //		{
 //			printf("flag2");
 //		    down_count=0xffff-capture_2+capture_3;
 //		}
-//        //ÆµÂÊÓÃÖ÷Æµ³ıÖÜÆÚ¼´¿ÉµÃµ½
+//        //é¢‘ç‡ç”¨ä¸»é¢‘é™¤å‘¨æœŸå³å¯å¾—åˆ°
 //		freq=SysCtlClockGet()/(up_count+down_count);
-//        //Õ¼¿Õ±ÈÎª¸ßµçÆ½Õ¼ÖÜÆÚµÄ±ÈÖµ¼´¿ÉµÃµ½
+//        //å ç©ºæ¯”ä¸ºé«˜ç”µå¹³å å‘¨æœŸçš„æ¯”å€¼å³å¯å¾—åˆ°
 //		duty=up_count*100/(up_count+down_count);
 //	}
-
-
 
 //}
 
 /********************************************************/
 
-/********************QEIÄ£Ê½¾ÙÀı****************************/
+/********************QEIæ¨¡å¼ä¸¾ä¾‹****************************/
 
+void Motor_Encoder_Init(void) {
+    // å¯åŠ¨QEI0å’ŒGPIODçš„æ€»çº¿æ—¶é’Ÿ
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_QEI0);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_QEI1);
 
-void Motor_Encoder_Init(void)
-{
-	//Æô¶¯QEI0ºÍGPIODµÄ×ÜÏßÊ±ÖÓ
-	SysCtlPeripheralEnable(SYSCTL_PERIPH_QEI0);
-	SysCtlPeripheralEnable(SYSCTL_PERIPH_QEI1);
-	
-	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOC);
-	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
-	
-	//½âËøPD7  TM4C123xµÄPF0ºÍPD7½ÅÓĞËø£¬ÔÚ½âËøºó·½¿ÉÒÔÖ¸¶¨¹Ü½Å¹¦ÄÜ
-	HWREG(GPIO_PORTD_BASE + GPIO_O_LOCK) = GPIO_LOCK_KEY; //½âËø
-	HWREG(GPIO_PORTD_BASE + GPIO_O_CR) |= 0x80; //È·ÈÏ
-	HWREG(GPIO_PORTD_BASE + GPIO_O_LOCK) = 0;  //ÖØĞÂËø¶¨
-	
-	//ÅäÖÃQEIÊ¹ÓÃµÄGPIO¿Ú
-	GPIOPinTypeQEI(GPIO_PORTD_BASE , GPIO_PIN_6 | GPIO_PIN_7);
-	GPIOPinTypeQEI(GPIO_PORTC_BASE , GPIO_PIN_5 | GPIO_PIN_6);
-	
-	//ÅäÖÃGPIO¿Ú±¸ÓÃ½Ó¿Ú
-	GPIOPinConfigure(GPIO_PD7_PHB0);
-	GPIOPinConfigure(GPIO_PD6_PHA0);
-	GPIOPinConfigure(GPIO_PC5_PHA1);
-	GPIOPinConfigure(GPIO_PC6_PHB1);
-	
-	//ÅäÖÃQEI²ÎÊı£ºÊ¹ÓÃABÍ¨µÀ¡¢Ê¹ÓÃÕı½»²¶»ñ¡¢²¶»ñÇ°ABÍ¨µÀ²»ÓÃ½»»»¡¢Ò»È¦Âö³åÊıÉèÖÃÎª0
-	QEIConfigure(QEI0_BASE, QEI_CONFIG_CAPTURE_A_B |QEI_CONFIG_NO_RESET| QEI_CONFIG_QUADRATURE | QEI_CONFIG_NO_SWAP, 12000);
-	QEIConfigure(QEI1_BASE, QEI_CONFIG_CAPTURE_A_B |QEI_CONFIG_NO_RESET| QEI_CONFIG_QUADRATURE | QEI_CONFIG_NO_SWAP, 12000);
-	QEIVelocityConfigure(QEI0_BASE, QEI_VELDIV_1,  SysCtlClockGet()/100); //ÅäÖÃQEIËÙ¶È²¶»ñÄ£Ê½
-	QEIVelocityConfigure(QEI1_BASE, QEI_VELDIV_1,  SysCtlClockGet()/100); //ÅäÖÃQEIËÙ¶È²¶»ñÄ£Ê½
-	QEIVelocityEnable(QEI0_BASE);  //Ê¹ÄÜËÙ¶È²¶»ñ
-	QEIVelocityEnable(QEI1_BASE);  //Ê¹ÄÜËÙ¶È²¶»ñ
-	QEIEnable(QEI0_BASE); //Ê¹ÄÜQEI
-	QEIEnable(QEI1_BASE); //Ê¹ÄÜQEI
-	//±àÂëÆ÷³õÊ¼Öµ
-	QEIPositionSet(QEI0_BASE , 0);
-	QEIPositionSet(QEI1_BASE , 0);
-	
-	//³õÊ¼»¯¶¨Ê±Æ÷0ÓÃÓÚQEI0²¶»ñ
-	//TimerQEIinit();
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOC);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
+
+    // è§£é”PD7  TM4C123xçš„PF0å’ŒPD7è„šæœ‰é”ï¼Œåœ¨è§£é”åæ–¹å¯ä»¥æŒ‡å®šç®¡è„šåŠŸèƒ½
+    HWREG(GPIO_PORTD_BASE + GPIO_O_LOCK) = GPIO_LOCK_KEY; // è§£é”
+    HWREG(GPIO_PORTD_BASE + GPIO_O_CR) |= 0x80;           // ç¡®è®¤
+    HWREG(GPIO_PORTD_BASE + GPIO_O_LOCK) = 0;             // é‡æ–°é”å®š
+
+    // é…ç½®QEIä½¿ç”¨çš„GPIOå£
+    GPIOPinTypeQEI(GPIO_PORTD_BASE, GPIO_PIN_6 | GPIO_PIN_7);
+    GPIOPinTypeQEI(GPIO_PORTC_BASE, GPIO_PIN_5 | GPIO_PIN_6);
+
+    // é…ç½®GPIOå£å¤‡ç”¨æ¥å£
+    GPIOPinConfigure(GPIO_PD7_PHB0);
+    GPIOPinConfigure(GPIO_PD6_PHA0);
+    GPIOPinConfigure(GPIO_PC5_PHA1);
+    GPIOPinConfigure(GPIO_PC6_PHB1);
+
+    // é…ç½®QEIå‚æ•°ï¼šä½¿ç”¨ABé€šé“ã€ä½¿ç”¨æ­£äº¤æ•è·ã€æ•è·å‰ABé€šé“ä¸ç”¨äº¤æ¢ã€ä¸€åœˆè„‰å†²æ•°è®¾ç½®ä¸º0
+    QEIConfigure(QEI0_BASE,
+                 QEI_CONFIG_CAPTURE_A_B | QEI_CONFIG_NO_RESET | QEI_CONFIG_QUADRATURE |
+                     QEI_CONFIG_NO_SWAP,
+                 12000);
+    QEIConfigure(QEI1_BASE,
+                 QEI_CONFIG_CAPTURE_A_B | QEI_CONFIG_NO_RESET | QEI_CONFIG_QUADRATURE |
+                     QEI_CONFIG_NO_SWAP,
+                 12000);
+    QEIVelocityConfigure(QEI0_BASE, QEI_VELDIV_1, SysCtlClockGet() / 100); // é…ç½®QEIé€Ÿåº¦æ•è·æ¨¡å¼
+    QEIVelocityConfigure(QEI1_BASE, QEI_VELDIV_1, SysCtlClockGet() / 100); // é…ç½®QEIé€Ÿåº¦æ•è·æ¨¡å¼
+    QEIVelocityEnable(QEI0_BASE);                                          // ä½¿èƒ½é€Ÿåº¦æ•è·
+    QEIVelocityEnable(QEI1_BASE);                                          // ä½¿èƒ½é€Ÿåº¦æ•è·
+    QEIEnable(QEI0_BASE);                                                  // ä½¿èƒ½QEI
+    QEIEnable(QEI1_BASE);                                                  // ä½¿èƒ½QEI
+    // ç¼–ç å™¨åˆå§‹å€¼
+    QEIPositionSet(QEI0_BASE, 0);
+    QEIPositionSet(QEI1_BASE, 0);
+
+    // åˆå§‹åŒ–å®šæ—¶å™¨0ç”¨äºQEI0æ•è·
+    // TimerQEIinit();
 }
 
-void TimerQEIinit(void)
-{
-SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER3); // Ê¹ÄÜ¶¨Ê±Æ÷3ÍâÉè
-IntMasterEnable(); // Ê¹ÄÜÈ«¾ÖÖĞ¶Ï
-TimerConfigure(TIMER3_BASE , TIMER_CFG_PERIODIC); // ÅäÖÃ¶¨Ê±Æ÷3ÎªÖÜÆÚÄ£Ê½
-TimerLoadSet(TIMER3_BASE , TIMER_A , SysCtlClockGet() / 100); // ÉèÖÃ¶¨Ê±Æ÷3µÄ¼ÓÔØÖµ
-IntEnable(INT_TIMER3A); // Ê¹ÄÜ¶¨Ê±Æ÷3µÄ¶¨Ê±Æ÷AÖĞ¶Ï
-TimerEnable(TIMER3_BASE , TIMER_A); // Æô¶¯¶¨Ê±Æ÷3µÄ¶¨Ê±Æ÷A
-TimerIntEnable(TIMER3_BASE , TIMER_TIMA_TIMEOUT); // Ê¹ÄÜ¶¨Ê±Æ÷3µÄ¶¨Ê±Æ÷A³¬Ê±ÖĞ¶Ï
-QEIVelocityGet(QEI0_BASE); // »ñÈ¡QEI0µÄËÙ¶È
-QEIVelocityGet(QEI1_BASE); // »ñÈ¡QEI1µÄËÙ¶È
-TimerEnable(TIMER3_BASE , TIMER_A); // ¼ÌĞøÆô¶¯¶¨Ê±Æ÷3µÄ¶¨Ê±Æ÷A
-TimerIntRegister(TIMER3_BASE , TIMER_A , QQ_Handler); // ×¢²á¶¨Ê±Æ÷3µÄ¶¨Ê±Æ÷AÖĞ¶Ï´¦Àíº¯Êı
-	printf("TIME3 OK \r\n");
+void TimerQEIinit(void) {
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER3);               // ä½¿èƒ½å®šæ—¶å™¨3å¤–è®¾
+    IntMasterEnable();                                          // ä½¿èƒ½å…¨å±€ä¸­æ–­
+    TimerConfigure(TIMER3_BASE, TIMER_CFG_PERIODIC);            // é…ç½®å®šæ—¶å™¨3ä¸ºå‘¨æœŸæ¨¡å¼
+    TimerLoadSet(TIMER3_BASE, TIMER_A, SysCtlClockGet() / 100); // è®¾ç½®å®šæ—¶å™¨3çš„åŠ è½½å€¼
+    IntEnable(INT_TIMER3A);                                     // ä½¿èƒ½å®šæ—¶å™¨3çš„å®šæ—¶å™¨Aä¸­æ–­
+    TimerEnable(TIMER3_BASE, TIMER_A);                          // å¯åŠ¨å®šæ—¶å™¨3çš„å®šæ—¶å™¨A
+    TimerIntEnable(TIMER3_BASE, TIMER_TIMA_TIMEOUT);            // ä½¿èƒ½å®šæ—¶å™¨3çš„å®šæ—¶å™¨Aè¶…æ—¶ä¸­æ–­
+    QEIVelocityGet(QEI0_BASE);                                  // è·å–QEI0çš„é€Ÿåº¦
+    QEIVelocityGet(QEI1_BASE);                                  // è·å–QEI1çš„é€Ÿåº¦
+    TimerEnable(TIMER3_BASE, TIMER_A);                          // ç»§ç»­å¯åŠ¨å®šæ—¶å™¨3çš„å®šæ—¶å™¨A
+    TimerIntRegister(TIMER3_BASE, TIMER_A, QQ_Handler);         // æ³¨å†Œå®šæ—¶å™¨3çš„å®šæ—¶å™¨Aä¸­æ–­å¤„ç†å‡½æ•°
+    printf("TIME3 OK \r\n");
 }
 
-void QQ_Handler(void)
-{
-	uint8_t Velocity;
-	int Ture_V;
-	TimerIntClear(TIMER3_BASE , TIMER_TIMA_TIMEOUT);
-	Velocity = QEIVelocityGet(QEI1_BASE);
-	Ture_V = QEIDirectionGet(QEI1_BASE) * Velocity;
-	printf("ËÙ¶ÈÊÇ:%d\r\n" , Ture_V);
-	//SysCtlDelay(200);
+void QQ_Handler(void) {
+    uint8_t Velocity;
+    int Ture_V;
+    TimerIntClear(TIMER3_BASE, TIMER_TIMA_TIMEOUT);
+    Velocity = QEIVelocityGet(QEI1_BASE);
+    Ture_V = QEIDirectionGet(QEI1_BASE) * Velocity;
+    printf("é€Ÿåº¦æ˜¯:%d\r\n", Ture_V);
+    // SysCtlDelay(200);
 }
 
 /********************************************************/

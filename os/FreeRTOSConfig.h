@@ -29,7 +29,14 @@ extern uint32_t SysCtlClockGet(void);
 #define configUSE_MALLOC_FAILED_HOOK 1
 #define configKERNEL_INTERRUPT_PRIORITY 255
 #define configMAX_SYSCALL_INTERRUPT_PRIORITY 0xA0
-#define configASSERT(x) do { if (!(x)) { taskDISABLE_INTERRUPTS(); for(;;){} } } while(0)
+#define configASSERT(x)                                                                            \
+    do {                                                                                           \
+        if (!(x)) {                                                                                \
+            taskDISABLE_INTERRUPTS();                                                              \
+            for (;;) {                                                                             \
+            }                                                                                      \
+        }                                                                                          \
+    } while (0)
 #define INCLUDE_vTaskDelay 1
 #define INCLUDE_xTaskDelayUntil 1
 #define INCLUDE_vTaskDelete 1

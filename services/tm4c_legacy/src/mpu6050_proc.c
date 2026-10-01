@@ -4,150 +4,154 @@
 #include "WP_Math.h"
 #include "imu_snapshot.h"
 
-static state_t CarPos;		/*×ËÌ¬*/
+static state_t CarPos; /*å§¿æ€*/
 static vector3f Gyro, Acc;
 Vector3f_t CarAcc;
 Vector3f_t CarGryo;
 static float Temp;
 
 static tm4c_imu_snapshot_t published;
-void tm4c_imu_snapshot(tm4c_imu_snapshot_t *out){taskENTER_CRITICAL();*out=published;taskEXIT_CRITICAL();}
-void MPU6050_Task_Proc(void const * argument)
-{
-  /* USER CODE BEGIN MPU6050_Task_Proc */
+void tm4c_imu_snapshot(tm4c_imu_snapshot_t *out) {
+    taskENTER_CRITICAL();
+    *out = published;
+    taskEXIT_CRITICAL();
+}
+void MPU6050_Task_Proc(void const *argument) {
+    /* USER CODE BEGIN MPU6050_Task_Proc */
 
+    static u16 count = 0;
 
-	static u16 count = 0;
-	
-	MPU6050_Init();	 //²»×°ËüÖ®Ç°²»ÒªËæ±ã³õÊ¼»¯  Õâ¶«Î÷Ã»·´À¡ÐÅºÅÖ±½ÓËÀ»úµÄËµ ²»¹ý¶à½ø³ÌµÄÓÅÊÆ¾Í³öÀ´ÁË ËÀÒ²ÊÇËÀÕâ¸ö½ø³Ì¶øÒÑ
-  for(;;)
-  {
-	MPU6050_Read_Data(&Gyro, &Acc, &Temp);
+    MPU6050_Init(); // ä¸è£…å®ƒä¹‹å‰ä¸è¦éšä¾¿åˆå§‹åŒ–  è¿™ä¸œè¥¿æ²¡åé¦ˆä¿¡å·ç›´æŽ¥æ­»æœºçš„è¯´
+                    // ä¸è¿‡å¤šè¿›ç¨‹çš„ä¼˜åŠ¿å°±å‡ºæ¥äº† æ­»ä¹Ÿæ˜¯æ­»è¿™ä¸ªè¿›ç¨‹è€Œå·²
+    for (;;) {
+        MPU6050_Read_Data(&Gyro, &Acc, &Temp);
 
-		CarAcc.x = (float)Acc.x/(0xffff/16.0);
-		CarAcc.y = (float)Acc.y/(0xffff/16.0);
-		CarAcc.z = (float)Acc.z/(0xffff/16.0);
-		
-		CarGryo.x = (float)Gyro.x/(0xffff/2000.0);
-		CarGryo.y = (float)Gyro.y/(0xffff/2000.0);
-		CarGryo.z = (float)Gyro.z/(0xffff/2000.0);
-		imuUpdate(CarAcc, CarGryo, &CarPos, 0.01);
-        taskENTER_CRITICAL();published.roll=CarPos.attitude.roll;published.pitch=CarPos.attitude.pitch;published.yaw=CarPos.attitude.yaw;taskEXIT_CRITICAL(); //×ËÌ¬½âËã
-	
-		if (count % 10 == 0 )
-		{
-		}
-			vTaskDelay(10);
-		count++;
-  }
-  /* USER CODE END MPU6050_Task_Proc */
+        CarAcc.x = (float)Acc.x / (0xffff / 16.0);
+        CarAcc.y = (float)Acc.y / (0xffff / 16.0);
+        CarAcc.z = (float)Acc.z / (0xffff / 16.0);
+
+        CarGryo.x = (float)Gyro.x / (0xffff / 2000.0);
+        CarGryo.y = (float)Gyro.y / (0xffff / 2000.0);
+        CarGryo.z = (float)Gyro.z / (0xffff / 2000.0);
+        imuUpdate(CarAcc, CarGryo, &CarPos, 0.01);
+        taskENTER_CRITICAL();
+        published.roll = CarPos.attitude.roll;
+        published.pitch = CarPos.attitude.pitch;
+        published.yaw = CarPos.attitude.yaw;
+        taskEXIT_CRITICAL(); // å§¿æ€è§£ç®—
+
+        if (count % 10 == 0) {
+        }
+        vTaskDelay(10);
+        count++;
+    }
+    /* USER CODE END MPU6050_Task_Proc */
 }
 
+#define DEG2RAD 0.017453293f /* åº¦è½¬å¼§åº¦ Ï€/180 */
+#define RAD2DEG 57.29578f    /* å¼§åº¦è½¬åº¦ 180/Ï€ */
 
-#define DEG2RAD		0.017453293f	/* ¶È×ª»¡¶È ¦Ð/180 */
-#define RAD2DEG		57.29578f		/* »¡¶È×ª¶È 180/¦Ð */
-
-
-float Kp = 0.4f;		/*±ÈÀýÔöÒæ*/
-float Ki = 0.001f;		/*»ý·ÖÔöÒæ*/
+float Kp = 0.4f;   /*æ¯”ä¾‹å¢žç›Š*/
+float Ki = 0.001f; /*ç§¯åˆ†å¢žç›Š*/
 float exInt = 0.0f;
 float eyInt = 0.0f;
-float ezInt = 0.0f;		/*»ý·ÖÎó²îÀÛ¼Æ*/
+float ezInt = 0.0f; /*ç§¯åˆ†è¯¯å·®ç´¯è®¡*/
 
-static float q0 = 1.0f;	/*ËÄÔªÊý*/
+static float q0 = 1.0f; /*å››å…ƒæ•°*/
 static float q1 = 0.0f;
 static float q2 = 0.0f;
-static float q3 = 0.0f;	
+static float q3 = 0.0f;
 
-static float baseZacc = 1.0;		/*¾²Ì¬ZÖá¼ÓËÙ¶È*/
+static float baseZacc = 1.0; /*é™æ€Zè½´åŠ é€Ÿåº¦*/
 static bool isCalibrated = false;
 
+static float tm4c_imu_inv_sqrt(float x); /*å¿«é€Ÿå¼€å¹³æ–¹æ±‚å€’*/
 
-static float tm4c_imu_inv_sqrt(float x);	/*¿ìËÙ¿ªÆ½·½Çóµ¹*/
-
-void imuUpdate(Vector3f_t acc, Vector3f_t gyro, state_t *state , float dt)	/*Êý¾ÝÈÚºÏ »¥²¹ÂË²¨*/
+void imuUpdate(Vector3f_t acc, Vector3f_t gyro, state_t *state, float dt) /*æ•°æ®èžåˆ äº’è¡¥æ»¤æ³¢*/
 {
-	float normalise;
-	float ex, ey, ez;
-	float q0s, q1s, q2s, q3s;	/*ËÄÔªÊýµÄÆ½·½*/
-	static float R11,R21;		/*¾ØÕó(1,1),(2,1)Ïî*/
-	static float vecxZ, vecyZ, veczZ;	/*»úÌå×ø±êÏµÏÂµÄZ·½ÏòÏòÁ¿*/
-	float halfT =0.5f * dt;
-	Vector3f_t tempacc =acc;
+    float normalise;
+    float ex, ey, ez;
+    float q0s, q1s, q2s, q3s;         /*å››å…ƒæ•°çš„å¹³æ–¹*/
+    static float R11, R21;            /*çŸ©é˜µ(1,1),(2,1)é¡¹*/
+    static float vecxZ, vecyZ, veczZ; /*æœºä½“åæ ‡ç³»ä¸‹çš„Zæ–¹å‘å‘é‡*/
+    float halfT = 0.5f * dt;
+    Vector3f_t tempacc = acc;
 
-	gyro.x = gyro.x * DEG2RAD;	/* ¶È×ª»¡¶È */
-	gyro.y = gyro.y * DEG2RAD;
-	gyro.z = gyro.z * DEG2RAD;
+    gyro.x = gyro.x * DEG2RAD; /* åº¦è½¬å¼§åº¦ */
+    gyro.y = gyro.y * DEG2RAD;
+    gyro.z = gyro.z * DEG2RAD;
 
-	/* Ä³Ò»¸ö·½Ïò¼ÓËÙ¶È²»Îª0 */
-	if((acc.x != 0.0f) || (acc.y != 0.0f) || (acc.z != 0.0f))
-	{
-		/*µ¥Î»»¯¼ÓËÙ¼Æ²âÁ¿Öµ*/
-		normalise = tm4c_imu_inv_sqrt(acc.x * acc.x + acc.y * acc.y + acc.z * acc.z);
-		acc.x *= normalise;
-		acc.y *= normalise;
-		acc.z *= normalise;
+    /* æŸä¸€ä¸ªæ–¹å‘åŠ é€Ÿåº¦ä¸ä¸º0 */
+    if ((acc.x != 0.0f) || (acc.y != 0.0f) || (acc.z != 0.0f)) {
+        /*å•ä½åŒ–åŠ é€Ÿè®¡æµ‹é‡å€¼*/
+        normalise = tm4c_imu_inv_sqrt(acc.x * acc.x + acc.y * acc.y + acc.z * acc.z);
+        acc.x *= normalise;
+        acc.y *= normalise;
+        acc.z *= normalise;
 
-		/*¼ÓËÙ¼Æ¶ÁÈ¡µÄ·½ÏòÓëÖØÁ¦¼ÓËÙ¼Æ·½ÏòµÄ²îÖµ£¬ÓÃÏòÁ¿²æ³Ë¼ÆËã*/
-		ex = (acc.y * veczZ - acc.z * vecyZ);
-		ey = (acc.z * vecxZ - acc.x * veczZ);
-		ez = (acc.x * vecyZ - acc.y * vecxZ);
-		
-		/*Îó²îÀÛ¼Æ£¬Óë»ý·Ö³£ÊýÏà³Ë*/
-		exInt += Ki * ex * dt ;  
-		eyInt += Ki * ey * dt ;
-		ezInt += Ki * ez * dt ;
-		
-		/*ÓÃ²æ»ýÎó²îÀ´×öPIÐÞÕýÍÓÂÝÁãÆ«£¬¼´µÖÏûÍÓÂÝ¶ÁÊýÖÐµÄÆ«ÒÆÁ¿*/
-		gyro.x += Kp * ex + exInt;
-		gyro.y += Kp * ey + eyInt;
-		gyro.z += Kp * ez + ezInt;
-	}
-	/* Ò»½×½üËÆËã·¨£¬ËÄÔªÊýÔË¶¯Ñ§·½³ÌµÄÀëÉ¢»¯ÐÎÊ½ºÍ»ý·Ö */
-	q0 += (-q1 * gyro.x - q2 * gyro.y - q3 * gyro.z) * halfT;
-	q1 += (q0 * gyro.x + q2 * gyro.z - q3 * gyro.y) * halfT;
-	q2 += (q0 * gyro.y - q1 * gyro.z + q3 * gyro.x) * halfT;
-	q3 += (q0 * gyro.z + q1 * gyro.y - q2 * gyro.x) * halfT;
-	
-	/*µ¥Î»»¯ËÄÔªÊý*/
-	normalise = tm4c_imu_inv_sqrt(q0 * q0 + q1 * q1 + q2 * q2 + q3 * q3);
-	q0 *= normalise;
-	q1 *= normalise;
-	q2 *= normalise;
-	q3 *= normalise;
-	/*ËÄÔªÊýµÄÆ½·½*/
-	q0s = q0 * q0;
-	q1s = q1 * q1;
-	q2s = q2 * q2;
-	q3s = q3 * q3;
-	
-	R11 = q0s + q1s - q2s - q3s;	/*¾ØÕó(1,1)Ïî*/
-	R21 = 2 * (q1 * q2 + q0 * q3);	/*¾ØÕó(2,1)Ïî*/
+        /*åŠ é€Ÿè®¡è¯»å–çš„æ–¹å‘ä¸Žé‡åŠ›åŠ é€Ÿè®¡æ–¹å‘çš„å·®å€¼ï¼Œç”¨å‘é‡å‰ä¹˜è®¡ç®—*/
+        ex = (acc.y * veczZ - acc.z * vecyZ);
+        ey = (acc.z * vecxZ - acc.x * veczZ);
+        ez = (acc.x * vecyZ - acc.y * vecxZ);
 
-	/*»úÌå×ø±êÏµÏÂµÄZ·½ÏòÏòÁ¿*/
-	vecxZ = 2 * (q1 * q3 - q0 * q2);/*¾ØÕó(3,1)Ïî*/
-	vecyZ = 2 * (q0 * q1 + q2 * q3);/*¾ØÕó(3,2)Ïî*/
-	veczZ = q0s - q1s - q2s + q3s;	/*¾ØÕó(3,3)Ïî*/
-	
-	if (vecxZ>1) vecxZ=1;
-	if (vecxZ<-1) vecxZ=-1;
-	
-	/*¼ÆËãroll pitch yaw Å·À­½Ç*/
-	state->attitude.pitch = -asinf(vecxZ) * RAD2DEG; 
-	state->attitude.roll = atan2f(vecyZ, veczZ) * RAD2DEG;
-	state->attitude.yaw = atan2f(R21, R11) * RAD2DEG;
-	
-	if (!isCalibrated)	/*Ð£×¼*/
-	{
-		baseZacc = tempacc.x* vecxZ + tempacc.y * vecyZ + tempacc.z * veczZ;
-		isCalibrated = true;
-	}
-	state->acc.z= tempacc.x* vecxZ + tempacc.y * vecyZ + tempacc.z * veczZ - baseZacc;	/*ZÖá¼ÓËÙ¶È(È¥³ýÖØÁ¦¼ÓËÙ¶È)*/
+        /*è¯¯å·®ç´¯è®¡ï¼Œä¸Žç§¯åˆ†å¸¸æ•°ç›¸ä¹˜*/
+        exInt += Ki * ex * dt;
+        eyInt += Ki * ey * dt;
+        ezInt += Ki * ez * dt;
+
+        /*ç”¨å‰ç§¯è¯¯å·®æ¥åšPIä¿®æ­£é™€èžºé›¶åï¼Œå³æŠµæ¶ˆé™€èžºè¯»æ•°ä¸­çš„åç§»é‡*/
+        gyro.x += Kp * ex + exInt;
+        gyro.y += Kp * ey + eyInt;
+        gyro.z += Kp * ez + ezInt;
+    }
+    /* ä¸€é˜¶è¿‘ä¼¼ç®—æ³•ï¼Œå››å…ƒæ•°è¿åŠ¨å­¦æ–¹ç¨‹çš„ç¦»æ•£åŒ–å½¢å¼å’Œç§¯åˆ† */
+    q0 += (-q1 * gyro.x - q2 * gyro.y - q3 * gyro.z) * halfT;
+    q1 += (q0 * gyro.x + q2 * gyro.z - q3 * gyro.y) * halfT;
+    q2 += (q0 * gyro.y - q1 * gyro.z + q3 * gyro.x) * halfT;
+    q3 += (q0 * gyro.z + q1 * gyro.y - q2 * gyro.x) * halfT;
+
+    /*å•ä½åŒ–å››å…ƒæ•°*/
+    normalise = tm4c_imu_inv_sqrt(q0 * q0 + q1 * q1 + q2 * q2 + q3 * q3);
+    q0 *= normalise;
+    q1 *= normalise;
+    q2 *= normalise;
+    q3 *= normalise;
+    /*å››å…ƒæ•°çš„å¹³æ–¹*/
+    q0s = q0 * q0;
+    q1s = q1 * q1;
+    q2s = q2 * q2;
+    q3s = q3 * q3;
+
+    R11 = q0s + q1s - q2s - q3s;   /*çŸ©é˜µ(1,1)é¡¹*/
+    R21 = 2 * (q1 * q2 + q0 * q3); /*çŸ©é˜µ(2,1)é¡¹*/
+
+    /*æœºä½“åæ ‡ç³»ä¸‹çš„Zæ–¹å‘å‘é‡*/
+    vecxZ = 2 * (q1 * q3 - q0 * q2); /*çŸ©é˜µ(3,1)é¡¹*/
+    vecyZ = 2 * (q0 * q1 + q2 * q3); /*çŸ©é˜µ(3,2)é¡¹*/
+    veczZ = q0s - q1s - q2s + q3s;   /*çŸ©é˜µ(3,3)é¡¹*/
+
+    if (vecxZ > 1)
+        vecxZ = 1;
+    if (vecxZ < -1)
+        vecxZ = -1;
+
+    /*è®¡ç®—roll pitch yaw æ¬§æ‹‰è§’*/
+    state->attitude.pitch = -asinf(vecxZ) * RAD2DEG;
+    state->attitude.roll = atan2f(vecyZ, veczZ) * RAD2DEG;
+    state->attitude.yaw = atan2f(R21, R11) * RAD2DEG;
+
+    if (!isCalibrated) /*æ ¡å‡†*/
+    {
+        baseZacc = tempacc.x * vecxZ + tempacc.y * vecyZ + tempacc.z * veczZ;
+        isCalibrated = true;
+    }
+    state->acc.z = tempacc.x * vecxZ + tempacc.y * vecyZ + tempacc.z * veczZ -
+                   baseZacc; /*Zè½´åŠ é€Ÿåº¦(åŽ»é™¤é‡åŠ›åŠ é€Ÿåº¦)*/
 }
 
 // Fast inverse square-root
 // See: http://en.wikipedia.org/wiki/Fast_inverse_square_root
-static float tm4c_imu_inv_sqrt(float x)	/*¿ìËÙ¿ªÆ½·½Çóµ¹*/
+static float tm4c_imu_inv_sqrt(float x) /*å¿«é€Ÿå¼€å¹³æ–¹æ±‚å€’*/
 {
-    return isfinite(x) && x>0.0f?1.0f/sqrtf(x):0.0f;
+    return isfinite(x) && x > 0.0f ? 1.0f / sqrtf(x) : 0.0f;
 }

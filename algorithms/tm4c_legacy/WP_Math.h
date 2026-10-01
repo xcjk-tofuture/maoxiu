@@ -3,38 +3,38 @@
 
 #include "stdint.h"
 
-#define AcceMax     2048 
+#define AcceMax 2048
 #define AcceGravity 9.80f
-/*************WGS84µÿ–ƒ◊¯±Í≤Œøºœµ ˝**************/
-#define WGS84_RADIUS_EQUATOR        6378137.0f//∞Î≥§÷·£¨µ•Œªm
-#define WGS84_INVERSE_FLATTENING    298.257223563f//±‚¬ 
-#define WGS84_FLATTENING            (1/WGS84_INVERSE_FLATTENING)//±‚¬ µº ˝
-#define WGS84_RADIUS_POLAR          (WGS84_RADIUS_EQUATOR*(1-WGS84_FLATTENING))//∂Ã÷·
-#define WGS84_ECCENTRICITY_SQUARED  (2*WGS84_FLATTENING-WGS84_FLATTENING*WGS84_FLATTENING)
+/*************WGS84Âú∞ÂøÉÂùêÊ†áÂèÇËÄÉÁ≥ªÊï∞**************/
+#define WGS84_RADIUS_EQUATOR 6378137.0f                                    // ÂçäÈïøËΩ¥ÔºåÂçï‰Ωçm
+#define WGS84_INVERSE_FLATTENING 298.257223563f                            // ÊâÅÁéá
+#define WGS84_FLATTENING (1 / WGS84_INVERSE_FLATTENING)                    // ÊâÅÁéáÂØºÊï∞
+#define WGS84_RADIUS_POLAR (WGS84_RADIUS_EQUATOR * (1 - WGS84_FLATTENING)) // Áü≠ËΩ¥
+#define WGS84_ECCENTRICITY_SQUARED (2 * WGS84_FLATTENING - WGS84_FLATTENING * WGS84_FLATTENING)
 /*********************************************
-æ≠∂»∑ΩœÚæ‡¿Î£∫LON_TO_CM*æ≠∂»≤Ó£¨LON_TO_CM∂‘”¶Œ‰∫∫µÿ«¯À˘‘⁄Œ≥∂»∆Ω√Ê‘≤÷‹≥§
-Œ≥∂»∑ΩœÚæ‡¿Î£∫LAT_TO_CM*Œ≥∂»≤Ó£¨
+ÁªèÂ∫¶ÊñπÂêëË∑ùÁ¶ªÔºöLON_TO_CM*ÁªèÂ∫¶Â∑ÆÔºåLON_TO_CMÂØπÂ∫îÊ≠¶Ê±âÂú∞Âå∫ÊâÄÂú®Á∫¨Â∫¶Âπ≥Èù¢ÂúÜÂë®Èïø
+Á∫¨Â∫¶ÊñπÂêëË∑ùÁ¶ªÔºöLAT_TO_CM*Á∫¨Â∫¶Â∑ÆÔºå
 *********************************************/
 
-#define LON_COSINE_LOCAL 0.860460f//‘ºµ»”⁄µ±µÿŒ≥∂»µƒ”‡œ“÷µ£¨cos(Lat*DEG_TO_RAD)
-//#define LAT_TO_CM  (2.0f * WGS84_RADIUS_EQUATOR * PI / (360.0f * 100000.0f))
-//#define LON_TO_CM  (2.0f * WGS84_RADIUS_EQUATOR * PI / (360.0f * 100000.0f))*LON_COSINE_LOCAL
-#define LAT_TO_CM  (2.0f * WGS84_RADIUS_EQUATOR * PI/360.0f)*100.0f
-#define LON_TO_CM  (2.0f * WGS84_RADIUS_EQUATOR * PI*LON_COSINE_LOCAL/360.0f)*100.0f
+#define LON_COSINE_LOCAL 0.860460f // Á∫¶Á≠â‰∫éÂΩìÂú∞Á∫¨Â∫¶ÁöÑ‰ΩôÂº¶ÂÄºÔºåcos(Lat*DEG_TO_RAD)
+// #define LAT_TO_CM  (2.0f * WGS84_RADIUS_EQUATOR * PI / (360.0f * 100000.0f))
+// #define LON_TO_CM  (2.0f * WGS84_RADIUS_EQUATOR * PI / (360.0f * 100000.0f))*LON_COSINE_LOCAL
+#define LAT_TO_CM (2.0f * WGS84_RADIUS_EQUATOR * PI / 360.0f) * 100.0f
+#define LON_TO_CM (2.0f * WGS84_RADIUS_EQUATOR * PI * LON_COSINE_LOCAL / 360.0f) * 100.0f
 
-#define LAT_TO_M  (2.0f * WGS84_RADIUS_EQUATOR * PI/360.0f)
-#define LON_TO_M  (2.0f * WGS84_RADIUS_EQUATOR * PI*LON_COSINE_LOCAL/360.0f)
+#define LAT_TO_M (2.0f * WGS84_RADIUS_EQUATOR * PI / 360.0f)
+#define LON_TO_M (2.0f * WGS84_RADIUS_EQUATOR * PI * LON_COSINE_LOCAL / 360.0f)
 
 #ifndef M_PI_F
- #define M_PI_F 3.141592653589793f
+#define M_PI_F 3.141592653589793f
 #endif
 #ifndef PI
- # define PI M_PI_F
+#define PI M_PI_F
 #endif
 #ifndef M_PI_2
- # define M_PI_2 1.570796326794897f
+#define M_PI_2 1.570796326794897f
 #endif
-//Single precision conversions
+// Single precision conversions
 #define DEG_TO_RAD 0.017453292519943295769236907684886f
 #define RAD_TO_DEG 57.295779513082320876798154814105f
 
@@ -45,7 +45,6 @@
 #define LOCATION_SCALING_FACTOR 0.011131884502145034f
 // inverse of LOCATION_SCALING_FACTOR
 #define LOCATION_SCALING_FACTOR_INV 89.83204953368922f
-
 
 float safe_asin(float v);
 float safe_sqrt(float v);
@@ -59,9 +58,6 @@ float degrees(float rad);
 float sq(float v);
 float pythagorous2(float a, float b);
 float pythagorous3(float a, float b, float c);
-
-
-
 
 #define ROOT_HALF (0.70710678118654752440084436210485f)
 #define LOGA_COEF0 (-4.649062303464e-1f)
@@ -80,37 +76,37 @@ float pythagorous3(float a, float b, float c);
 
 float FastLn(float x);
 //////////////////////////////////////////////////////////////////////////
-///Coefficients used for pow
-#define POWP_COEF1    (+8.33333286245e-2f)
-#define POWP_COEF2    (+1.25064850052e-2f)
-#define POWQ_COEF1    (+6.93147180556341e-1f)
-#define POWQ_COEF2    (+2.40226506144710e-1f)
-#define POWQ_COEF3    (+5.55040488130765e-2f)
-#define POWQ_COEF4    (+9.61620659583789e-3f)
-#define POWQ_COEF5    (+1.30525515942810e-3f)
+/// Coefficients used for pow
+#define POWP_COEF1 (+8.33333286245e-2f)
+#define POWP_COEF2 (+1.25064850052e-2f)
+#define POWQ_COEF1 (+6.93147180556341e-1f)
+#define POWQ_COEF2 (+2.40226506144710e-1f)
+#define POWQ_COEF3 (+5.55040488130765e-2f)
+#define POWQ_COEF4 (+9.61620659583789e-3f)
+#define POWQ_COEF5 (+1.30525515942810e-3f)
 
 #define POW_BIGNUM (+2046.0f)
 #define POW_SMALLNUM (-2015.0f)
 
 #define LOG2E_MINUS1 (0.44269504088896340735992468100189f)
 //
-#define FLT_EPSILON          1.1920928955078125E-07F 
-#define FLT_MAX              3.4028234663852886E+38F
+#define FLT_EPSILON 1.1920928955078125E-07F
+#define FLT_MAX 3.4028234663852886E+38F
 //
-float FastPow(float x,float y);
+float FastPow(float x, float y);
 //////////////////////////////////////////////////////////////////////////
 //
 #define X_MAX (+9.099024257348e3f)
-#define INV_PI_2 ( 0.63661977236758134307553505349006f)
-#define PI_2_C1             ( 1.5703125f)
-#define PI_2_C2             ( 4.84466552734375e-4f)
+#define INV_PI_2 (0.63661977236758134307553505349006f)
+#define PI_2_C1 (1.5703125f)
+#define PI_2_C2 (4.84466552734375e-4f)
 #define PI_2_C3 (-6.39757837755768678308360248557e-7f)
 
-#define TANP_COEF1    (-1.113614403566e-1f)
-#define TANP_COEF2    (+1.075154738488e-3f)
-#define TANQ_COEF0    (+1.000000000000f)
-#define TANQ_COEF1    (-4.446947720281e-1f)
-#define TANQ_COEF2    (+1.597339213300e-2f)
+#define TANP_COEF1 (-1.113614403566e-1f)
+#define TANP_COEF2 (+1.075154738488e-3f)
+#define TANQ_COEF0 (+1.000000000000f)
+#define TANQ_COEF1 (-4.446947720281e-1f)
+#define TANQ_COEF2 (+1.597339213300e-2f)
 float FastTan(float x);
 //////////////////////////////////////////////////////////////////////////
 
@@ -118,7 +114,7 @@ float FastTan(float x);
 #define RADTODEG(x) ((x) * 57.295779513082320876798154814105f)
 #define DEGTORAD(x) ((x) * 0.01745329251994329576923690768489f)
 
-//translate from the DSP instruction of a DSP Library.
+// translate from the DSP instruction of a DSP Library.
 #ifndef PI
 #define PI (3.1415926535897932384626433832795f)
 #endif
@@ -130,12 +126,12 @@ float FastTan(float x);
 #define SQRT3_MINUS_1 (0.73205080756887729352744634150587f)
 #define SQRT3 (1.7320508075688772935274463415059f)
 #define EPS_FLOAT (+3.452669830012e-4f)
-//Coefficients used for atan/atan2
+// Coefficients used for atan/atan2
 #define ATANP_COEF0 (-1.44008344874f)
 #define ATANP_COEF1 (-7.20026848898e-1f)
 #define ATANQ_COEF0 (+4.32025038919f)
 #define ATANQ_COEF1 (+4.75222584599f)
-//Coefficients used for asin/acos
+// Coefficients used for asin/acos
 #define ASINP_COEF1 (-2.7516555290596f)
 #define ASINP_COEF2 (+2.9058762374859f)
 #define ASINP_COEF3 (-5.9450144193246e-1f)
@@ -153,18 +149,16 @@ float FastSin(float x);
 float FastCos(float x);
 void FastSinCos(float x, float *sinVal, float *cosVal);
 
-inline float FastAbs(float x){
-	union { unsigned int i; float f;} y;
-	y.f = x;
-	y.i = y.i & 0x7FFFFFFF;
-	return (float)y.f;
+inline float FastAbs(float x) {
+    union {
+        unsigned int i;
+        float f;
+    } y;
+    y.f = x;
+    y.i = y.i & 0x7FFFFFFF;
+    return (float)y.f;
 }
-
-
-
 
 //////////////////////////////////////////////////////////////////////////
 
-
 #endif
-

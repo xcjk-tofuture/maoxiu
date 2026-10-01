@@ -5,27 +5,21 @@
 #include "task.h"
 #include "main.h"
 
+typedef struct motor {
+    u8 Num;            // ç¼–å·
+    s8 direction;      // æ–¹å‘
+    s32 Trig;          // è„‰å†²æ•°
+    float Speed;       // å½“å‰é€Ÿåº¦
+    s16 SetSpeedRange; // è®¾å®šçš„é€Ÿåº¦æ¡£ä½   è´Ÿå·ä»£è¡¨åæ–¹å‘
+    s8 SetDirection;   //   è´Ÿå·ä»£è¡¨åæ–¹å‘
 
-
-typedef struct motor
-{
-	u8 Num;       //±àºÅ
-	s8 direction; //·½Ïò
-	s32 Trig;     //Âö³åÊı
-	float Speed;  //µ±Ç°ËÙ¶È
-	s16 SetSpeedRange; //Éè¶¨µÄËÙ¶ÈµµÎ»   ¸ººÅ´ú±í·´·½Ïò
-	s8 SetDirection; //   ¸ººÅ´ú±í·´·½Ïò
-	
-}MOTOR;
+} MOTOR;
 
 void Motor_Encoder_Init();
-void Motor_Get_Value(MOTOR  *motor);
+void Motor_Get_Value(MOTOR *motor);
 void Motor_Init();
 void Motor_Speed_Set(MOTOR *motor, s16 speed);
 void Motor_Speed_Set_Extra(MOTOR *motor, s16 speed);
 float FABS(float a);
-
-
-
 
 #endif

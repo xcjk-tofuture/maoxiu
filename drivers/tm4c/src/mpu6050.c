@@ -2,116 +2,112 @@
 #include "mpu6050.h"
 #include "WP_Math.h"
 
-uint8_t IMU_ID=0x68;
+uint8_t IMU_ID = 0x68;
 /***********************************************************
-@º¯ÊýÃû£ºInit_MPU6050
-@Èë¿Ú²ÎÊý£ºÎÞ
-@³ö¿Ú²ÎÊý£ºÎÞ
-¹¦ÄÜÃèÊö£ºMPU6050³õÊ¼»¯
-@×÷Õß£ºÎÞÃûÐ¡¸ç
-@ÈÕÆÚ£º2019Äê01ÔÂ27ÈÕ
+@å‡½æ•°åï¼šInit_MPU6050
+@å…¥å£å‚æ•°ï¼šæ— 
+@å‡ºå£å‚æ•°ï¼šæ— 
+åŠŸèƒ½æè¿°ï¼šMPU6050åˆå§‹åŒ–
+@ä½œè€…ï¼šæ— åå°å“¥
+@æ—¥æœŸï¼š2019å¹´01æœˆ27æ—¥
 *************************************************************/
-void MPU6050_Init(void)//MPU6050³õÊ¼»¯
+void MPU6050_Init(void) // MPU6050åˆå§‹åŒ–
 {
-	IMU_ID=Single_ReadI2C(MPU_ADRESS,WHO_AM_I);
-  if(IMU_ID==IMU_MPU6050_ID)//MPU6050
-	{
-		i2cWrite(MPU_ADRESS,PWR_MGMT_1  , 0x00);//¹Ø±ÕËùÓÐÖÐ¶Ï,½â³ýÐÝÃß
-		i2cWrite(MPU_ADRESS,SMPLRT_DIV  , 0x00); // sample rate.  Fsample= 1Khz/(<this value>+1) = 1000Hz
-		//i2cWrite(MPU_ADRESS,MPU_CONFIG  , 0x02); //ÄÚ²¿µÍÍ¨ÂË²¨ÆµÂÊ£¬¼ÓËÙ¶È¼Æ94hz£¬ÍÓÂÝÒÇ98hz
-		i2cWrite(MPU_ADRESS,MPU_CONFIG  , 0x03);//ÄÚ²¿µÍÍ¨ÂË²¨ÆµÂÊ£¬¼ÓËÙ¶È¼Æ44hz£¬ÍÓÂÝÒÇ42hz
-		i2cWrite(MPU_ADRESS,GYRO_CONFIG , 0x10);//1000deg/s
-		i2cWrite(MPU_ADRESS,ACCEL_CONFIG, 0x18);// Accel scale 16g (2048 LSB/g)
-	}
-	else if(IMU_ID==IMU_ICM20689_ID)//ICM20689
-	{	
-		i2cWrite(MPU_ADRESS,PWR_MGMT_1  , 0x00);//¹Ø±ÕËùÓÐÖÐ¶Ï,½â³ýÐÝÃß
-		i2cWrite(MPU_ADRESS,SMPLRT_DIV  , 0x00); // sample rate.  Fsample= 1Khz/(<this value>+1) = 1000Hz
-		//i2cWrite(MPU_ADRESS,MPU_CONFIG  , 0x02); //ÄÚ²¿µÍÍ¨ÂË²¨ÆµÂÊ£¬¼ÓËÙ¶È¼Æ94hz£¬ÍÓÂÝÒÇ98hz		
-		i2cWrite(MPU_ADRESS,MPU_CONFIG  , 0x03);//ÉèÖÃÍÓÂÝÒÇ¡¢ÎÂ¶ÈÄÚ²¿µÍÍ¨ÂË²¨ÆµÂÊ·¶Î§£¬ÍÓÂÝÒÇ41hz£¬ÔëÉù´ø¿í59hz£¬ÎÂ¶È42hz	
-		i2cWrite(MPU_ADRESS,GYRO_CONFIG , 0x10);//ÉèÖÃÍÓÂÝÒÇÁ¿³Ì£¬1000deg/s
-		i2cWrite(MPU_ADRESS,ACCEL_CONFIG, 0x18);// Accel scale 16g (2048 LSB/g)	
-		i2cWrite(MPU_ADRESS,ACCEL_CONFIG2,0x03);//ÉèÖÃ¼ÓËÙ¶È¼ÆÄÚ²¿µÍÍ¨ÂË²¨ÆµÂÊ·¶Î§£¬¼ÓËÙ¶È44.8hz£¬ÔëÉù´ø¿í61.5hz
-	}
-  My_Delay_ms(500);
-  IMU_Calibration();
+    IMU_ID = Single_ReadI2C(MPU_ADRESS, WHO_AM_I);
+    if (IMU_ID == IMU_MPU6050_ID) // MPU6050
+    {
+        i2cWrite(MPU_ADRESS, PWR_MGMT_1, 0x00); // å…³é—­æ‰€æœ‰ä¸­æ–­,è§£é™¤ä¼‘çœ 
+        i2cWrite(MPU_ADRESS, SMPLRT_DIV,
+                 0x00); // sample rate.  Fsample= 1Khz/(<this value>+1) = 1000Hz
+        // i2cWrite(MPU_ADRESS,MPU_CONFIG  , 0x02); //å†…éƒ¨ä½Žé€šæ»¤æ³¢é¢‘çŽ‡ï¼ŒåŠ é€Ÿåº¦è®¡94hzï¼Œé™€èžºä»ª98hz
+        i2cWrite(MPU_ADRESS, MPU_CONFIG, 0x03); // å†…éƒ¨ä½Žé€šæ»¤æ³¢é¢‘çŽ‡ï¼ŒåŠ é€Ÿåº¦è®¡44hzï¼Œé™€èžºä»ª42hz
+        i2cWrite(MPU_ADRESS, GYRO_CONFIG, 0x10);  // 1000deg/s
+        i2cWrite(MPU_ADRESS, ACCEL_CONFIG, 0x18); // Accel scale 16g (2048 LSB/g)
+    } else if (IMU_ID == IMU_ICM20689_ID)         // ICM20689
+    {
+        i2cWrite(MPU_ADRESS, PWR_MGMT_1, 0x00); // å…³é—­æ‰€æœ‰ä¸­æ–­,è§£é™¤ä¼‘çœ 
+        i2cWrite(MPU_ADRESS, SMPLRT_DIV,
+                 0x00); // sample rate.  Fsample= 1Khz/(<this value>+1) = 1000Hz
+        // i2cWrite(MPU_ADRESS,MPU_CONFIG  , 0x02); //å†…éƒ¨ä½Žé€šæ»¤æ³¢é¢‘çŽ‡ï¼ŒåŠ é€Ÿåº¦è®¡94hzï¼Œé™€èžºä»ª98hz
+        i2cWrite(MPU_ADRESS, MPU_CONFIG,
+                 0x03); // è®¾ç½®é™€èžºä»ªã€æ¸©åº¦å†…éƒ¨ä½Žé€šæ»¤æ³¢é¢‘çŽ‡èŒƒå›´ï¼Œé™€èžºä»ª41hzï¼Œå™ªå£°å¸¦å®½59hzï¼Œæ¸©åº¦42hz
+        i2cWrite(MPU_ADRESS, GYRO_CONFIG, 0x10);  // è®¾ç½®é™€èžºä»ªé‡ç¨‹ï¼Œ1000deg/s
+        i2cWrite(MPU_ADRESS, ACCEL_CONFIG, 0x18); // Accel scale 16g (2048 LSB/g)
+        i2cWrite(MPU_ADRESS, ACCEL_CONFIG2,
+                 0x03); // è®¾ç½®åŠ é€Ÿåº¦è®¡å†…éƒ¨ä½Žé€šæ»¤æ³¢é¢‘çŽ‡èŒƒå›´ï¼ŒåŠ é€Ÿåº¦44.8hzï¼Œå™ªå£°å¸¦å®½61.5hz
+    }
+    My_Delay_ms(500);
+    IMU_Calibration();
 }
 
 /***********************************************************
-@º¯ÊýÃû£ºMPU6050_Read_Data
-@Èë¿Ú²ÎÊý£ºvector3f *gyro,vector3f *accel
-@³ö¿Ú²ÎÊý£ºÎÞ
-¹¦ÄÜÃèÊö£ºMPU6050Êý¾Ý²É¼¯
-@×÷Õß£ºÎÞÃûÐ¡¸ç
-@ÈÕÆÚ£º2019Äê01ÔÂ27ÈÕ
+@å‡½æ•°åï¼šMPU6050_Read_Data
+@å…¥å£å‚æ•°ï¼švector3f *gyro,vector3f *accel
+@å‡ºå£å‚æ•°ï¼šæ— 
+åŠŸèƒ½æè¿°ï¼šMPU6050æ•°æ®é‡‡é›†
+@ä½œè€…ï¼šæ— åå°å“¥
+@æ—¥æœŸï¼š2019å¹´01æœˆ27æ—¥
 *************************************************************/
-void MPU6050_Read_Data(vector3f *gyro,vector3f *accel,float *temperature)//¶ÁÈ¡MPU6050Êý¾Ý
+void MPU6050_Read_Data(vector3f *gyro, vector3f *accel, float *temperature) // è¯»å–MPU6050æ•°æ®
 {
-	uint8_t buf[14];
-	int16_t temp;
-	i2cReadData(MPU_ADRESS,ACCEL_XOUT_H,buf,14);
-	accel->x=(int16_t)((buf[0]<<8)|buf[1]);
-	accel->y=(int16_t)((buf[2]<<8)|buf[3]);
-	accel->z=(int16_t)((buf[4]<<8)|buf[5]);	
-	temp		=(int16_t)((buf[6]<<8)|buf[7]);
-	gyro->x	=(int16_t)((buf[8]<<8)|buf[9]);
-	gyro->y	=(int16_t)((buf[10]<<8)|buf[11]);
-	gyro->z	=(int16_t)((buf[12]<<8)|buf[13]);	
-	if(IMU_ID==IMU_MPU6050_ID)
-	{
-		//MPU6050
-		//Sensitivity=340 LSB/¡ãC
-		//Temperature Offset=35 ¡ãC
-		*temperature=36.53f+(double)(temp/340.0f);
-	}
-	if(IMU_ID==IMU_ICM20689_ID)
-	{
-		//ICM20689
-		//Room Temperature Offset=25 ¡ãC
-		//Sensitivity=326.8 LSB/¡ãC
-		//TEMP_degC = ((TEMP_OUT ¨CRoomTemp_Offset)/Temp_Sensitivity) +25degC
-		*temperature=25.0f+(double)((temp-25.0f)/326.8f);
-	}	
+    uint8_t buf[14];
+    int16_t temp;
+    i2cReadData(MPU_ADRESS, ACCEL_XOUT_H, buf, 14);
+    accel->x = (int16_t)((buf[0] << 8) | buf[1]);
+    accel->y = (int16_t)((buf[2] << 8) | buf[3]);
+    accel->z = (int16_t)((buf[4] << 8) | buf[5]);
+    temp = (int16_t)((buf[6] << 8) | buf[7]);
+    gyro->x = (int16_t)((buf[8] << 8) | buf[9]);
+    gyro->y = (int16_t)((buf[10] << 8) | buf[11]);
+    gyro->z = (int16_t)((buf[12] << 8) | buf[13]);
+    if (IMU_ID == IMU_MPU6050_ID) {
+        // MPU6050
+        // Sensitivity=340 LSB/Â°C
+        // Temperature Offset=35 Â°C
+        *temperature = 36.53f + (double)(temp / 340.0f);
+    }
+    if (IMU_ID == IMU_ICM20689_ID) {
+        // ICM20689
+        // Room Temperature Offset=25 Â°C
+        // Sensitivity=326.8 LSB/Â°C
+        // TEMP_degC = ((TEMP_OUT â€“RoomTemp_Offset)/Temp_Sensitivity) +25degC
+        *temperature = 25.0f + (double)((temp - 25.0f) / 326.8f);
+    }
 }
-
 
 Vector3f gyro_offset;
 s32 g_Gyro_xoffset = 0, g_Gyro_yoffset = 0, g_Gyro_zoffset = 0;
 /***********************************************************
-@º¯ÊýÃû£ºIMU_Calibration
-@Èë¿Ú²ÎÊý£ºÎÞ
-@³ö¿Ú²ÎÊý£ºÎÞ
-¹¦ÄÜÃèÊö£ºÍÓÂÝÒÇ¿ª»úÁãÆ«±ê¶¨
-@×÷Õß£ºÎÞÃûÐ¡¸ç
-@ÈÕÆÚ£º2019Äê01ÔÂ27ÈÕ
+@å‡½æ•°åï¼šIMU_Calibration
+@å…¥å£å‚æ•°ï¼šæ— 
+@å‡ºå£å‚æ•°ï¼šæ— 
+åŠŸèƒ½æè¿°ï¼šé™€èžºä»ªå¼€æœºé›¶åæ ‡å®š
+@ä½œè€…ï¼šæ— åå°å“¥
+@æ—¥æœŸï¼š2019å¹´01æœˆ27æ—¥
 *************************************************************/
-void IMU_Calibration(void)
-{
-  u8 i;
-	vector3f gyro_offset_temp={NAN,NAN,NAN};
-//	ReadFlashParameterOne(GYRO_X_OFFSET,&gyro_offset_temp.x);
-//	ReadFlashParameterOne(GYRO_Y_OFFSET,&gyro_offset_temp.y);
-//	ReadFlashParameterOne(GYRO_Z_OFFSET,&gyro_offset_temp.z);	
-	if(isnan(gyro_offset_temp.x)==0
-		&&isnan(gyro_offset_temp.y)==0
-		 &&isnan(gyro_offset_temp.z)==0)//Èç¹ûÖ®Ç°ÒÑ¾­ÎÂ¶ÈÐ£×¼¹ý£¬¿ª»úÊ±Ö±½ÓÓÃÖ®Ç°Ð£×¼µÄÊý¾Ý 
-	{
-		 gyro_offset.x=gyro_offset_temp.x;
-		 gyro_offset.y=gyro_offset_temp.y;
-		 gyro_offset.z=gyro_offset_temp.z;
-	}
-	else
-	{
-		My_Delay_ms(500);
-		for (i = 0; i < 100; i++)			//Á¬Ðø²ÉÑù30´Î£¬Ò»¹²ºÄÊ±30*3=90ms
-		{
-			g_Gyro_xoffset +=Double_ReadI2C(MPU_ADRESS,GYRO_XOUT_H);
-			g_Gyro_yoffset +=Double_ReadI2C(MPU_ADRESS,GYRO_YOUT_H);
-			g_Gyro_zoffset +=Double_ReadI2C(MPU_ADRESS,GYRO_ZOUT_H);
-			My_Delay_ms(10);
-		}
-		gyro_offset.x =(g_Gyro_xoffset/100);//µÃµ½±ê¶¨Æ«ÒÆ
-		gyro_offset.y =(g_Gyro_yoffset/100);
-		gyro_offset.z =(g_Gyro_zoffset/100);
-	}
+void IMU_Calibration(void) {
+    u8 i;
+    vector3f gyro_offset_temp = {NAN, NAN, NAN};
+    //	ReadFlashParameterOne(GYRO_X_OFFSET,&gyro_offset_temp.x);
+    //	ReadFlashParameterOne(GYRO_Y_OFFSET,&gyro_offset_temp.y);
+    //	ReadFlashParameterOne(GYRO_Z_OFFSET,&gyro_offset_temp.z);
+    if (isnan(gyro_offset_temp.x) == 0 && isnan(gyro_offset_temp.y) == 0 &&
+        isnan(gyro_offset_temp.z) == 0) // å¦‚æžœä¹‹å‰å·²ç»æ¸©åº¦æ ¡å‡†è¿‡ï¼Œå¼€æœºæ—¶ç›´æŽ¥ç”¨ä¹‹å‰æ ¡å‡†çš„æ•°æ®
+    {
+        gyro_offset.x = gyro_offset_temp.x;
+        gyro_offset.y = gyro_offset_temp.y;
+        gyro_offset.z = gyro_offset_temp.z;
+    } else {
+        My_Delay_ms(500);
+        for (i = 0; i < 100; i++) // è¿žç»­é‡‡æ ·30æ¬¡ï¼Œä¸€å…±è€—æ—¶30*3=90ms
+        {
+            g_Gyro_xoffset += Double_ReadI2C(MPU_ADRESS, GYRO_XOUT_H);
+            g_Gyro_yoffset += Double_ReadI2C(MPU_ADRESS, GYRO_YOUT_H);
+            g_Gyro_zoffset += Double_ReadI2C(MPU_ADRESS, GYRO_ZOUT_H);
+            My_Delay_ms(10);
+        }
+        gyro_offset.x = (g_Gyro_xoffset / 100); // å¾—åˆ°æ ‡å®šåç§»
+        gyro_offset.y = (g_Gyro_yoffset / 100);
+        gyro_offset.z = (g_Gyro_zoffset / 100);
+    }
 }

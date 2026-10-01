@@ -1,72 +1,71 @@
 #include "include.h"
 
-
-
 #include "bsp_spi.h"
 extern void tm4c_fatal(void);
 
-/* SSIÅäÖÃº¯Êı */
-void SSI_Init(void)
-{
-    /* Ê¹ÄÜÍâÉè */
+/* SSIé…ç½®å‡½æ•° */
+void SSI_Init(void) {
+    /* ä½¿èƒ½å¤–è®¾ */
     SysCtlPeripheralEnable(SYSCTL_PERIPH_SSI0);
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
 
-    /* ÉèÖÃSSI IO¿ÚµÄÄ£Ê½ */
+    /* è®¾ç½®SSI IOå£çš„æ¨¡å¼ */
     GPIOPinTypeSSI(GPIO_PORTA_BASE, GPIO_PIN_2 | GPIO_PIN_4 | GPIO_PIN_5);
 
-    /* IO¿ÚÅäÖÃÎªSSI¹¦ÄÜ */
-    GPIOPinConfigure(GPIO_PA2_SSI0CLK);//SCK
-    GPIOPinConfigure(GPIO_PA4_SSI0RX); //MISO
-    GPIOPinConfigure(GPIO_PA5_SSI0TX); //MOSI
+    /* IOå£é…ç½®ä¸ºSSIåŠŸèƒ½ */
+    GPIOPinConfigure(GPIO_PA2_SSI0CLK); // SCK
+    GPIOPinConfigure(GPIO_PA4_SSI0RX);  // MISO
+    GPIOPinConfigure(GPIO_PA5_SSI0TX);  // MOSI
 
-    /* SSIÅäÖÃ Ä£Ê½3(Polarity = 1 Phase = 1) Ö÷Éè±¸Ä£Ê½ ËÙÂÊ1MHz Êı¾İ³¤¶È8Î»*/
-    SSIConfigSetExpClk(SSI0_BASE, SysCtlClockGet(), SSI_FRF_MOTO_MODE_3, SSI_MODE_MASTER, 1000000, 8);
-//	Polarity	Phase	Mode
-//	0						0	            SSI_FRF_MOTO_MODE_0
-//	0						1	            SSI_FRF_MOTO_MODE_1
-//	1						0							SSI_FRF_MOTO_MODE_2
-//	1						1							SSI_FRF_MOTO_MODE_3
-    /* Ê¹ÄÜSSI2 */
+    /* SSIé…ç½® æ¨¡å¼3(Polarity = 1 Phase = 1) ä¸»è®¾å¤‡æ¨¡å¼ é€Ÿç‡1MHz æ•°æ®é•¿åº¦8ä½*/
+    SSIConfigSetExpClk(SSI0_BASE, SysCtlClockGet(), SSI_FRF_MOTO_MODE_3, SSI_MODE_MASTER, 1000000,
+                       8);
+    //	Polarity	Phase	Mode
+    //	0						0	            SSI_FRF_MOTO_MODE_0
+    //	0						1	            SSI_FRF_MOTO_MODE_1
+    //	1						0
+    //SSI_FRF_MOTO_MODE_2 	1						1
+    //SSI_FRF_MOTO_MODE_3
+    /* ä½¿èƒ½SSI2 */
     SSIEnable(SSI0_BASE);
-
 }
 
-/* SPI¶ÁĞ´º¯Êı */
-uint8_t ucSPI_RW(uint8_t uc_SendData)
-{
+/* SPIè¯»å†™å‡½æ•° */
+uint8_t ucSPI_RW(uint8_t uc_SendData) {
     uint32_t ui_TempData;
     uint8_t uc_ReceiveData;
 
-    /* ÏòSSI FIFOĞ´ÈëÊı¾İ */
-    if(!SSIDataPutNonBlocking(SSI0_BASE,uc_SendData))tm4c_fatal();
-    /* µÈ´ıSSI²»Ã¦ */
-    uint32_t remaining=60000;while(SSIBusy(SSI0_BASE) && --remaining){}if(!remaining)tm4c_fatal();
-    /* ´ÓFIFO¶ÁÈ¡Êı¾İ */
-    if(!SSIDataGetNonBlocking(SSI0_BASE,&ui_TempData))tm4c_fatal();
+    /* å‘SSI FIFOå†™å…¥æ•°æ® */
+    if (!SSIDataPutNonBlocking(SSI0_BASE, uc_SendData))
+        tm4c_fatal();
+    /* ç­‰å¾…SSIä¸å¿™ */
+    uint32_t remaining = 60000;
+    while (SSIBusy(SSI0_BASE) && --remaining) {
+    }
+    if (!remaining)
+        tm4c_fatal();
+    /* ä»FIFOè¯»å–æ•°æ® */
+    if (!SSIDataGetNonBlocking(SSI0_BASE, &ui_TempData))
+        tm4c_fatal();
 
-    /* ½ØÈ¡Êı¾İµÄµÍ°ËÎ» */
+    /* æˆªå–æ•°æ®çš„ä½å…«ä½ */
     uc_ReceiveData = ui_TempData & 0xff;
 
     return uc_ReceiveData;
 }
 
-void vSPI_Transmit(uint8_t *ucp_Data, uint16_t us_Size)
-{
+void vSPI_Transmit(uint8_t *ucp_Data, uint16_t us_Size) {
     uint16_t i = 0;
-    /* Á¬ĞøĞ´ÈëÊı¾İ */
-    for(i = 0; i < us_Size; i++)
-    {
+    /* è¿ç»­å†™å…¥æ•°æ® */
+    for (i = 0; i < us_Size; i++) {
         ucSPI_RW(ucp_Data[i]);
     }
 }
 
-void vSPI_Receive(uint8_t *ucp_Data, uint16_t us_Size)
-{
+void vSPI_Receive(uint8_t *ucp_Data, uint16_t us_Size) {
     uint16_t i = 0;
-    /* Á¬Ğø¶ÁÈ¡Êı¾İ */
-    for(i = 0; i < us_Size; i++)
-    {
+    /* è¿ç»­è¯»å–æ•°æ® */
+    for (i = 0; i < us_Size; i++) {
         ucp_Data[i] = ucSPI_RW(0xFF);
     }
 }

@@ -1,17 +1,10 @@
 #ifndef __BSP_GPIO_H
 #define __BSP_GPIO_H
 
-
-
 #include <stdint.h>
 #include "main.h"
 
-void GPIO_Init(); //³õÊ¼»¯gpioÒı½Å
+void GPIO_Init(); // åˆå§‹åŒ–gpioå¼•è„š
 void LCD_IO_Init();
 
-
-
-
-
 #endif
-

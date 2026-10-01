@@ -1,33 +1,34 @@
 #include "include.h"
 /*
-	1¡¢´®¿ÚÅäÖÃÁ÷³Ì£º
-		SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);							//Enable UART0 module
-		SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);							//for UART
-		GPIOPinTypeUART(GPIO_PORTA_BASE,GPIO_PIN_0 | GPIO_PIN_1);	//PA0&PA1 forUART0
-		UARTClockSourceSet(UART0_BASE, UART_CLOCK_PIOSC);					//configure the baud clock source theprecision internal oscillator(UART_CLOCK_PIOSC)																											
-		UARTStdioConfig(0,9600, 16000000);												//Õâ¸öº¯ÊıÒ²ÊÇÔÚuartstdio.cÀï¶¨ÒåµÄ£¬¿ÉÒÔ´ò¿ªÎÄ¼ş²é¿´Ô´´úÂë
-		
-	2¡¢HWREG±íÊ¾²Ù×÷Ó²¼ş¼Ä´æÆ÷
-		
-	3¡¢s = GPIOIntStatus(GPIO_PORTF_BASE, true);
-		 ¶ÁÈ¡ÖĞ¶Ï×´Ì¬¡£TM4C¿ÉÒÔÉèÖÃÄ³Ğ©ÖĞ¶Ï±»ÆÁ±Î£¬ÆÁ±ÎµÄÖĞ¶ÏĞÅºÅ²»»á±»ËÍµ½ÖĞ¶Ï¿ØÖÆÆ÷£¬ÆÁ±ÎÎ»´æÔÚGPIOIM¼Ä´æÆ÷
-		 µÚ¶ş¸ö²ÎÊıĞ´1£¬Ôò·µ»Ø²»º¬ÒÑÆÁ±ÎÖĞ¶ÏµÄÁªºÏÖĞ¶Ï×´Ì¬ return(HWREG(ui32Port + GPIO_O_MIS)); ÆäÖĞui32Port + GPIO_O_MISÖ¸³öÁËReg GPIOMISµÄµØÖ·£¬HWREG(ui32Port + GPIO_O_MIS)¼´ÎªÈ¡Öµ
-							 Ğ´0£¬Ôò·µ»Ø°üº¬ÒÑÆÁ±ÎÖĞ¶ÏµÄÁªºÏÖĞ¶Ï×´Ì¬ return(HWREG(ui32Port + GPIO_O_RIS));
-		
-		 Õâ¸öº¯Êı¶Áµ½µÄÊÇËùÓĞÁªºÏÖĞ¶ÏĞÅºÅµÄ×ÛºÏĞÅÏ¢£¨±ÈÈçÕâÀïÊÇPFµÄËùÓĞpinÓĞÃ»ÓĞ·¢ÉúÖĞ¶Ï£©£¬Í¨¹ıs & GPIO_PIN_4ÕâÑùµÄ·½·¨È¡ÆäÖĞÄ³Î»½øĞĞµ¥¶ÀÅĞ¶Ï
-			
-	4¡¢GPIOIntClear(GPIO_PORTF_BASE, s);
-		 Çå³ıËùÓĞ·¢ÉúÖÃÎ»µÄÖĞ¶Ï±êÖ¾
-				
+        1ã€ä¸²å£é…ç½®æµç¨‹ï¼š
+                SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
+   //Enable UART0 module SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+   //for UART GPIOPinTypeUART(GPIO_PORTA_BASE,GPIO_PIN_0 | GPIO_PIN_1);	//PA0&PA1 forUART0
+                UARTClockSourceSet(UART0_BASE, UART_CLOCK_PIOSC);
+   //configure the baud clock source theprecision internal oscillator(UART_CLOCK_PIOSC)
+                UARTStdioConfig(0,9600, 16000000);
+   //è¿™ä¸ªå‡½æ•°ä¹Ÿæ˜¯åœ¨uartstdio.cé‡Œå®šä¹‰çš„ï¼Œå¯ä»¥æ‰“å¼€æ–‡ä»¶æŸ¥çœ‹æºä»£ç 
+
+        2ã€HWREGè¡¨ç¤ºæ“ä½œç¡¬ä»¶å¯„å­˜å™¨
+
+        3ã€s = GPIOIntStatus(GPIO_PORTF_BASE, true);
+                 è¯»å–ä¸­æ–­çŠ¶æ€ã€‚TM4Cå¯ä»¥è®¾ç½®æŸäº›ä¸­æ–­è¢«å±è”½ï¼Œå±è”½çš„ä¸­æ–­ä¿¡å·ä¸ä¼šè¢«é€åˆ°ä¸­æ–­æ§åˆ¶å™¨ï¼Œå±è”½ä½å­˜åœ¨GPIOIMå¯„å­˜å™¨
+                 ç¬¬äºŒä¸ªå‚æ•°å†™1ï¼Œåˆ™è¿”å›ä¸å«å·²å±è”½ä¸­æ–­çš„è”åˆä¸­æ–­çŠ¶æ€ return(HWREG(ui32Port +
+   GPIO_O_MIS)); å…¶ä¸­ui32Port + GPIO_O_MISæŒ‡å‡ºäº†Reg GPIOMISçš„åœ°å€ï¼ŒHWREG(ui32Port +
+   GPIO_O_MIS)å³ä¸ºå–å€¼ å†™0ï¼Œåˆ™è¿”å›åŒ…å«å·²å±è”½ä¸­æ–­çš„è”åˆä¸­æ–­çŠ¶æ€ return(HWREG(ui32Port + GPIO_O_RIS));
+
+                 è¿™ä¸ªå‡½æ•°è¯»åˆ°çš„æ˜¯æ‰€æœ‰è”åˆä¸­æ–­ä¿¡å·çš„ç»¼åˆä¿¡æ¯ï¼ˆæ¯”å¦‚è¿™é‡Œæ˜¯PFçš„æ‰€æœ‰pinæœ‰æ²¡æœ‰å‘ç”Ÿä¸­æ–­ï¼‰ï¼Œé€šè¿‡s
+   & GPIO_PIN_4è¿™æ ·çš„æ–¹æ³•å–å…¶ä¸­æŸä½è¿›è¡Œå•ç‹¬åˆ¤æ–­
+
+        4ã€GPIOIntClear(GPIO_PORTF_BASE, s);
+                 æ¸…é™¤æ‰€æœ‰å‘ç”Ÿç½®ä½çš„ä¸­æ–­æ ‡å¿—
+
 */
-//#include "inc/hw_ints.h"
-
-
+// #include "inc/hw_ints.h"
 
 #include "include.h"
 #include "bsp_uart.h"
 #include "pc_service.h"
-
 
 u8 Uart0_TX[200];
 u8 Uart1_TX[200];
@@ -40,388 +41,337 @@ u8 Uart6_RX[200];
 u8 Uart7_RX[200];
 
 void USART0_IRQHandler(void);
-void USART_Init(void)
-{
-	/**********************Ê¹ÄÜuart0 ********************************/
-    //Ê¹ÄÜÍâÉè
-  SysCtlPeripheralEnable( SYSCTL_PERIPH_GPIOA);
-	SysCtlPeripheralEnable( SYSCTL_PERIPH_UART0);
-    //Ê¹ÄÜ¸´ÓÃ
-	GPIOPinConfigure( GPIO_PA0_U0RX);
-	GPIOPinConfigure( GPIO_PA1_U0TX);
-    //·ÖÅäĞÅºÅ
-	GPIOPinTypeUART( GPIO_PORTA_BASE,  GPIO_PIN_0);
-	GPIOPinTypeUART( GPIO_PORTA_BASE,  GPIO_PIN_1);
-    /*´îÅäUARTprintfÊ¹ÓÃ*/
-    //ÉèÖÃ´®¿Ú0µÄÊ±ÖÓÎªUART_CLOCK_PIOSC
-//	UARTClockSourceSet( UART0_BASE,  UART_CLOCK_PIOSC);
-    //ÉèÖÃ´®¿Ú0²¨ÌØÂÊÓë²¨ÌØÊ±ÖÓ
-//	UARTStdioConfig( 0,  115200,
-//                             16000000);
-    /*ÓëUARTCharPut£¬UARTCharPutNonBlockingµÈ´îÅäÊ¹ÓÃ*/
-    //ÅäÖÃ´®¿Ú0²¨ÌØÂÊÓëĞ£ÑéÎ»£¬Í£Ö¹Î»£¬×Ö³¤µÈ
-	UARTConfigSetExpClk( UART0_BASE,  SysCtlClockGet(),
-                                 115200,  UART_CONFIG_WLEN_8|UART_CONFIG_STOP_ONE|UART_CONFIG_PAR_NONE);
-    //Ê§ÄÜFIFO
-	UARTFIFODisable( UART0_BASE);
-//    //½ÓÊÕ·¢ËÍµÄFIFO¶¼Îª1/4£¬Ò²¾ÍÊÇ16*1/4=4¸ö×Ö½Ú
-//	UARTFIFOLevelSet( UART0_BASE,  UART_FIFO_TX2_8,
-//                              UART_FIFO_RX2_8);
-    //Ê¹ÄÜ´®¿ÚµÄ½ÓÊÕÓë½ÓÊÕ³¬Ê±ÖĞ¶Ï
-	UARTIntEnable( UART0_BASE,  UART_INT_RX|UART_INT_RT);
-    //×¢²áÖĞ¶Ïº¯Êı
-	UARTIntRegister( UART0_BASE, USART0_IRQHandler);
-    //ÉèÖÃÖĞ¶ÏÓÅÏÈ¼¶
-	IntPrioritySet(INT_UART0,0xA0);
-    //¿ªÆôÖĞ¶Ï
-	IntEnable( INT_UART0);
-	IntMasterEnable();
-    //Ê¹ÄÜ´®¿Ú
-    UARTEnable( UART0_BASE);
-		
-		
-		
-		
-		
-		/**********************Ê¹ÄÜuart1 ********************************/
-		   //Ê¹ÄÜÍâÉè
-  SysCtlPeripheralEnable( SYSCTL_PERIPH_GPIOB);
-	SysCtlPeripheralEnable( SYSCTL_PERIPH_UART1);
-    //Ê¹ÄÜ¸´ÓÃ
-	GPIOPinConfigure( GPIO_PB0_U1RX);
-	GPIOPinConfigure( GPIO_PB1_U1TX);
-    //·ÖÅäĞÅºÅ
-	GPIOPinTypeUART( GPIO_PORTB_BASE,  GPIO_PIN_0);
-	GPIOPinTypeUART( GPIO_PORTB_BASE,  GPIO_PIN_1);
-    /*´îÅäUARTprintfÊ¹ÓÃ*/
-    //ÉèÖÃ´®¿Ú0µÄÊ±ÖÓÎªUART_CLOCK_PIOSC
-//	UARTClockSourceSet( UART0_BASE,  UART_CLOCK_PIOSC);
-    //ÉèÖÃ´®¿Ú0²¨ÌØÂÊÓë²¨ÌØÊ±ÖÓ
-//	UARTStdioConfig( 0,  115200,
-//                             16000000);
-    /*ÓëUARTCharPut£¬UARTCharPutNonBlockingµÈ´îÅäÊ¹ÓÃ*/
-    //ÅäÖÃ´®¿Ú0²¨ÌØÂÊÓëĞ£ÑéÎ»£¬Í£Ö¹Î»£¬×Ö³¤µÈ
-	UARTConfigSetExpClk( UART1_BASE,  SysCtlClockGet(),
-                                 115200,  UART_CONFIG_WLEN_8|UART_CONFIG_STOP_ONE|UART_CONFIG_PAR_NONE);
-    //Ê§ÄÜFIFO
-	UARTFIFODisable( UART1_BASE);
-//    //½ÓÊÕ·¢ËÍµÄFIFO¶¼Îª1/4£¬Ò²¾ÍÊÇ16*1/4=4¸ö×Ö½Ú
-//	UARTFIFOLevelSet( UART0_BASE,  UART_FIFO_TX2_8,
-//                              UART_FIFO_RX2_8);
-    //Ê¹ÄÜ´®¿ÚµÄ½ÓÊÕÓë½ÓÊÕ³¬Ê±ÖĞ¶Ï
-	UARTIntEnable( UART1_BASE,  UART_INT_RX|UART_INT_RT);
-    //×¢²áÖĞ¶Ïº¯Êı
-	UARTIntRegister(UART1_BASE, USART1_IRQHandler);
-    //ÉèÖÃÖĞ¶ÏÓÅÏÈ¼¶
-	IntPrioritySet( INT_UART1,  0);
-    //¿ªÆôÖĞ¶Ï
-	IntEnable( INT_UART1);
-	IntMasterEnable();
-    //Ê¹ÄÜ´®¿Ú
-    UARTEnable( UART1_BASE);
+void USART_Init(void) {
+    /**********************ä½¿èƒ½uart0 ********************************/
+    // ä½¿èƒ½å¤–è®¾
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
+    // ä½¿èƒ½å¤ç”¨
+    GPIOPinConfigure(GPIO_PA0_U0RX);
+    GPIOPinConfigure(GPIO_PA1_U0TX);
+    // åˆ†é…ä¿¡å·
+    GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0);
+    GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_1);
+    /*æ­é…UARTprintfä½¿ç”¨*/
+    // è®¾ç½®ä¸²å£0çš„æ—¶é’Ÿä¸ºUART_CLOCK_PIOSC
+    //	UARTClockSourceSet( UART0_BASE,  UART_CLOCK_PIOSC);
+    // è®¾ç½®ä¸²å£0æ³¢ç‰¹ç‡ä¸æ³¢ç‰¹æ—¶é’Ÿ
+    //	UARTStdioConfig( 0,  115200,
+    //                             16000000);
+    /*ä¸UARTCharPutï¼ŒUARTCharPutNonBlockingç­‰æ­é…ä½¿ç”¨*/
+    // é…ç½®ä¸²å£0æ³¢ç‰¹ç‡ä¸æ ¡éªŒä½ï¼Œåœæ­¢ä½ï¼Œå­—é•¿ç­‰
+    UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 115200,
+                        UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE);
+    // å¤±èƒ½FIFO
+    UARTFIFODisable(UART0_BASE);
+    //    //æ¥æ”¶å‘é€çš„FIFOéƒ½ä¸º1/4ï¼Œä¹Ÿå°±æ˜¯16*1/4=4ä¸ªå­—èŠ‚
+    //	UARTFIFOLevelSet( UART0_BASE,  UART_FIFO_TX2_8,
+    //                              UART_FIFO_RX2_8);
+    // ä½¿èƒ½ä¸²å£çš„æ¥æ”¶ä¸æ¥æ”¶è¶…æ—¶ä¸­æ–­
+    UARTIntEnable(UART0_BASE, UART_INT_RX | UART_INT_RT);
+    // æ³¨å†Œä¸­æ–­å‡½æ•°
+    UARTIntRegister(UART0_BASE, USART0_IRQHandler);
+    // è®¾ç½®ä¸­æ–­ä¼˜å…ˆçº§
+    IntPrioritySet(INT_UART0, 0xA0);
+    // å¼€å¯ä¸­æ–­
+    IntEnable(INT_UART0);
+    IntMasterEnable();
+    // ä½¿èƒ½ä¸²å£
+    UARTEnable(UART0_BASE);
 
+    /**********************ä½¿èƒ½uart1 ********************************/
+    // ä½¿èƒ½å¤–è®¾
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART1);
+    // ä½¿èƒ½å¤ç”¨
+    GPIOPinConfigure(GPIO_PB0_U1RX);
+    GPIOPinConfigure(GPIO_PB1_U1TX);
+    // åˆ†é…ä¿¡å·
+    GPIOPinTypeUART(GPIO_PORTB_BASE, GPIO_PIN_0);
+    GPIOPinTypeUART(GPIO_PORTB_BASE, GPIO_PIN_1);
+    /*æ­é…UARTprintfä½¿ç”¨*/
+    // è®¾ç½®ä¸²å£0çš„æ—¶é’Ÿä¸ºUART_CLOCK_PIOSC
+    //	UARTClockSourceSet( UART0_BASE,  UART_CLOCK_PIOSC);
+    // è®¾ç½®ä¸²å£0æ³¢ç‰¹ç‡ä¸æ³¢ç‰¹æ—¶é’Ÿ
+    //	UARTStdioConfig( 0,  115200,
+    //                             16000000);
+    /*ä¸UARTCharPutï¼ŒUARTCharPutNonBlockingç­‰æ­é…ä½¿ç”¨*/
+    // é…ç½®ä¸²å£0æ³¢ç‰¹ç‡ä¸æ ¡éªŒä½ï¼Œåœæ­¢ä½ï¼Œå­—é•¿ç­‰
+    UARTConfigSetExpClk(UART1_BASE, SysCtlClockGet(), 115200,
+                        UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE);
+    // å¤±èƒ½FIFO
+    UARTFIFODisable(UART1_BASE);
+    //    //æ¥æ”¶å‘é€çš„FIFOéƒ½ä¸º1/4ï¼Œä¹Ÿå°±æ˜¯16*1/4=4ä¸ªå­—èŠ‚
+    //	UARTFIFOLevelSet( UART0_BASE,  UART_FIFO_TX2_8,
+    //                              UART_FIFO_RX2_8);
+    // ä½¿èƒ½ä¸²å£çš„æ¥æ”¶ä¸æ¥æ”¶è¶…æ—¶ä¸­æ–­
+    UARTIntEnable(UART1_BASE, UART_INT_RX | UART_INT_RT);
+    // æ³¨å†Œä¸­æ–­å‡½æ•°
+    UARTIntRegister(UART1_BASE, USART1_IRQHandler);
+    // è®¾ç½®ä¸­æ–­ä¼˜å…ˆçº§
+    IntPrioritySet(INT_UART1, 0);
+    // å¼€å¯ä¸­æ–­
+    IntEnable(INT_UART1);
+    IntMasterEnable();
+    // ä½¿èƒ½ä¸²å£
+    UARTEnable(UART1_BASE);
 
+    /**********************ä½¿èƒ½uart6 ********************************/
+    // ä½¿èƒ½å¤–è®¾
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART6);
+    // ä½¿èƒ½å¤ç”¨
+    GPIOPinConfigure(GPIO_PD4_U6RX);
+    GPIOPinConfigure(GPIO_PD5_U6TX);
+    // åˆ†é…ä¿¡å·
+    GPIOPinTypeUART(GPIO_PORTD_BASE, GPIO_PIN_4);
+    GPIOPinTypeUART(GPIO_PORTD_BASE, GPIO_PIN_5);
+    /*æ­é…UARTprintfä½¿ç”¨*/
+    // è®¾ç½®ä¸²å£0çš„æ—¶é’Ÿä¸ºUART_CLOCK_PIOSC
+    //	UARTClockSourceSet( UART0_BASE,  UART_CLOCK_PIOSC);
+    // è®¾ç½®ä¸²å£0æ³¢ç‰¹ç‡ä¸æ³¢ç‰¹æ—¶é’Ÿ
+    //	UARTStdioConfig( 0,  115200,
+    //                             16000000);
+    /*ä¸UARTCharPutï¼ŒUARTCharPutNonBlockingç­‰æ­é…ä½¿ç”¨*/
+    // é…ç½®ä¸²å£0æ³¢ç‰¹ç‡ä¸æ ¡éªŒä½ï¼Œåœæ­¢ä½ï¼Œå­—é•¿ç­‰
+    UARTConfigSetExpClk(UART6_BASE, SysCtlClockGet(), 115200,
+                        UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE);
+    // å¤±èƒ½FIFO
+    UARTFIFODisable(UART6_BASE);
+    //    //æ¥æ”¶å‘é€çš„FIFOéƒ½ä¸º1/4ï¼Œä¹Ÿå°±æ˜¯16*1/4=4ä¸ªå­—èŠ‚
+    //	UARTFIFOLevelSet( UART0_BASE,  UART_FIFO_TX2_8,
+    //                              UART_FIFO_RX2_8);
+    // ä½¿èƒ½ä¸²å£çš„æ¥æ”¶ä¸æ¥æ”¶è¶…æ—¶ä¸­æ–­
+    UARTIntEnable(UART6_BASE, UART_INT_RX | UART_INT_RT);
+    // æ³¨å†Œä¸­æ–­å‡½æ•°
+    UARTIntRegister(UART6_BASE, USART6_IRQHandler);
+    // è®¾ç½®ä¸­æ–­ä¼˜å…ˆçº§
+    IntPrioritySet(INT_UART6, 0);
+    // å¼€å¯ä¸­æ–­
+    IntEnable(INT_UART6);
+    IntMasterEnable();
+    // ä½¿èƒ½ä¸²å£
+    UARTEnable(UART6_BASE);
 
-		
-		/**********************Ê¹ÄÜuart6 ********************************/
-	   //Ê¹ÄÜÍâÉè
-  SysCtlPeripheralEnable( SYSCTL_PERIPH_GPIOD);
-	SysCtlPeripheralEnable( SYSCTL_PERIPH_UART6);
-    //Ê¹ÄÜ¸´ÓÃ
-	GPIOPinConfigure( GPIO_PD4_U6RX);
-	GPIOPinConfigure( GPIO_PD5_U6TX);
-    //·ÖÅäĞÅºÅ
-	GPIOPinTypeUART( GPIO_PORTD_BASE,  GPIO_PIN_4);
-	GPIOPinTypeUART( GPIO_PORTD_BASE,  GPIO_PIN_5);
-    /*´îÅäUARTprintfÊ¹ÓÃ*/
-    //ÉèÖÃ´®¿Ú0µÄÊ±ÖÓÎªUART_CLOCK_PIOSC
-//	UARTClockSourceSet( UART0_BASE,  UART_CLOCK_PIOSC);
-    //ÉèÖÃ´®¿Ú0²¨ÌØÂÊÓë²¨ÌØÊ±ÖÓ
-//	UARTStdioConfig( 0,  115200,
-//                             16000000);
-    /*ÓëUARTCharPut£¬UARTCharPutNonBlockingµÈ´îÅäÊ¹ÓÃ*/
-    //ÅäÖÃ´®¿Ú0²¨ÌØÂÊÓëĞ£ÑéÎ»£¬Í£Ö¹Î»£¬×Ö³¤µÈ
-	UARTConfigSetExpClk( UART6_BASE,  SysCtlClockGet(),
-                                 115200,  UART_CONFIG_WLEN_8|UART_CONFIG_STOP_ONE|UART_CONFIG_PAR_NONE);
-    //Ê§ÄÜFIFO
-	UARTFIFODisable( UART6_BASE);
-//    //½ÓÊÕ·¢ËÍµÄFIFO¶¼Îª1/4£¬Ò²¾ÍÊÇ16*1/4=4¸ö×Ö½Ú
-//	UARTFIFOLevelSet( UART0_BASE,  UART_FIFO_TX2_8,
-//                              UART_FIFO_RX2_8);
-    //Ê¹ÄÜ´®¿ÚµÄ½ÓÊÕÓë½ÓÊÕ³¬Ê±ÖĞ¶Ï
-	UARTIntEnable( UART6_BASE,  UART_INT_RX|UART_INT_RT);
-    //×¢²áÖĞ¶Ïº¯Êı
-	UARTIntRegister( UART6_BASE, USART6_IRQHandler);
-    //ÉèÖÃÖĞ¶ÏÓÅÏÈ¼¶
-	IntPrioritySet( INT_UART6,  0);
-    //¿ªÆôÖĞ¶Ï
-	IntEnable( INT_UART6);
-	IntMasterEnable();
-    //Ê¹ÄÜ´®¿Ú
-    UARTEnable( UART6_BASE);	
-		
-		
-		/**********************Ê¹ÄÜuart7 ********************************/
-	   //Ê¹ÄÜÍâÉè
-  SysCtlPeripheralEnable( SYSCTL_PERIPH_GPIOE);
-	SysCtlPeripheralEnable( SYSCTL_PERIPH_UART7);
-    //Ê¹ÄÜ¸´ÓÃ
-	GPIOPinConfigure( GPIO_PE0_U7RX);
-	GPIOPinConfigure( GPIO_PE1_U7TX);
-    //·ÖÅäĞÅºÅ
-	GPIOPinTypeUART( GPIO_PORTE_BASE,  GPIO_PIN_0);
-	GPIOPinTypeUART( GPIO_PORTE_BASE,  GPIO_PIN_1);
-    /*´îÅäUARTprintfÊ¹ÓÃ*/
-    //ÉèÖÃ´®¿Ú0µÄÊ±ÖÓÎªUART_CLOCK_PIOSC
-//	UARTClockSourceSet( UART0_BASE,  UART_CLOCK_PIOSC);
-    //ÉèÖÃ´®¿Ú0²¨ÌØÂÊÓë²¨ÌØÊ±ÖÓ
-//	UARTStdioConfig( 0,  115200,
-//                             16000000);
-    /*ÓëUARTCharPut£¬UARTCharPutNonBlockingµÈ´îÅäÊ¹ÓÃ*/
-    //ÅäÖÃ´®¿Ú0²¨ÌØÂÊÓëĞ£ÑéÎ»£¬Í£Ö¹Î»£¬×Ö³¤µÈ
-	UARTConfigSetExpClk( UART7_BASE,  SysCtlClockGet(),
-                                 115200,  UART_CONFIG_WLEN_8|UART_CONFIG_STOP_ONE|UART_CONFIG_PAR_NONE);
-    //Ê§ÄÜFIFO
-	UARTFIFODisable( UART7_BASE);
-//    //½ÓÊÕ·¢ËÍµÄFIFO¶¼Îª1/4£¬Ò²¾ÍÊÇ16*1/4=4¸ö×Ö½Ú
-//	UARTFIFOLevelSet( UART0_BASE,  UART_FIFO_TX2_8,
-//                              UART_FIFO_RX2_8);
-    //Ê¹ÄÜ´®¿ÚµÄ½ÓÊÕÓë½ÓÊÕ³¬Ê±ÖĞ¶Ï
-	UARTIntEnable( UART7_BASE,  UART_INT_RX|UART_INT_RT);
-    //×¢²áÖĞ¶Ïº¯Êı
-	UARTIntRegister( UART7_BASE, USART7_IRQHandler);
-    //ÉèÖÃÖĞ¶ÏÓÅÏÈ¼¶
-	IntPrioritySet( INT_UART7,  0);
-    //¿ªÆôÖĞ¶Ï
-	IntEnable( INT_UART7);
-	IntMasterEnable();
-    //Ê¹ÄÜ´®¿Ú
-    UARTEnable( UART7_BASE);
-		
+    /**********************ä½¿èƒ½uart7 ********************************/
+    // ä½¿èƒ½å¤–è®¾
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART7);
+    // ä½¿èƒ½å¤ç”¨
+    GPIOPinConfigure(GPIO_PE0_U7RX);
+    GPIOPinConfigure(GPIO_PE1_U7TX);
+    // åˆ†é…ä¿¡å·
+    GPIOPinTypeUART(GPIO_PORTE_BASE, GPIO_PIN_0);
+    GPIOPinTypeUART(GPIO_PORTE_BASE, GPIO_PIN_1);
+    /*æ­é…UARTprintfä½¿ç”¨*/
+    // è®¾ç½®ä¸²å£0çš„æ—¶é’Ÿä¸ºUART_CLOCK_PIOSC
+    //	UARTClockSourceSet( UART0_BASE,  UART_CLOCK_PIOSC);
+    // è®¾ç½®ä¸²å£0æ³¢ç‰¹ç‡ä¸æ³¢ç‰¹æ—¶é’Ÿ
+    //	UARTStdioConfig( 0,  115200,
+    //                             16000000);
+    /*ä¸UARTCharPutï¼ŒUARTCharPutNonBlockingç­‰æ­é…ä½¿ç”¨*/
+    // é…ç½®ä¸²å£0æ³¢ç‰¹ç‡ä¸æ ¡éªŒä½ï¼Œåœæ­¢ä½ï¼Œå­—é•¿ç­‰
+    UARTConfigSetExpClk(UART7_BASE, SysCtlClockGet(), 115200,
+                        UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE);
+    // å¤±èƒ½FIFO
+    UARTFIFODisable(UART7_BASE);
+    //    //æ¥æ”¶å‘é€çš„FIFOéƒ½ä¸º1/4ï¼Œä¹Ÿå°±æ˜¯16*1/4=4ä¸ªå­—èŠ‚
+    //	UARTFIFOLevelSet( UART0_BASE,  UART_FIFO_TX2_8,
+    //                              UART_FIFO_RX2_8);
+    // ä½¿èƒ½ä¸²å£çš„æ¥æ”¶ä¸æ¥æ”¶è¶…æ—¶ä¸­æ–­
+    UARTIntEnable(UART7_BASE, UART_INT_RX | UART_INT_RT);
+    // æ³¨å†Œä¸­æ–­å‡½æ•°
+    UARTIntRegister(UART7_BASE, USART7_IRQHandler);
+    // è®¾ç½®ä¸­æ–­ä¼˜å…ˆçº§
+    IntPrioritySet(INT_UART7, 0);
+    // å¼€å¯ä¸­æ–­
+    IntEnable(INT_UART7);
+    IntMasterEnable();
+    // ä½¿èƒ½ä¸²å£
+    UARTEnable(UART7_BASE);
 }
-
-
 
 void USART0_IRQHandler(void) {
-    unsigned count=0;uint32_t status=UARTIntStatus(UART0_BASE,true);
-    UARTIntClear(UART0_BASE,status);
-    while(count++<16 && UARTCharsAvail(UART0_BASE)) maoxiu_pc_rx_isr((uint8_t)UARTCharGetNonBlocking(UART0_BASE));
+    unsigned count = 0;
+    uint32_t status = UARTIntStatus(UART0_BASE, true);
+    UARTIntClear(UART0_BASE, status);
+    while (count++ < 16 && UARTCharsAvail(UART0_BASE))
+        maoxiu_pc_rx_isr((uint8_t)UARTCharGetNonBlocking(UART0_BASE));
 }
 
-
-
-
-
-void USART1_IRQHandler(void)
-{
-{
-    static uint16_t count = 0;
-    
-    // ¶ÁÈ¡ÖĞ¶Ï×´Ì¬²¢Çå³ıÖĞ¶Ï±êÖ¾Î»
-    uint32_t status = UARTIntStatus(UART1_BASE, true);
-    UARTIntClear(UART1_BASE, status);
-    
-    // ÅĞ¶ÏUART0ÓĞÃ»ÓĞ×Ö·ûÎ´¶ÁÈ¡
-    while (UARTCharsAvail(UART1_BASE))
+void USART1_IRQHandler(void) {
     {
-        // Èç¹ûÓĞ×Ö·ûÎ´¶ÁÈ¡¾ÍÈ¡³ö£¬Ê¹ÓÃUARTCharGetNonBlocking·ÀÖ¹µÈ´ı
-        Uart1_RX[count] = UARTCharGetNonBlocking(UART1_BASE);
-        
-        
-        // ÅĞ¶ÏÊÇ·ñ½ÓÊÕÍêÕûÒ»½Ú×Ö·û´®
-        if (Uart1_RX[count] == '\n')
-        {
-            // ·¢ËÍ×Ö·û´®
-            Uart1_Transmit(Uart1_RX);
-            
-            // ÖØÖÃ¼ÆÊıÆ÷ºÍ»º³åÇø
-           count = 0;
-           // memset(Uart1_RX, 0, sizeof(Uart1_RX));
-					printf("%s\r\n", Uart1_RX);
-        }
-        else
-        {
-            // ÊıÁ¿µİÔö
-            count++;
-            
-            // ÅĞ¶Ï»º³åÇøÒç³ö
-            if (count >= 100)
-            {
-                // ·¢ËÍ´íÎóĞÅÏ¢²¢ÖØÖÃ¼ÆÊıÆ÷ºÍ»º³åÇø
-                Uart1_Transmit((u8 *)"Error: Buffer Overflow\n");
+        static uint16_t count = 0;
+
+        // è¯»å–ä¸­æ–­çŠ¶æ€å¹¶æ¸…é™¤ä¸­æ–­æ ‡å¿—ä½
+        uint32_t status = UARTIntStatus(UART1_BASE, true);
+        UARTIntClear(UART1_BASE, status);
+
+        // åˆ¤æ–­UART0æœ‰æ²¡æœ‰å­—ç¬¦æœªè¯»å–
+        while (UARTCharsAvail(UART1_BASE)) {
+            // å¦‚æœæœ‰å­—ç¬¦æœªè¯»å–å°±å–å‡ºï¼Œä½¿ç”¨UARTCharGetNonBlockingé˜²æ­¢ç­‰å¾…
+            Uart1_RX[count] = UARTCharGetNonBlocking(UART1_BASE);
+
+            // åˆ¤æ–­æ˜¯å¦æ¥æ”¶å®Œæ•´ä¸€èŠ‚å­—ç¬¦ä¸²
+            if (Uart1_RX[count] == '\n') {
+                // å‘é€å­—ç¬¦ä¸²
+                Uart1_Transmit(Uart1_RX);
+
+                // é‡ç½®è®¡æ•°å™¨å’Œç¼“å†²åŒº
                 count = 0;
-                memset(Uart1_RX, 0, sizeof(Uart1_RX));
+                // memset(Uart1_RX, 0, sizeof(Uart1_RX));
+                printf("%s\r\n", Uart1_RX);
+            } else {
+                // æ•°é‡é€’å¢
+                count++;
+
+                // åˆ¤æ–­ç¼“å†²åŒºæº¢å‡º
+                if (count >= 100) {
+                    // å‘é€é”™è¯¯ä¿¡æ¯å¹¶é‡ç½®è®¡æ•°å™¨å’Œç¼“å†²åŒº
+                    Uart1_Transmit((u8 *)"Error: Buffer Overflow\n");
+                    count = 0;
+                    memset(Uart1_RX, 0, sizeof(Uart1_RX));
+                }
             }
         }
     }
 }
 
-}
-
-
-
-
-void USART6_IRQHandler(void)
-{
-{
-    static uint16_t count = 0;
-    // ¶ÁÈ¡ÖĞ¶Ï×´Ì¬²¢Çå³ıÖĞ¶Ï±êÖ¾Î»
-    uint32_t status = UARTIntStatus(UART6_BASE, true);
-    UARTIntClear(UART6_BASE, status);
-    
-    // ÅĞ¶ÏUART0ÓĞÃ»ÓĞ×Ö·ûÎ´¶ÁÈ¡
-    while (UARTCharsAvail(UART6_BASE))
+void USART6_IRQHandler(void) {
     {
-        // Èç¹ûÓĞ×Ö·ûÎ´¶ÁÈ¡¾ÍÈ¡³ö£¬Ê¹ÓÃUARTCharGetNonBlocking·ÀÖ¹µÈ´ı
-        Uart6_RX[count] = UARTCharGetNonBlocking(UART6_BASE);
-        
-        
-        // ÅĞ¶ÏÊÇ·ñ½ÓÊÕÍêÕûÒ»½Ú×Ö·û´®
-        if (Uart6_RX[count] == '\n')
-        {
-            // ·¢ËÍ×Ö·û´®
-            Uart1_Transmit(Uart6_RX);
-            
-            // ÖØÖÃ¼ÆÊıÆ÷ºÍ»º³åÇø
-           count = 0;
-           // memset(Uart6_RX, 0, sizeof(Uart6_RX));
-        }
-        else
-        {
-            // ÊıÁ¿µİÔö
-            count++;
-            
-            // ÅĞ¶Ï»º³åÇøÒç³ö
-            if (count >= 100)
-            {
-                // ·¢ËÍ´íÎóĞÅÏ¢²¢ÖØÖÃ¼ÆÊıÆ÷ºÍ»º³åÇø
-                Uart1_Transmit((u8 *)"Error: Buffer Overflow\n");
+        static uint16_t count = 0;
+        // è¯»å–ä¸­æ–­çŠ¶æ€å¹¶æ¸…é™¤ä¸­æ–­æ ‡å¿—ä½
+        uint32_t status = UARTIntStatus(UART6_BASE, true);
+        UARTIntClear(UART6_BASE, status);
+
+        // åˆ¤æ–­UART0æœ‰æ²¡æœ‰å­—ç¬¦æœªè¯»å–
+        while (UARTCharsAvail(UART6_BASE)) {
+            // å¦‚æœæœ‰å­—ç¬¦æœªè¯»å–å°±å–å‡ºï¼Œä½¿ç”¨UARTCharGetNonBlockingé˜²æ­¢ç­‰å¾…
+            Uart6_RX[count] = UARTCharGetNonBlocking(UART6_BASE);
+
+            // åˆ¤æ–­æ˜¯å¦æ¥æ”¶å®Œæ•´ä¸€èŠ‚å­—ç¬¦ä¸²
+            if (Uart6_RX[count] == '\n') {
+                // å‘é€å­—ç¬¦ä¸²
+                Uart1_Transmit(Uart6_RX);
+
+                // é‡ç½®è®¡æ•°å™¨å’Œç¼“å†²åŒº
                 count = 0;
-                memset(Uart6_RX, 0, sizeof(Uart6_RX));
+                // memset(Uart6_RX, 0, sizeof(Uart6_RX));
+            } else {
+                // æ•°é‡é€’å¢
+                count++;
+
+                // åˆ¤æ–­ç¼“å†²åŒºæº¢å‡º
+                if (count >= 100) {
+                    // å‘é€é”™è¯¯ä¿¡æ¯å¹¶é‡ç½®è®¡æ•°å™¨å’Œç¼“å†²åŒº
+                    Uart1_Transmit((u8 *)"Error: Buffer Overflow\n");
+                    count = 0;
+                    memset(Uart6_RX, 0, sizeof(Uart6_RX));
+                }
             }
         }
     }
 }
 
-}
-
-void USART7_IRQHandler(void)
-{
-{
-    static uint16_t count = 0;
-    
-    // ¶ÁÈ¡ÖĞ¶Ï×´Ì¬²¢Çå³ıÖĞ¶Ï±êÖ¾Î»
-    uint32_t status = UARTIntStatus(UART7_BASE, true);
-    UARTIntClear(UART7_BASE, status);
-    
-    // ÅĞ¶ÏUART0ÓĞÃ»ÓĞ×Ö·ûÎ´¶ÁÈ¡
-    while (UARTCharsAvail(UART7_BASE))
+void USART7_IRQHandler(void) {
     {
-        // Èç¹ûÓĞ×Ö·ûÎ´¶ÁÈ¡¾ÍÈ¡³ö£¬Ê¹ÓÃUARTCharGetNonBlocking·ÀÖ¹µÈ´ı
-        Uart7_RX[count] = UARTCharGetNonBlocking(UART7_BASE);
-        
-        
-        // ÅĞ¶ÏÊÇ·ñ½ÓÊÕÍêÕûÒ»½Ú×Ö·û´®
-        if (Uart7_RX[count] == '\n')
-        {
-            // ·¢ËÍ×Ö·û´®
-            Uart1_Transmit(Uart7_RX);
-            
-            // ÖØÖÃ¼ÆÊıÆ÷ºÍ»º³åÇø
-            count = 0;
-           // memset(Uart7_RX, 0, sizeof(Uart7_RX));
-        }
-        else
-        {
-            // ÊıÁ¿µİÔö
-            count++;
-            
-            // ÅĞ¶Ï»º³åÇøÒç³ö
-            if (count >= 100)
-            {
-                // ·¢ËÍ´íÎóĞÅÏ¢²¢ÖØÖÃ¼ÆÊıÆ÷ºÍ»º³åÇø
-                Uart1_Transmit((u8 *)"Error: Buffer Overflow\n");
+        static uint16_t count = 0;
+
+        // è¯»å–ä¸­æ–­çŠ¶æ€å¹¶æ¸…é™¤ä¸­æ–­æ ‡å¿—ä½
+        uint32_t status = UARTIntStatus(UART7_BASE, true);
+        UARTIntClear(UART7_BASE, status);
+
+        // åˆ¤æ–­UART0æœ‰æ²¡æœ‰å­—ç¬¦æœªè¯»å–
+        while (UARTCharsAvail(UART7_BASE)) {
+            // å¦‚æœæœ‰å­—ç¬¦æœªè¯»å–å°±å–å‡ºï¼Œä½¿ç”¨UARTCharGetNonBlockingé˜²æ­¢ç­‰å¾…
+            Uart7_RX[count] = UARTCharGetNonBlocking(UART7_BASE);
+
+            // åˆ¤æ–­æ˜¯å¦æ¥æ”¶å®Œæ•´ä¸€èŠ‚å­—ç¬¦ä¸²
+            if (Uart7_RX[count] == '\n') {
+                // å‘é€å­—ç¬¦ä¸²
+                Uart1_Transmit(Uart7_RX);
+
+                // é‡ç½®è®¡æ•°å™¨å’Œç¼“å†²åŒº
                 count = 0;
-                memset(Uart7_RX, 0, sizeof(Uart7_RX));
+                // memset(Uart7_RX, 0, sizeof(Uart7_RX));
+            } else {
+                // æ•°é‡é€’å¢
+                count++;
+
+                // åˆ¤æ–­ç¼“å†²åŒºæº¢å‡º
+                if (count >= 100) {
+                    // å‘é€é”™è¯¯ä¿¡æ¯å¹¶é‡ç½®è®¡æ•°å™¨å’Œç¼“å†²åŒº
+                    Uart1_Transmit((u8 *)"Error: Buffer Overflow\n");
+                    count = 0;
+                    memset(Uart7_RX, 0, sizeof(Uart7_RX));
+                }
             }
         }
     }
 }
 
-}
-
 /**
- * @brief ½«×Ö·û´®Í¨¹ıUART0·¢ËÍ
- * 
- * @param string Òª·¢ËÍµÄ×Ö·û´®£¬ÒÔ'\0'½áÎ²
+ * @brief å°†å­—ç¬¦ä¸²é€šè¿‡UART0å‘é€
+ *
+ * @param string è¦å‘é€çš„å­—ç¬¦ä¸²ï¼Œä»¥'\0'ç»“å°¾
  */
-void Uart0_Transmit(u8 *string)
-{
+void Uart0_Transmit(u8 *string) {
     u8 data;
-    data = *string++; // »ñÈ¡×Ö·û´®µÄµÚÒ»¸ö×Ö·û
-    while(data != '\0')
-    {
-        UARTCharPutNonBlocking(UART0_BASE, data); // ·¢ËÍ×Ö·û
-        data = *string++; // »ñÈ¡ÏÂÒ»¸ö×Ö·û
+    data = *string++; // è·å–å­—ç¬¦ä¸²çš„ç¬¬ä¸€ä¸ªå­—ç¬¦
+    while (data != '\0') {
+        UARTCharPutNonBlocking(UART0_BASE, data); // å‘é€å­—ç¬¦
+        data = *string++;                         // è·å–ä¸‹ä¸€ä¸ªå­—ç¬¦
     }
 }
 
 /**
- * @brief ½«×Ö·û´®Í¨¹ıUART1·¢ËÍ
- * 
- * @param string Òª·¢ËÍµÄ×Ö·û´®£¬ÒÔ'\0'½áÎ²
+ * @brief å°†å­—ç¬¦ä¸²é€šè¿‡UART1å‘é€
+ *
+ * @param string è¦å‘é€çš„å­—ç¬¦ä¸²ï¼Œä»¥'\0'ç»“å°¾
  */
-void Uart1_Transmit(u8 *string)
-{
+void Uart1_Transmit(u8 *string) {
     u8 data;
-    data = *string++; // »ñÈ¡×Ö·û´®µÄµÚÒ»¸ö×Ö·û
-    while(data != '\0')
-    {
-        UARTCharPutNonBlocking(UART1_BASE, data); // ·¢ËÍ×Ö·û
-        data = *string++; // »ñÈ¡ÏÂÒ»¸ö×Ö·û
+    data = *string++; // è·å–å­—ç¬¦ä¸²çš„ç¬¬ä¸€ä¸ªå­—ç¬¦
+    while (data != '\0') {
+        UARTCharPutNonBlocking(UART1_BASE, data); // å‘é€å­—ç¬¦
+        data = *string++;                         // è·å–ä¸‹ä¸€ä¸ªå­—ç¬¦
     }
 }
 /**
- * @brief ½«×Ö·û´®Í¨¹ıUART6·¢ËÍ
- * 
- * @param string Òª·¢ËÍµÄ×Ö·û´®£¬ÒÔ'\0'½áÎ²
+ * @brief å°†å­—ç¬¦ä¸²é€šè¿‡UART6å‘é€
+ *
+ * @param string è¦å‘é€çš„å­—ç¬¦ä¸²ï¼Œä»¥'\0'ç»“å°¾
  */
-void Uart6_Transmit(u8 *string)
-{
+void Uart6_Transmit(u8 *string) {
     u8 data;
-    data = *string++; // »ñÈ¡×Ö·û´®µÄµÚÒ»¸ö×Ö·û
-    while(data != '\0')
-    {
-        UARTCharPutNonBlocking(UART6_BASE, data); // ·¢ËÍ×Ö·û
-        data = *string++; // »ñÈ¡ÏÂÒ»¸ö×Ö·û
+    data = *string++; // è·å–å­—ç¬¦ä¸²çš„ç¬¬ä¸€ä¸ªå­—ç¬¦
+    while (data != '\0') {
+        UARTCharPutNonBlocking(UART6_BASE, data); // å‘é€å­—ç¬¦
+        data = *string++;                         // è·å–ä¸‹ä¸€ä¸ªå­—ç¬¦
     }
 }
 /**
- * @brief ½«×Ö·û´®Í¨¹ıUART7·¢ËÍ
- * 
- * @param string Òª·¢ËÍµÄ×Ö·û´®£¬ÒÔ'\0'½áÎ²
+ * @brief å°†å­—ç¬¦ä¸²é€šè¿‡UART7å‘é€
+ *
+ * @param string è¦å‘é€çš„å­—ç¬¦ä¸²ï¼Œä»¥'\0'ç»“å°¾
  */
-void Uart7_Transmit(u8 *string)
-{
+void Uart7_Transmit(u8 *string) {
     u8 data;
-    data = *string++; // »ñÈ¡×Ö·û´®µÄµÚÒ»¸ö×Ö·û
-    while(data != '\0')
-    {
-        UARTCharPutNonBlocking(UART7_BASE, data); // ·¢ËÍ×Ö·û
-        data = *string++; // »ñÈ¡ÏÂÒ»¸ö×Ö·û
+    data = *string++; // è·å–å­—ç¬¦ä¸²çš„ç¬¬ä¸€ä¸ªå­—ç¬¦
+    while (data != '\0') {
+        UARTCharPutNonBlocking(UART7_BASE, data); // å‘é€å­—ç¬¦
+        data = *string++;                         // è·å–ä¸‹ä¸€ä¸ªå­—ç¬¦
     }
 }
 
-/************printfÖØ¶¨ÏòÏà¹Ø**************/
-int fputc(int ch, FILE *f)
-{
-	UARTCharPut(UART1_BASE, ch);
-  return ch;
+/************printfé‡å®šå‘ç›¸å…³**************/
+int fputc(int ch, FILE *f) {
+    UARTCharPut(UART1_BASE, ch);
+    return ch;
 }
 
-int fgetc(FILE *f)
-{
-  uint8_t ch = 0;
-  ch = UARTCharGet(UART0_BASE);
-  return ch;
+int fgetc(FILE *f) {
+    uint8_t ch = 0;
+    ch = UARTCharGet(UART0_BASE);
+    return ch;
 }
