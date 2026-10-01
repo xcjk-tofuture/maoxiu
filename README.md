@@ -10,3 +10,5 @@
 - [回滚与 Git 流程](docs/ROLLBACK.md)
 - [源码版本与来源](docs/SOURCES.md)
 - [统一串口协议](docs/PROTOCOL.md)
+
+- dev 功能与接口/验收：[DEV-ITERATION.md](docs/DEV-ITERATION.md)

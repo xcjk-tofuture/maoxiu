@@ -13,3 +13,7 @@
 BREAKING CHANGE：上位机默认改用协议v1；ROS配套源码同步迁移。旧ROS/匿名ANO客户端需保留旧固件或使用旧提交，协议版本不自动猜测。
 
 补充：底盘状态0=idle，1=active，2=undervoltage，3=command-timeout，4=uncalibrated。TM4C默认能力不含底盘运动，标定完成之前拒绝速度命令；其状态帧的IMU原始字段当前填0，表示没有接入统一遥测，不可作为有效IMU测量。STM32 IMU配置源码为acc±2g/gyro±500deg/s（仍需上板核对）。星璇状态角度使用rad，0x2000为查询，协议不提供远程解锁或飞控目标写入。
+
+## dev 扩展
+
+本分支的新增参数、持久化和诊断命令详见[DEV-ITERATION.md](DEV-ITERATION.md)。原帧格式和基础状态长度不变；TM4C仅保持基础协议，不具备本次STM32/UAV扩展能力。
