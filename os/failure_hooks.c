@@ -2,7 +2,7 @@
 #include "task.h"
 extern void tm4c_emergency_stop(void);
 void tm4c_fatal(void) {
-    taskDISABLE_INTERRUPTS();
+    __asm volatile("cpsid i" ::: "memory");
     tm4c_emergency_stop();
     for (;;) {
     }

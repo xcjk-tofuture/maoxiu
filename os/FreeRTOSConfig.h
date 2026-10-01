@@ -2,6 +2,7 @@
 #define FREERTOS_CONFIG_H
 #include <stdint.h>
 extern uint32_t SysCtlClockGet(void);
+extern void tm4c_fatal(void);
 #define configCPU_CLOCK_HZ (SysCtlClockGet())
 #define configUSE_PREEMPTION 1
 #define configUSE_IDLE_HOOK 0
@@ -32,9 +33,7 @@ extern uint32_t SysCtlClockGet(void);
 #define configASSERT(x)                                                                            \
     do {                                                                                           \
         if (!(x)) {                                                                                \
-            taskDISABLE_INTERRUPTS();                                                              \
-            for (;;) {                                                                             \
-            }                                                                                      \
+            tm4c_fatal();                                                                          \
         }                                                                                          \
     } while (0)
 #define INCLUDE_vTaskDelay 1

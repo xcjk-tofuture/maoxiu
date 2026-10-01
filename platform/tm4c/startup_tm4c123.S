@@ -190,7 +190,8 @@ Reset_Handler:
 .section .text.Default_Handler,"ax",%progbits
 .thumb_func
 Default_Handler:
- b .
+ cpsid i
+ b tm4c_fatal
 .weak ADC0SS0_Handler
 .thumb_set ADC0SS0_Handler,Default_Handler
 .weak ADC0SS1_Handler
