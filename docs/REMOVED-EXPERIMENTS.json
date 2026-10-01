@@ -1,0 +1,11 @@
+[
+  "firmware/services/legacy/src/ble_proc.c",
+  "firmware/services/legacy/inc/ble_proc.h",
+  "firmware/services/legacy/src/buzzer_proc.c",
+  "firmware/services/legacy/inc/buzzer_proc.h",
+  "firmware/services/legacy/src/servo_proc.c",
+  "firmware/services/legacy/inc/servo_proc.h",
+  "firmware/platform/stm32/servo_port.c",
+  "firmware/platform/stm32/servo_port.h",
+  "firmware/boards/stm32/servo_resources.h"
+]

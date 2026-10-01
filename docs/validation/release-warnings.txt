@@ -1,0 +1,18 @@
+Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc_ex.c:778:57: warning: unused parameter 'hadc' [-Wunused-parameter]
+Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c:466:66: warning: unused parameter 'Edge' [-Wunused-parameter]
+Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c:495:64: warning: unused parameter 'Edge' [-Wunused-parameter]
+Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c:951:60: warning: unused parameter 'Banks' [-Wunused-parameter]
+Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c:1030:74: warning: unused parameter 'Banks' [-Wunused-parameter]
+Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c:1066:75: warning: unused parameter 'Banks' [-Wunused-parameter]
+Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c:379:38: warning: unused parameter 'Regulator' [-Wunused-parameter]
+firmware/algorithms/math/src/filter.c:10:48: warning: missing braces around initializer [-Wmissing-braces]
+firmware/algorithms/math/src/filter.c:46:47: warning: missing braces around initializer [-Wmissing-braces]
+firmware/algorithms/math/src/simplepid.c:96:33: warning: unused parameter 'target' [-Wunused-parameter]
+firmware/drivers/legacy/inc/IIC.h:30: warning: "MPU_ADDR" redefined
+firmware/services/legacy/src/oledfont.c:10:33: warning: missing braces around initializer [-Wmissing-braces]
+firmware/services/legacy/src/key_proc.c:10:32: warning: unused parameter 'argument' [-Wunused-parameter]
+firmware/services/legacy/src/lcd_proc.c:20:36: warning: pointer targets in passing argument 3 of 'LCD_ShowString' differ in signedness [-Wpointer-sign]
+firmware/services/legacy/src/lcd_proc.c:15:8: warning: unused variable 'oledDisp' [-Wunused-variable]
+firmware/services/legacy/src/lcd_proc.c:9:32: warning: unused parameter 'argument' [-Wunused-parameter]
+firmware/drivers/legacy/inc/IIC.h:30: warning: "MPU_ADDR" redefined
+firmware/services/legacy/src/rgb_proc.c:10:32: warning: unused parameter 'argument' [-Wunused-parameter]

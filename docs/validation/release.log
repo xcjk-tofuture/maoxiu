@@ -1,0 +1,376 @@
+[1/1] Cleaning all built files...
+Cleaning... 91 files.
+[1/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/app/tasks/log_task.c.obj
+[2/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/os/failure_hooks.c.obj
+[3/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/os/log_queue.c.obj
+[4/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/platform/stm32/log_port.c.obj
+[5/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/app/failure.c.obj
+[6/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/drivers/legacy/src/voltage_device.c.obj
+[7/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/platform/stm32/emergency_stop.c.obj
+[8/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/platform/stm32/board_io.c.obj
+[9/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/platform/stm32/motor_hal.c.obj
+[10/91] Building C object CMakeFiles/maoxiu_stm32.dir/Core/Src/adc.c.obj
+[11/91] Building C object CMakeFiles/maoxiu_stm32.dir/Core/Src/dma.c.obj
+[12/91] Building C object CMakeFiles/maoxiu_stm32.dir/Core/Src/can.c.obj
+[13/91] Building C object CMakeFiles/maoxiu_stm32.dir/Core/Src/freertos.c.obj
+[14/91] Building C object CMakeFiles/maoxiu_stm32.dir/Core/Src/gpio.c.obj
+[15/91] Building C object CMakeFiles/maoxiu_stm32.dir/Core/Src/main.c.obj
+[16/91] Building C object CMakeFiles/maoxiu_stm32.dir/Core/Src/spi.c.obj
+[17/91] Building C object CMakeFiles/maoxiu_stm32.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+[18/91] Building C object CMakeFiles/maoxiu_stm32.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+[19/91] Building C object CMakeFiles/maoxiu_stm32.dir/Core/Src/system_stm32f4xx.c.obj
+[20/91] Building C object CMakeFiles/maoxiu_stm32.dir/Core/Src/stm32f4xx_it.c.obj
+[21/91] Building C object CMakeFiles/maoxiu_stm32.dir/Core/Src/tim.c.obj
+[22/91] Building C object CMakeFiles/maoxiu_stm32.dir/Core/Src/usart.c.obj
+[23/91] Building C object CMakeFiles/maoxiu_stm32.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.obj
+[24/91] Building C object CMakeFiles/maoxiu_stm32.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.c.obj
+[25/91] Building C object CMakeFiles/maoxiu_stm32.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.obj
+[26/91] Building C object CMakeFiles/maoxiu_stm32.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc_ex.c.obj
+C:/Users/20493/Desktop/maoxiu/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc_ex.c: In function 'HAL_ADCEx_MultiModeGetValue':
+C:/Users/20493/Desktop/maoxiu/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc_ex.c:778:57: warning: unused parameter 'hadc' [-Wunused-parameter]
+  778 | uint32_t HAL_ADCEx_MultiModeGetValue(ADC_HandleTypeDef* hadc)
+      |                                      ~~~~~~~~~~~~~~~~~~~^~~~
+[27/91] Building C object CMakeFiles/maoxiu_stm32.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_can.c.obj
+[28/91] Building C object CMakeFiles/maoxiu_stm32.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.obj
+C:/Users/20493/Desktop/maoxiu/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c: In function 'HAL_EXTI_GetPending':
+C:/Users/20493/Desktop/maoxiu/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c:466:66: warning: unused parameter 'Edge' [-Wunused-parameter]
+  466 | uint32_t HAL_EXTI_GetPending(EXTI_HandleTypeDef *hexti, uint32_t Edge)
+      |                                                         ~~~~~~~~~^~~~
+C:/Users/20493/Desktop/maoxiu/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c: In function 'HAL_EXTI_ClearPending':
+C:/Users/20493/Desktop/maoxiu/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c:495:64: warning: unused parameter 'Edge' [-Wunused-parameter]
+  495 | void HAL_EXTI_ClearPending(EXTI_HandleTypeDef *hexti, uint32_t Edge)
+      |                                                       ~~~~~~~~~^~~~
+[29/91] Building C object CMakeFiles/maoxiu_stm32.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj
+[30/91] Building C object CMakeFiles/maoxiu_stm32.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.obj
+[31/91] Building C object CMakeFiles/maoxiu_stm32.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.obj
+[32/91] Building C object CMakeFiles/maoxiu_stm32.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.obj
+[33/91] Building C object CMakeFiles/maoxiu_stm32.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.obj
+C:/Users/20493/Desktop/maoxiu/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c: In function 'FLASH_MassErase':
+C:/Users/20493/Desktop/maoxiu/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c:951:60: warning: unused parameter 'Banks' [-Wunused-parameter]
+  951 | static void FLASH_MassErase(uint8_t VoltageRange, uint32_t Banks)
+      |                                                   ~~~~~~~~~^~~~~
+C:/Users/20493/Desktop/maoxiu/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c: In function 'FLASH_OB_EnableWRP':
+C:/Users/20493/Desktop/maoxiu/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c:1030:74: warning: unused parameter 'Banks' [-Wunused-parameter]
+ 1030 | static HAL_StatusTypeDef FLASH_OB_EnableWRP(uint32_t WRPSector, uint32_t Banks)
+      |                                                                 ~~~~~~~~~^~~~~
+C:/Users/20493/Desktop/maoxiu/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c: In function 'FLASH_OB_DisableWRP':
+C:/Users/20493/Desktop/maoxiu/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c:1066:75: warning: unused parameter 'Banks' [-Wunused-parameter]
+ 1066 | static HAL_StatusTypeDef FLASH_OB_DisableWRP(uint32_t WRPSector, uint32_t Banks)
+      |                                                                  ~~~~~~~~~^~~~~
+[34/91] Building C object CMakeFiles/maoxiu_stm32.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.obj
+[35/91] Building C object CMakeFiles/maoxiu_stm32.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.obj
+[36/91] Building C object CMakeFiles/maoxiu_stm32.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.obj
+C:/Users/20493/Desktop/maoxiu/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c: In function 'HAL_PWR_EnterSLEEPMode':
+C:/Users/20493/Desktop/maoxiu/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c:379:38: warning: unused parameter 'Regulator' [-Wunused-parameter]
+  379 | void HAL_PWR_EnterSLEEPMode(uint32_t Regulator, uint8_t SLEEPEntry)
+      |                             ~~~~~~~~~^~~~~~~~~
+[37/91] Building C object CMakeFiles/maoxiu_stm32.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.obj
+[38/91] Building C object CMakeFiles/maoxiu_stm32.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.obj
+[39/91] Building C object CMakeFiles/maoxiu_stm32.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj
+[40/91] Building C object CMakeFiles/maoxiu_stm32.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c.obj
+[41/91] Building C object CMakeFiles/maoxiu_stm32.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_adc.c.obj
+[42/91] Building C object CMakeFiles/maoxiu_stm32.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.obj
+[43/91] Building C object CMakeFiles/maoxiu_stm32.dir/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.obj
+[44/91] Building C object CMakeFiles/maoxiu_stm32.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj
+[45/91] Building C object CMakeFiles/maoxiu_stm32.dir/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.obj
+[46/91] Building C object CMakeFiles/maoxiu_stm32.dir/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.obj
+[47/91] Building C object CMakeFiles/maoxiu_stm32.dir/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj
+[48/91] Building C object CMakeFiles/maoxiu_stm32.dir/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj
+[49/91] Building C object CMakeFiles/maoxiu_stm32.dir/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.obj
+[50/91] Building C object CMakeFiles/maoxiu_stm32.dir/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj
+[51/91] Building C object CMakeFiles/maoxiu_stm32.dir/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
+[52/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/algorithms/chassis/chassis_math.c.obj
+[53/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/algorithms/math/src/adrc.c.obj
+[54/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/algorithms/math/src/LevenbergMarquardt.c.obj
+[55/91] Building C object CMakeFiles/maoxiu_stm32.dir/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
+[56/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/algorithms/math/src/filter.c.obj
+C:/Users/20493/Desktop/maoxiu/firmware/algorithms/math/src/filter.c:10:48: warning: missing braces around initializer [-Wmissing-braces]
+   10 | ButterParameter_t Butter_80HZ_Parameter_Acce = {
+      |                                                ^
+   11 |     // 200hz---80hz
+   12 |     1, 1.14298050254, 0.4128015980962, 0.638945525159, 1.277891050318, 0.638945525159};
+      |     {                                } {                                             }
+C:/Users/20493/Desktop/maoxiu/firmware/algorithms/math/src/filter.c:46:47: warning: missing braces around initializer [-Wmissing-braces]
+   46 | ButterParameter_t Butter_5HZ_Parameter_Acce = {
+      |                                               ^
+   47 |     // 200hz---5hz
+   48 |     1, -1.778631777825, 0.8008026466657, 0.005542717210281, 0.01108543442056, 0.005542717210281};
+      |     {                                  } {                                                     }
+[57/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/algorithms/math/src/declination.c.obj
+[58/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/algorithms/math/src/kalman3.c.obj
+[59/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/algorithms/math/src/lowPassFilter.c.obj
+[60/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/algorithms/math/src/kalmanVel.c.obj
+[61/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/algorithms/math/src/matrix3.c.obj
+[62/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/algorithms/math/src/cJSON.c.obj
+[63/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/algorithms/math/src/mathTool.c.obj
+[64/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/algorithms/math/src/matrix6.c.obj
+[65/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/algorithms/math/src/pid.c.obj
+[66/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/algorithms/math/src/simplepid.c.obj
+C:/Users/20493/Desktop/maoxiu/firmware/algorithms/math/src/simplepid.c: In function 'Position_PID':
+C:/Users/20493/Desktop/maoxiu/firmware/algorithms/math/src/simplepid.c:96:33: warning: unused parameter 'target' [-Wunused-parameter]
+   96 | int Position_PID (tPid *pid,int target)
+      |                             ~~~~^~~~~~
+[67/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/algorithms/math/src/quaternion.c.obj
+[68/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/algorithms/math/src/rotation.c.obj
+[69/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/algorithms/math/src/vector3.c.obj
+[70/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/app/tasks/chassis_task.c.obj
+[71/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/app/startup.c.obj
+[72/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/app/tasks/serial_task.c.obj
+[73/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/drivers/legacy/src/IIC.c.obj
+[74/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/drivers/legacy/src/mpu6050.c.obj
+In file included from C:/Users/20493/Desktop/maoxiu/firmware/drivers/legacy/src/mpu6050.c:5:
+C:/Users/20493/Desktop/maoxiu/firmware/drivers/legacy/inc/IIC.h:30: warning: "MPU_ADDR" redefined
+   30 | #define MPU_ADDR 0x68
+      | 
+In file included from C:/Users/20493/Desktop/maoxiu/firmware/drivers/legacy/src/mpu6050.c:1:
+C:/Users/20493/Desktop/maoxiu/firmware/drivers/legacy/inc/mpu6050.h:36: note: this is the location of the previous definition
+   36 | #define MPU_ADDR 0X68
+      | 
+[75/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/drivers/motor/stm32_motor.c.obj
+[76/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/drivers/legacy/src/lcd_init.c.obj
+[77/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/drivers/legacy/src/oled_init.c.obj
+[78/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/os/ports/freertos-10.3.1/GCC/ARM_CM4F/port.c.obj
+[79/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/platform/stm32/platform_time.c.obj
+[80/91] Building ASM object CMakeFiles/maoxiu_stm32.dir/firmware/platform/stm32/startup_stm32f407xx.S.obj
+[81/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/services/chassis_service.c.obj
+[82/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/platform/stm32/serial_port.c.obj
+[83/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/services/legacy/src/oledfont.c.obj
+C:/Users/20493/Desktop/maoxiu/firmware/services/legacy/src/oledfont.c:10:33: warning: missing braces around initializer [-Wmissing-braces]
+   10 | const unsigned char F6x8[][6] = {
+      |                                 ^
+   11 |     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // sp
+      |     {                                 }
+   12 |     0x00, 0x00, 0x00, 0x2f, 0x00, 0x00, // !
+      |     {                                 }
+   13 |     0x00, 0x00, 0x07, 0x00, 0x07, 0x00, // "
+      |     {                                 }
+   14 |     0x00, 0x14, 0x7f, 0x14, 0x7f, 0x14, // #
+      |     {                                 }
+   15 |     0x00, 0x24, 0x2a, 0x7f, 0x2a, 0x12, // $
+      |     {                                 }
+   16 |     0x00, 0x62, 0x64, 0x08, 0x13, 0x23, // %
+      |     {                                 }
+   17 |     0x00, 0x36, 0x49, 0x55, 0x22, 0x50, // &
+      |     {                                 }
+   18 |     0x00, 0x00, 0x05, 0x03, 0x00, 0x00, // '
+      |     {                                 }
+   19 |     0x00, 0x00, 0x1c, 0x22, 0x41, 0x00, // (
+      |     {                                 }
+   20 |     0x00, 0x00, 0x41, 0x22, 0x1c, 0x00, // )
+      |     {                                 }
+   21 |     0x00, 0x14, 0x08, 0x3E, 0x08, 0x14, // *
+      |     {                                 }
+   22 |     0x00, 0x08, 0x08, 0x3E, 0x08, 0x08, // +
+      |     {                                 }
+   23 |     0x00, 0x00, 0x00, 0xA0, 0x60, 0x00, // ,
+      |     {                                 }
+   24 |     0x00, 0x08, 0x08, 0x08, 0x08, 0x08, // -
+      |     {                                 }
+   25 |     0x00, 0x00, 0x60, 0x60, 0x00, 0x00, // .
+      |     {                                 }
+   26 |     0x00, 0x20, 0x10, 0x08, 0x04, 0x02, // /
+      |     {                                 }
+   27 |     0x00, 0x3E, 0x51, 0x49, 0x45, 0x3E, // 0
+      |     {                                 }
+   28 |     0x00, 0x00, 0x42, 0x7F, 0x40, 0x00, // 1
+      |     {                                 }
+   29 |     0x00, 0x42, 0x61, 0x51, 0x49, 0x46, // 2
+      |     {                                 }
+   30 |     0x00, 0x21, 0x41, 0x45, 0x4B, 0x31, // 3
+      |     {                                 }
+   31 |     0x00, 0x18, 0x14, 0x12, 0x7F, 0x10, // 4
+      |     {                                 }
+   32 |     0x00, 0x27, 0x45, 0x45, 0x45, 0x39, // 5
+      |     {                                 }
+   33 |     0x00, 0x3C, 0x4A, 0x49, 0x49, 0x30, // 6
+      |     {                                 }
+   34 |     0x00, 0x01, 0x71, 0x09, 0x05, 0x03, // 7
+      |     {                                 }
+   35 |     0x00, 0x36, 0x49, 0x49, 0x49, 0x36, // 8
+      |     {                                 }
+   36 |     0x00, 0x06, 0x49, 0x49, 0x29, 0x1E, // 9
+      |     {                                 }
+   37 |     0x00, 0x00, 0x36, 0x36, 0x00, 0x00, // :
+      |     {                                 }
+   38 |     0x00, 0x00, 0x56, 0x36, 0x00, 0x00, // ;
+      |     {                                 }
+   39 |     0x00, 0x08, 0x14, 0x22, 0x41, 0x00, // <
+      |     {                                 }
+   40 |     0x00, 0x14, 0x14, 0x14, 0x14, 0x14, // =
+      |     {                                 }
+   41 |     0x00, 0x00, 0x41, 0x22, 0x14, 0x08, // >
+      |     {                                 }
+   42 |     0x00, 0x02, 0x01, 0x51, 0x09, 0x06, // ?
+      |     {                                 }
+   43 |     0x00, 0x32, 0x49, 0x59, 0x51, 0x3E, // @
+      |     {                                 }
+   44 |     0x00, 0x7C, 0x12, 0x11, 0x12, 0x7C, // A
+      |     {                                 }
+   45 |     0x00, 0x7F, 0x49, 0x49, 0x49, 0x36, // B
+      |     {                                 }
+   46 |     0x00, 0x3E, 0x41, 0x41, 0x41, 0x22, // C
+      |     {                                 }
+   47 |     0x00, 0x7F, 0x41, 0x41, 0x22, 0x1C, // D
+      |     {                                 }
+   48 |     0x00, 0x7F, 0x49, 0x49, 0x49, 0x41, // E
+      |     {                                 }
+   49 |     0x00, 0x7F, 0x09, 0x09, 0x09, 0x01, // F
+      |     {                                 }
+   50 |     0x00, 0x3E, 0x41, 0x49, 0x49, 0x7A, // G
+      |     {                                 }
+   51 |     0x00, 0x7F, 0x08, 0x08, 0x08, 0x7F, // H
+      |     {                                 }
+   52 |     0x00, 0x00, 0x41, 0x7F, 0x41, 0x00, // I
+      |     {                                 }
+   53 |     0x00, 0x20, 0x40, 0x41, 0x3F, 0x01, // J
+      |     {                                 }
+   54 |     0x00, 0x7F, 0x08, 0x14, 0x22, 0x41, // K
+      |     {                                 }
+   55 |     0x00, 0x7F, 0x40, 0x40, 0x40, 0x40, // L
+      |     {                                 }
+   56 |     0x00, 0x7F, 0x02, 0x0C, 0x02, 0x7F, // M
+      |     {                                 }
+   57 |     0x00, 0x7F, 0x04, 0x08, 0x10, 0x7F, // N
+      |     {                                 }
+   58 |     0x00, 0x3E, 0x41, 0x41, 0x41, 0x3E, // O
+      |     {                                 }
+   59 |     0x00, 0x7F, 0x09, 0x09, 0x09, 0x06, // P
+      |     {                                 }
+   60 |     0x00, 0x3E, 0x41, 0x51, 0x21, 0x5E, // Q
+      |     {                                 }
+   61 |     0x00, 0x7F, 0x09, 0x19, 0x29, 0x46, // R
+      |     {                                 }
+   62 |     0x00, 0x46, 0x49, 0x49, 0x49, 0x31, // S
+      |     {                                 }
+   63 |     0x00, 0x01, 0x01, 0x7F, 0x01, 0x01, // T
+      |     {                                 }
+   64 |     0x00, 0x3F, 0x40, 0x40, 0x40, 0x3F, // U
+      |     {                                 }
+   65 |     0x00, 0x1F, 0x20, 0x40, 0x20, 0x1F, // V
+      |     {                                 }
+   66 |     0x00, 0x3F, 0x40, 0x38, 0x40, 0x3F, // W
+      |     {                                 }
+   67 |     0x00, 0x63, 0x14, 0x08, 0x14, 0x63, // X
+      |     {                                 }
+   68 |     0x00, 0x07, 0x08, 0x70, 0x08, 0x07, // Y
+      |     {                                 }
+   69 |     0x00, 0x61, 0x51, 0x49, 0x45, 0x43, // Z
+      |     {                                 }
+   70 |     0x00, 0x00, 0x7F, 0x41, 0x41, 0x00, // [
+      |     {                                 }
+   71 |     0x00, 0x55, 0x2A, 0x55, 0x2A, 0x55, // 55
+      |     {                                 }
+   72 |     0x00, 0x00, 0x41, 0x41, 0x7F, 0x00, // ]
+      |     {                                 }
+   73 |     0x00, 0x04, 0x02, 0x01, 0x02, 0x04, // ^
+      |     {                                 }
+   74 |     0x00, 0x40, 0x40, 0x40, 0x40, 0x40, // _
+      |     {                                 }
+   75 |     0x00, 0x00, 0x01, 0x02, 0x04, 0x00, // '
+      |     {                                 }
+   76 |     0x00, 0x20, 0x54, 0x54, 0x54, 0x78, // a
+      |     {                                 }
+   77 |     0x00, 0x7F, 0x48, 0x44, 0x44, 0x38, // b
+      |     {                                 }
+   78 |     0x00, 0x38, 0x44, 0x44, 0x44, 0x20, // c
+      |     {                                 }
+   79 |     0x00, 0x38, 0x44, 0x44, 0x48, 0x7F, // d
+      |     {                                 }
+   80 |     0x00, 0x38, 0x54, 0x54, 0x54, 0x18, // e
+      |     {                                 }
+   81 |     0x00, 0x08, 0x7E, 0x09, 0x01, 0x02, // f
+      |     {                                 }
+   82 |     0x00, 0x18, 0xA4, 0xA4, 0xA4, 0x7C, // g
+      |     {                                 }
+   83 |     0x00, 0x7F, 0x08, 0x04, 0x04, 0x78, // h
+      |     {                                 }
+   84 |     0x00, 0x00, 0x44, 0x7D, 0x40, 0x00, // i
+      |     {                                 }
+   85 |     0x00, 0x40, 0x80, 0x84, 0x7D, 0x00, // j
+      |     {                                 }
+   86 |     0x00, 0x7F, 0x10, 0x28, 0x44, 0x00, // k
+      |     {                                 }
+   87 |     0x00, 0x00, 0x41, 0x7F, 0x40, 0x00, // l
+      |     {                                 }
+   88 |     0x00, 0x7C, 0x04, 0x18, 0x04, 0x78, // m
+      |     {                                 }
+   89 |     0x00, 0x7C, 0x08, 0x04, 0x04, 0x78, // n
+      |     {                                 }
+   90 |     0x00, 0x38, 0x44, 0x44, 0x44, 0x38, // o
+      |     {                                 }
+   91 |     0x00, 0xFC, 0x24, 0x24, 0x24, 0x18, // p
+      |     {                                 }
+   92 |     0x00, 0x18, 0x24, 0x24, 0x18, 0xFC, // q
+      |     {                                 }
+   93 |     0x00, 0x7C, 0x08, 0x04, 0x04, 0x08, // r
+      |     {                                 }
+   94 |     0x00, 0x48, 0x54, 0x54, 0x54, 0x20, // s
+      |     {                                 }
+   95 |     0x00, 0x04, 0x3F, 0x44, 0x40, 0x20, // t
+      |     {                                 }
+   96 |     0x00, 0x3C, 0x40, 0x40, 0x20, 0x7C, // u
+      |     {                                 }
+   97 |     0x00, 0x1C, 0x20, 0x40, 0x20, 0x1C, // v
+      |     {                                 }
+   98 |     0x00, 0x3C, 0x40, 0x30, 0x40, 0x3C, // w
+      |     {                                 }
+   99 |     0x00, 0x44, 0x28, 0x10, 0x28, 0x44, // x
+      |     {                                 }
+  100 |     0x00, 0x1C, 0xA0, 0xA0, 0xA0, 0x7C, // y
+      |     {                                 }
+  101 |     0x00, 0x44, 0x64, 0x54, 0x4C, 0x44, // z
+      |     {                                 }
+  102 |     0x14, 0x14, 0x14, 0x14, 0x14, 0x14, // horiz lines
+      |     {
+  103 | };
+      | }
+[84/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/services/legacy/src/key_proc.c.obj
+C:/Users/20493/Desktop/maoxiu/firmware/services/legacy/src/key_proc.c: In function 'Key_Task_Proc':
+C:/Users/20493/Desktop/maoxiu/firmware/services/legacy/src/key_proc.c:10:32: warning: unused parameter 'argument' [-Wunused-parameter]
+   10 | void Key_Task_Proc(void const *argument) {
+      |                    ~~~~~~~~~~~~^~~~~~~~
+[85/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/services/legacy/src/lcd_proc.c.obj
+C:/Users/20493/Desktop/maoxiu/firmware/services/legacy/src/lcd_proc.c: In function 'LCD_Task_Proc':
+C:/Users/20493/Desktop/maoxiu/firmware/services/legacy/src/lcd_proc.c:20:36: warning: pointer targets in passing argument 3 of 'LCD_ShowString' differ in signedness [-Wpointer-sign]
+   20 |         LCD_ShowString(10 + 36, 0, (char *)"V1.0 RTOS", YELLOW, BLACK, 16, 0);
+      |                                    ^~~~~~~~~~~~~~~~~~~
+      |                                    |
+      |                                    char *
+In file included from C:/Users/20493/Desktop/maoxiu/firmware/services/legacy/src/lcd_proc.c:2:
+C:/Users/20493/Desktop/maoxiu/firmware/drivers/legacy/inc/lcd_init.h:58:45: note: expected 'const u8 *' {aka 'const unsigned char *'} but argument is of type 'char *'
+   58 | void LCD_ShowString(u16 x, u16 y, const u8 *p, u16 fc, u16 bc, u8 sizey, u8 mode); // 显示字符串
+      |                                   ~~~~~~~~~~^
+C:/Users/20493/Desktop/maoxiu/firmware/services/legacy/src/lcd_proc.c:15:8: warning: unused variable 'oledDisp' [-Wunused-variable]
+   15 |     u8 oledDisp[40];
+      |        ^~~~~~~~
+C:/Users/20493/Desktop/maoxiu/firmware/services/legacy/src/lcd_proc.c:9:32: warning: unused parameter 'argument' [-Wunused-parameter]
+    9 | void LCD_Task_Proc(void const *argument) {
+      |                    ~~~~~~~~~~~~^~~~~~~~
+[86/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/services/legacy/src/mpu6050_proc.c.obj
+In file included from C:/Users/20493/Desktop/maoxiu/firmware/services/legacy/src/mpu6050_proc.c:2:
+C:/Users/20493/Desktop/maoxiu/firmware/drivers/legacy/inc/IIC.h:30: warning: "MPU_ADDR" redefined
+   30 | #define MPU_ADDR 0x68
+      | 
+In file included from C:/Users/20493/Desktop/maoxiu/firmware/services/legacy/inc/mpu6050_proc.h:9,
+                 from C:/Users/20493/Desktop/maoxiu/firmware/services/legacy/src/mpu6050_proc.c:1:
+C:/Users/20493/Desktop/maoxiu/firmware/drivers/legacy/inc/mpu6050.h:36: note: this is the location of the previous definition
+   36 | #define MPU_ADDR 0X68
+      | 
+[87/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/services/protocol/star_dispatch.c.obj
+[88/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/services/legacy/src/rgb_proc.c.obj
+C:/Users/20493/Desktop/maoxiu/firmware/services/legacy/src/rgb_proc.c: In function 'RGB_Task_Proc':
+C:/Users/20493/Desktop/maoxiu/firmware/services/legacy/src/rgb_proc.c:10:32: warning: unused parameter 'argument' [-Wunused-parameter]
+   10 | void RGB_Task_Proc(void const *argument) // RGB进程主程序
+      |                    ~~~~~~~~~~~~^~~~~~~~
+[89/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/services/protocol/star_protocol.c.obj
+[90/91] Building C object CMakeFiles/maoxiu_stm32.dir/firmware/platform/syscalls.c.obj
+[91/91] Linking C executable maoxiu_stm32.elf
+C:/Users/20493/Desktop/embedded-tools/arm-gnu-toolchain-13.3.rel1-mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/bin/ld.exe: maoxiu_stm32.elf: section `.data' can't be allocated in segment 0
+LOAD: .isr_vector .text .ARM.exidx .init_array .fini_array .data
+C:/Users/20493/Desktop/embedded-tools/arm-gnu-toolchain-13.3.rel1-mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/bin/ld.exe: maoxiu_stm32.elf: section .heap lma 0x5505840800e8d4 adjusted to 0x55058f00000000
+C:/Users/20493/Desktop/embedded-tools/arm-gnu-toolchain-13.3.rel1-mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/bin/ld.exe: maoxiu_stm32.elf: section .stack lma 0x5505840800e8d4 adjusted to 0x55058f00000000
+Memory region         Used Size  Region Size  %age Used
+           FLASH:       59604 B       512 KB     11.37%
+             RAM:       36216 B       128 KB     27.63%
+   text	   data	    bss	    dec	    hex	filename
+  59104	    492	  35732	  95328	  17460	C:/Users/20493/Desktop/maoxiu/build/release/maoxiu_stm32.elf

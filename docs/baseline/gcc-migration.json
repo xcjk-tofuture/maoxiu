@@ -1,0 +1,11 @@
+{
+  "compiler": "Arm GNU Toolchain 13.3.Rel1",
+  "gcc": "13.3.1",
+  "kernel": "10.3.1",
+  "probe": "ST-Link",
+  "added_runtime_sha256": {
+    "firmware/os/ports/freertos-10.3.1/GCC/ARM_CM4F/port.c": "89f24a509ec85bf502724334c2607eeb7a432e1f26afbc9b7291254b8f7971dc",
+    "firmware/platform/stm32/startup_stm32f407xx.S": "f1f47866cbe60dd788ac37e15172b17ca6b4a072e2945b4309b2b9dfa4fabb99"
+  },
+  "hardware_flash_validation": "pending"
+}

@@ -1,0 +1,25 @@
+{
+  "maoxiu": {
+    "vendor_changes": [],
+    "generated_code_outside_USER_CODE_changes": [],
+    "CubeMX_GUI_regeneration": "not run",
+    "local_include_case_corrections": [],
+    "files_above_50_MiB": []
+  },
+  "xingxuan-uav": {
+    "vendor_changes": [],
+    "generated_code_outside_USER_CODE_changes": [],
+    "CubeMX_GUI_regeneration": "not run",
+    "local_include_case_corrections": [],
+    "files_above_50_MiB": []
+  },
+  "maoxiu-tm4c": {
+    "Lib_and_utils_byte_identical_to_reference": true,
+    "local_include_case_corrections": [],
+    "files_above_50_MiB": []
+  },
+  "beihe_AR_Hi3861": {
+    "local_include_case_corrections": [],
+    "files_above_50_MiB": []
+  }
+}

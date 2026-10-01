@@ -1,0 +1,143 @@
+{
+  "debug": {
+    "build": "PASS",
+    "flash_bytes": 63572,
+    "ram_static_heap_stack_reservation_bytes": 36224,
+    "warnings": 18,
+    "largest_compiler_stack_frames": [
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/algorithms/math/src/kalmanVel.c:18:6:KalmanVelUpdate",
+        "bytes": 976,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/app/tasks/serial_task.c:109:6:PC_Task_Proc",
+        "bytes": 504,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/algorithms/math/src/kalman3.c:241:6:KalmanUpdate",
+        "bytes": 328,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/algorithms/math/src/kalman3.c:172:6:Kalman_Fil_Calc",
+        "bytes": 320,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/algorithms/math/src/LevenbergMarquardt.c:21:6:LevenbergMarquardt",
+        "bytes": 280,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/algorithms/math/src/kalman3.c:140:6:Kalman_Fil_Init",
+        "bytes": 248,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/app/startup.c:22:6:app_tasks_init",
+        "bytes": 216,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/app/tasks/serial_task.c:82:6:PC_Data_Rx_Proc",
+        "bytes": 216,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/services/protocol/star_protocol.c:74:6:star_parser_feed",
+        "bytes": 184,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/algorithms/math/src/matrix6.c:90:6:Matrix6_Det",
+        "bytes": 160,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/app/tasks/serial_task.c:93:13:send_frame",
+        "bytes": 152,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/app/tasks/serial_task.c:101:13:on_frame",
+        "bytes": 144,
+        "classification": "static"
+      }
+    ],
+    "elf_sha256": "23d3985883990448cb1566e9ac9699eefaccc28ff6285b5deff9940722716dc5"
+  },
+  "release": {
+    "build": "PASS",
+    "flash_bytes": 59604,
+    "ram_static_heap_stack_reservation_bytes": 36216,
+    "warnings": 18,
+    "largest_compiler_stack_frames": [
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/algorithms/math/src/kalmanVel.c:18:6:KalmanVelUpdate",
+        "bytes": 968,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/app/tasks/serial_task.c:109:6:PC_Task_Proc",
+        "bytes": 520,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/algorithms/math/src/kalman3.c:241:6:KalmanUpdate",
+        "bytes": 336,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/algorithms/math/src/LevenbergMarquardt.c:21:6:LevenbergMarquardt",
+        "bytes": 328,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/algorithms/math/src/kalman3.c:172:6:Kalman_Fil_Calc",
+        "bytes": 320,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/algorithms/math/src/kalman3.c:140:6:Kalman_Fil_Init",
+        "bytes": 256,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/app/tasks/serial_task.c:82:6:PC_Data_Rx_Proc",
+        "bytes": 224,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/app/startup.c:22:6:app_tasks_init",
+        "bytes": 216,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/algorithms/math/src/matrix6.c:90:6:Matrix6_Det",
+        "bytes": 192,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/services/protocol/star_protocol.c:74:6:star_parser_feed",
+        "bytes": 184,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/app/tasks/serial_task.c:93:13:send_frame",
+        "bytes": 152,
+        "classification": "static"
+      },
+      {
+        "function": "C:/Users/20493/Desktop/maoxiu/firmware/app/tasks/serial_task.c:101:13:on_frame",
+        "bytes": 144,
+        "classification": "static"
+      }
+    ],
+    "elf_sha256": "28fee6c36464f0e8b2948729bc632cf22171335ab27e67b5fd9a46791357492e"
+  },
+  "host_tests": "PASS",
+  "OpenOCD_config_parse_and_flash_command_generation": "PASS; no probe initialization or flash performed",
+  "hardware": "PENDING; see ACCEPTANCE.md"
+}
