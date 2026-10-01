@@ -1,4 +1,7 @@
 set(FIRMWARE_SOURCES
+  firmware/services/parameters/chassis_parameters.c
+  firmware/platform/stm32/parameter_flash.c
+  firmware/services/parameters/param_journal.c
   firmware/app/tasks/log_task.c
   firmware/os/log_queue.c
   firmware/platform/stm32/log_port.c
@@ -91,6 +94,7 @@ set(FIRMWARE_SOURCES
   firmware/platform/syscalls.c
 )
 set(FIRMWARE_INCLUDES
+  firmware/services/parameters
   firmware/drivers/motor
   Core/Inc
   Drivers/CMSIS/Device/ST/STM32F4xx/Include

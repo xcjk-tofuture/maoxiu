@@ -40,17 +40,19 @@ void star_dispatch(star_dispatch_t *s, const star_frame_t *q, star_frame_t *r) {
             if (q->length != 2)
                 result = STAR_BAD_LENGTH;
             else if (star_read_u16(q->payload) != 1)
-                result = STAR_UNSUPPORTED;
+                result = s->business ? s->business(s->context, q, r) : STAR_UNSUPPORTED;
             else {
                 star_write_u16(r->payload + 1, s->telemetry_period_ms);
                 r->length = 3;
             }
             break;
         case STAR_CMD_PARAM_WRITE:
-            if (q->length != 4)
+            if (q->length < 2)
                 result = STAR_BAD_LENGTH;
             else if (star_read_u16(q->payload) != 1)
-                result = STAR_UNSUPPORTED;
+                result = s->business ? s->business(s->context, q, r) : STAR_UNSUPPORTED;
+            else if (q->length != 4)
+                result = STAR_BAD_LENGTH;
             else {
                 value = star_read_u16(q->payload + 2);
                 if (value < s->minimum_period_ms || value > 1000)
