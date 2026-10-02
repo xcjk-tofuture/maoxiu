@@ -1,4 +1,4 @@
-# maoxiu STM32 串口协议
+# StarPleiades STM32 串口协议
 
 ## 帧格式
 
