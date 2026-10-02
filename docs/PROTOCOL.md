@@ -1,4 +1,4 @@
-# 公共组件边界
+# StarPleiades（昴宿）串口协议
 
 `services/protocol` 与 `algorithms` 不依赖芯片、RTOS、业务全局变量。STM32、TM4C 和星璇各自包含相同版本的协议源码；修改公共源码须运行主机检查并核对三处 SHA256。星璇只复用协议，不复用底盘业务。
 
