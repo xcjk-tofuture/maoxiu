@@ -1,4 +1,4 @@
-# maoxiu TM4C 架构
+# StarPleiades TM4C 架构
 
 ## 入口与目录
 

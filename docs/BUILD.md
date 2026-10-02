@@ -1,4 +1,4 @@
-# maoxiu TM4C构建与验证
+# StarPleiades TM4C构建与验证
 
 依赖：ARM GNU 13.3.Rel1、CMake ≥3.21、Ninja、OpenOCD；VS Code 扩展 C/C++、CMake Tools、Cortex-Debug。`ARM_GCC_PATH` 可指向工具链根目录，相关 bin 目录加入 PATH。
 

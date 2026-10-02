@@ -1,4 +1,4 @@
-# maoxiu TM4C 串口协议
+# StarPleiades TM4C 串口协议
 
 ## 帧格式
 
