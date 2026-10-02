@@ -1,1 +1,0 @@
-[0/1] cmd.exe /C "cd /D C:\Users\20493\Desktop\maoxiu-tm4c\build\debug && C:\Users\20493\Desktop\embedded-tools\xpack-openocd-0.12.0-7\bin\openocd.exe -f C:/Users/20493/Desktop/maoxiu-tm4c/openocd/board.cfg -c "program C:/Users/20493/Desktop/maoxiu-tm4c/build/debug/maoxiu_tm4c.elf verify reset exit""

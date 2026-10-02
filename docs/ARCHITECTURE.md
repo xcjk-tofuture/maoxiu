@@ -1,19 +1,28 @@
-# 架构与模块接口
+# maoxiu TM4C 架构
 
-```mermaid
-flowchart TD
-    A[app: 状态机与启动编排] --> S[services: 控制/采集/通信/显示/参数]
-    S --> G[algorithms: 调用者持有算法上下文]
-    S --> D[drivers: 设备接口]
-    D --> P[platform: 芯片与总线适配]
-    P --> V[厂商 SDK/硬件]
-    A --> B[boards: 资源与参数]
-    A --> O[os: 任务/队列/互斥/快照]
-    S --> O
-```
+## 入口与目录
 
-公共算法与协议接口只有标准 C 数据类型，算法不包含 HAL/RTOS/业务主头文件。任务拥有运行状态；通信提交命令，显示与遥测读取快照。旧设备实现保留源头注释；legacy 表示保留接口命名的适配区，不允许新增跨模块可写 extern 状态。头文件包含循环已检查；这不等于证明所有运行时依赖或调用时序。
+`platform/tm4c/startup_tm4c123.S` → `app/tm4c/main.c: main` → `All_Init` → `FREERTOS_Init` → `vTaskStartScheduler`。
+应用、服务、算法、设备、平台、板级和 RTOS 适配分别位于根目录的 `app/services/algorithms/drivers/platform/boards/os`；厂商 `Lib/`、`utils/` 保留原结构与版权。
 
-协议回调中的帧借用仅在同步调用内有效，异步处理必须复制。控制命令按值入队且不阻塞，队列满返回 busy；原始 UART 接收队列丢包后重置解码器，目标速度受 500ms 超时保护。任务快照用短临界区复制，临界区里不进行 I/O、计算或等待。设备接口按各头文件约定调用上下文、单位与返回值；初始化在启动编排中检查创建结果。
+## 数据流与资源
 
-malloc/栈溢出/断言/致命设备错误进入停止输出并锁定的故障路径；恢复要求复位与重新初始化。现有工程没有已验证的硬件看门狗恢复，不能宣称自动恢复或自动重新解锁。看门狗接线、超时、复位原因记录和启动回归列入硬件验收。
+UART0 ISR → 256 字节队列 → `app/tm4c/pc_service.c` 帧解析/分发 → 命令队列 4 → `app/tm4c/control_task.c` → 公共 `chassis_service/chassis_math` → `drivers/tm4c/maoxiu_motor.c` → `platform/tm4c` QEI/PWM。
+控制任务拥有闭环状态，显示/通信读取快照。当前板型为两轮差速；`vy` 必须为 0。
+
+| 任务 | 优先级 | 栈（32 位项） | 资源 |
+|---|---|---|---|
+| Control | 3 | 512 | 10 ms，QEI/ADC/双轮 PWM |
+| PC | 2 | 768 | UART0 字节队列，5 ms 超时检查，TX 有界 |
+| LCD | 1 | 512 | 显示快照 |
+| IMU | 1 | 256 | 保留 MPU6050 采集与快照 |
+| RGB / 按键事件 | 1 | 128 | GPIOF 事件、指示灯 |
+| Buzzer | 1 | 128 | 启动音乐、电压告警 |
+
+实际任务定义见 `app/tm4c/FreeRTOS.c`。创建失败进入 `tm4c_fatal`，关闭输出后停机。
+
+## 未标定状态
+
+`boards/tm4c/maoxiu_board.h` 中 `MAOXIU_TM4C_CALIBRATED=0`：拒绝速度命令、发布状态 4、保持零 PWM，不声明运动能力。轮距、每计数距离、PI 和电池比例需实物标定；IMU 未接入统一状态包，字段填零。
+
+公共业务、算法及基础帧规则与 STM32 对齐，芯片适配和板型差异独立；当前是源码副本，需要核对公共修复。该分支只维护基础构建、标定与硬件基线，不安排后续功能开发。

@@ -1,12 +1,8 @@
-# maoxiu-tm4c 重构基线
+# maoxiu TM4C
 
-候选 TODO 尚未开发；GitHub 尚未推送。
+TM4C 板载基础分支：共享底盘业务骨架与串口协议，保留独立平台适配；实物标定前禁止运动。
 
-- [架构与接口](docs/ARCHITECTURE.md)
-- [任务和资源](docs/TASKS.md)
-- [构建与烧录](docs/BUILD.md)
-- [测试和验收边界](docs/ACCEPTANCE.md)
-- [候选 TODO](docs/TODO.md)
-- [回滚与 Git 流程](docs/ROLLBACK.md)
-- [源码版本与来源](docs/SOURCES.md)
-- [统一串口协议](docs/PROTOCOL.md)
+- [入口、架构与任务](docs/ARCHITECTURE.md)
+- [构建、验证与版本兼容](docs/BUILD.md)
+- [串口协议与接口](docs/PROTOCOL.md)
+- [依赖与来源](docs/SOURCES.md)

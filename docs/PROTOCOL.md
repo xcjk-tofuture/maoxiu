@@ -1,15 +1,20 @@
-# 公共组件边界
+# maoxiu TM4C 串口协议
 
-`services/protocol` 与 `algorithms` 不依赖芯片、RTOS、业务全局变量。STM32、TM4C 和星璇各自包含相同版本的协议源码；修改公共源码须运行主机检查并核对三处 SHA256。星璇只复用协议，不复用底盘业务。
+## 帧格式
 
-协议 v1：`A5 5A | version:u8 | flags:u8 | sequence:u16 | command:u16 | length:u16 | payload | CRC16:u16`。所有多字节字段小端，CRC16/CCITT-FALSE（poly=0x1021, init=0xFFFF）覆盖 version 到 payload。长度最大 128，帧间接收超时 100ms。请求 flags=0，应答=1，主动遥测=2。响应第一字节为错误码；异步遥测使用相同 status 数据结构并保留第一字节状态码 0。
+`A5 5A | version:u8 | flags:u8 | sequence:u16 | command:u16 | length:u16 | payload | CRC16:u16`
 
-命令：1版本、2设备ID、3能力位、4状态、5参数读、6参数写，0x1000底盘速度，0x2000无人机姿态。参数读 payload=id:u16，参数写=id:u16+value:u16。参数1为遥测周期 ms，仅 RAM 生效，范围由设备最小周期至1000ms。底盘速度为三个 IEEE754 binary32，单位 m/s、m/s、rad/s；NaN、Inf、越界、欠压和队列满必须拒绝。UAV 不开放串口解锁或执行器输出，扩展写命令返回 unsupported。
+版本 1；所有多字节字段小端。payload 最大 128 字节，接收超时 100 ms。CRC16/CCITT-FALSE：poly=0x1021、init=0xFFFF，覆盖 version 到 payload。
+flags：0 请求、1 应答、2 主动遥测。应答/状态事件 payload 首字节为状态码：0 成功、1 长度错误、2 不支持、3 范围错误、4 状态拒绝、5 忙、6 内部错误。
 
-状态 payload：status:u8 + project_state:u8 + 三个 float32；底盘为vx/vy/wz，无人机为roll/pitch/yaw（rad）；底盘其后追加 wheel_count:u8 + voltage:f32 + IMU 六个原始 i16 小端（acc±2g与gyro±500deg/s，量程待上板核对）。能力位0=状态、1=遥测周期读写、2=底盘速度。
+基础命令：1 版本、2 设备 ID、3 能力、4 状态、5 参数读、6 参数写。参数 ID 1 为遥测周期：读取 payload 为 `id:u16`，写入为 `id:u16 + value:u16`。遥测周期 50..1000 ms。
 
-帧编解码与命令分发均不直接接触硬件。ISR只提交字节；通信任务负责解码和命令提交；控制任务拥有闭环状态，通过受保护快照供遥测使用。队列满不覆盖未处理命令，返回 busy；接收丢包后重置解析器，旧目标由控制超时归零。
+编解码与分发在 `services/protocol`，不直接调用硬件或修改控制状态。中断交接数据，通信任务拥有解析器和发送；项目 `business` 回调通过业务接口提交或查询。分包、粘包、异常帧与队列丢包恢复由解析/传输层处理。旧客户端不兼容 v1，需配套固件和客户端。
 
-BREAKING CHANGE：上位机默认改用协议v1；ROS配套源码同步迁移。旧ROS/匿名ANO客户端需保留旧固件或使用旧提交，协议版本不自动猜测。
+## 板载接口
 
-补充：底盘状态0=idle，1=active，2=undervoltage，3=command-timeout，4=uncalibrated。TM4C默认能力不含底盘运动，标定完成之前拒绝速度命令；其状态帧的IMU原始字段当前填0，表示没有接入统一遥测，不可作为有效IMU测量。STM32 IMU配置源码为acc±2g/gyro±500deg/s（仍需上板核对）。星璇状态角度使用rad，0x2000为查询，协议不提供远程解锁或飞控目标写入。
+UART0，115200。设备 ID `0x4d540001`，能力为状态与遥测周期。状态共 31 字节，与 STM32 底盘布局一致：状态码、底盘状态、vx/vy/wz、轮数、电压及六个 IMU i16 字段。
+轮数为 2；IMU 字段为 0；未标定状态为 4。电压使用原 ADC 比例，需实物校验。
+
+`0x1000` 入参是 vx/vy/wz 三个 LE f32（m/s、m/s、rad/s）；差速板要求 vy=0，vx/wz 限 ±2/±6。未标定返回状态拒绝，不开放运动能力。
+不提供 STM32 的参数保存、底盘诊断或后续功能扩展。

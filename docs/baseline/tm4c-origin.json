@@ -1,7 +1,0 @@
-{
-  "source_repo": "https://github.com/xcjk-tofuture/xing-shu-ECB-TM4C",
-  "sha": "fc349d1753c7ca1afecb88c4528046d2910d297e",
-  "kernel": "CMSIS-FreeRTOS10.5.1",
-  "compiler": "ARMCC5.06u7",
-  "status": "hardware and target build pending"
-}
