@@ -30,7 +30,7 @@ def main():
         logs=[]
         for script in ['run_host.py','run_pid.py','run_math.py','run_todo.py']:
             logs.append(run([sys.executable,str(root/'tests'/script),'--cc',a.cc]))
-        logs.append(run([sys.executable,'-m','unittest','discover','-s','tests','-p','test_tools.py']))
+        logs.append(run([sys.executable,'-m','unittest','discover','-s','tests','-p','test_*tools.py']))
         if (root/'ros').exists():logs.append(run([sys.executable,'-m','unittest','discover','-s','ros/ws_starbot/starbot_serial/test','-p','test_star_protocol.py']))
         (report/'host-tests.txt').write_text(''.join(logs),encoding='utf-8');print(''.join(logs));return
     run([a.cmake,'--preset',a.preset]);log=run([a.cmake,'--build','--preset',a.preset,'--clean-first','--parallel','4'])

@@ -35,6 +35,25 @@ python tools/replay_log.py capture.jsonl
 
 使用实际串口，Linux 例如 `/dev/ttyUSB0`。录包文件必须不存在。回放用于帧与状态时间线检查，不是高频传感器解算或 HIL。主机测试使用本机 gcc；构建报告输出到 `build/reports`。CI 在 dev/master push 与 PR 上运行主机测试、Debug/Release 并保存固件/map/报告。
 
+### 串口诊断与回放
+
+工具先读取设备 ID 和能力位，再发送操作命令。状态/诊断输出带字段名称和单位，同时保留 `data_hex`。
+STM32/TM4C 底盘状态与 StarFlight 状态均可解码；TM4C 不支持底盘参数保存/诊断。
+遥测周期参数 ID 1 可在三种设备读取和写入：StarFlight 为 20..1000 ms，底盘为 50..1000 ms。
+STM32 底盘扩展参数的范围见 PROTOCOL.md；写入 ACK 表示受理，仍需再次读取确认应用。
+
+```sh
+python tools/serial_cli.py --port COM3 capabilities
+python tools/serial_cli.py --port COM3 read 1
+python tools/serial_cli.py --port COM3 write 1 100
+```
+
+新录包使用从开始计时的单调秒数；回放兼容旧版绝对单调秒数。
+回放检查行长度、字段类型、时间顺序、状态/诊断长度与有限数值；报告最后的解码状态/诊断、状态时间线、错误应答、最长状态事件间隔与事件序号间断。
+`estimated_missing_status_events` 只统计前进距离小于 32768 的序号缺口；重复或倒序单独计为间断。
+间断可能来自设备发送失败、链路丢失或主机未及时接收；接收时间间隔不是控制任务抖动实测。
+原始 IMU 字段保持 counts，不用未经验证的量程换算。回放不向设备发送命令。
+
 ## 硬件验证
 
 核对 IO、编码器方向/比例、电池量程、闭环节拍/抖动、栈与队列边界、欠压和断链；验证停止调参、保存后重启、Flash 各写入阶段断电与双副本恢复。参数扇区 6/7 位于 0x08040000/0x08060000，应用区限 256 KiB；保留参数时禁止整片擦除。还需 CubeMX 重生成回归及 Linux ROS2 colcon/话题联调。
